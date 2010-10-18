@@ -4,12 +4,15 @@ gem 'rails', '3.0.0'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'jquery-rails'
 gem 'rpx_now'
+gem 'nifty-generators'
 
 # Use unicorn as the web server
 # gem 'unicorn'
 
-# Deploy with Capistrano
+# Deploy
 # gem 'capistrano'
+gem 'heroku'
+
 
 # To use debugger
 gem 'ruby-debug'
