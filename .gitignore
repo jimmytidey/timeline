@@ -2,7 +2,6 @@
 *.swo
 *.swn
 untracked
-config/initializers/gems.rb
 capybara-201*
 .bundle
 db/*.sqlite3
