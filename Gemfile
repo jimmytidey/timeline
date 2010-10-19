@@ -40,3 +40,4 @@ group :development, :test do
   gem 'launchy'    # So you can do Then show me the page
   gem 'machinist', '>= 2.0.0.beta2' # Generate mock objects
 end
+gem "mocha", :group => :test

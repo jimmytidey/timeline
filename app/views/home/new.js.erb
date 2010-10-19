@@ -1,0 +1,5 @@
+<% if current_user then %>
+  window.location.replace('<%= url_for :controller => :timeline_charts, :action => :new %>');
+<% else %>
+  $('#user_nav a.rpxnow').click();
+<% end %>

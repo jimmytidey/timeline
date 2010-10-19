@@ -1,0 +1,22 @@
+<% title "Timeline Chart" %>
+
+<p>
+  <strong>User:</strong>
+  <%= @timeline_chart.user_id %>
+</p>
+<p>
+  <strong>Title:</strong>
+  <%= @timeline_chart.title %>
+</p>
+<p>
+  <strong>Start:</strong>
+  <%= @timeline_chart.start %>
+</p>
+<p>
+  <strong>End:</strong>
+  <%= @timeline_chart.end %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %> |
+</p>

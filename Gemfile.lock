@@ -90,6 +90,8 @@ GEM
       mime-types
       treetop (>= 1.4.5)
     mime-types (1.16)
+    mocha (0.9.8)
+      rake
     nifty-generators (0.4.2)
     nokogiri (1.4.3.1)
     polyglot (0.3.1)
@@ -164,6 +166,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   machinist (>= 2.0.0.beta2)
+  mocha
   nifty-generators
   rails (= 3.0.0)
   rpx_now
