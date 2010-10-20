@@ -1,7 +1,8 @@
 body {
-  background-color: #4B7399;
+  background-color: #9CB4CA;
   font-family: Verdana, Helvetica, Arial;
   font-size: 14px;
+  color: #333333;
 }
 
 a img {
@@ -19,12 +20,13 @@ a {
 }
 
 #container {
-  width: 75%;
-  margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px black;
-  margin-top: 20px;
+  /* TODO: Remove browser specific css */
+  -moz-border-radius:8px 8px 8px 8px;
+  -moz-box-shadow:0 2px 4px rgba(0, 0, 0, 0.5);
+  background:none repeat scroll 0 0 #FFFFFF;
+  margin:50px auto 0;
+  padding:30px 40px;
+  width:80%;
 }
 
 #flash_notice, #flash_error, #flash_alert {

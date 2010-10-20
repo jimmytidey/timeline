@@ -13,4 +13,16 @@ describe HomeController do
     end
   end
 
+  describe "new index" do
+    it "should be successful" do
+      get 'new'
+      response.should be_success
+    end
+
+    it "should be javascript" do
+      get 'new'
+      response.content_type.should eql "text/javascript"
+    end
+  end
+
 end

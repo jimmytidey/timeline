@@ -15,7 +15,7 @@
       <div id="user_nav">
         <p>
           <% if current_user %>
-             Hello <%= current_user.name %>, <%= button_to 'logout', current_user, :method=>:delete %>
+             Hello <%= current_user.name %>, <%= button_to 'Log out', current_user, :method=>:delete %>
           <% else %>
              Hi stranger, please 
            <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",'timeline', users_url)).html_safe %>

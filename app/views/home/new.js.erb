@@ -1,5 +1,6 @@
 <% if current_user then %>
   window.location.replace('<%= url_for :controller => :timeline_charts, :action => :new %>');
 <% else %>
+  RPXNOW.token_url = '<%= url_for :controller => :users, :action => :create, :only_path => false, :forward => 'new_timeline' %>'
   $('#user_nav a.rpxnow').click();
 <% end %>

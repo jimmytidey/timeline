@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   def index  
   end
 
-  def new
-    render 'new'
+  def new #'Add a new timeline' renders javascript to check if user is logged in.
+    render 'new.js.erb'
   end
 end
