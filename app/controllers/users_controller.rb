@@ -28,6 +28,7 @@ class UsersController < AdminController
   end
 
   def destroy
+    flash[:notice] = 'Signed out successfully'
     self.current_user = nil
     redirect_to '/'
   end

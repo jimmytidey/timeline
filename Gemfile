@@ -33,6 +33,7 @@ group :development, :test do
   gem 'ZenTest'
   gem 'autotest'
   gem 'autotest-rails'
+  gem 'relevance-rcov'
   gem 'test_notifier' # pop up's for autotest
   gem 'capybara' # like webrat
   gem 'capybara-envjs' # js support for the above

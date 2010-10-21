@@ -14,11 +14,17 @@ end
 
 Then /^I should see the button "([^"]*)"$/ do | label |
   txt = label
-find_button(txt).node.values.include? txt
+  find_button(txt).node.values.include? txt
 end
 
-#TODO the popup is completly invisible to rack-test (non-js) and selenium,
-# drivers as the popup is the result of a click event sent via new.js.erb, 
-# and not one of the selenium actions directly. Modification of selenium 
-# may be required to get this working.
+Given /^I know the admin password$/ do
+  Capybara.app_host = "http://admin:#{HTTP_BASIC_PASSWORD}@cap:9887"
+end
 
+Given /^I don't know the admin password$/ do
+  Capybara.app_host = "http://admin:whatever@cap:9887"
+end
+
+Then /^debug$/ do
+  debugger;nil
+end

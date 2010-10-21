@@ -2,6 +2,7 @@
 *.swo
 *.swn
 untracked
+features_rcov
 capybara-201*
 .bundle
 db/*.sqlite3

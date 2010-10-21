@@ -9,18 +9,22 @@ Feature: Authentication
     Then I should see the button "Sign in"
     And I should see the button "Add a new timeline"
 
-# TODO
-#
-# 
-#
-#  Scenario: User can log-out
-#    Given I am an authenticated user
-#    Then I should see the button "Log out"
-#    When I press "Log out"
-#    Then I should see "Signed out successfully"
-#    And I should be at the home page
+  Scenario: User can log-out
+    Given I am an authenticated user
+    Then I should see the button "Log out"
+    When I press "Log out"
+    Then I should see "Signed out successfully"
+    And I should be on the home page
 
-#  Scenario: Admin signs in
-#    Given I am signed in as admin
-#    Then I can delete user accounts
-#    And I can delete timelines
+@selenium
+  Scenario: Can't list users without password
+    Given I don't know the admin password
+    When I go to list the users
+    Then I should not see "Listing users:"
+
+@selenium
+  Scenario: Admin signs in
+    Given I know the admin password
+    When I go to list the users
+    Then I should see "Listing users:"
+
