@@ -31,5 +31,5 @@ class UsersController < AdminController
     self.current_user = nil
     redirect_to '/'
   end
-
+  
 end

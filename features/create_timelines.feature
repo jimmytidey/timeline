@@ -1,10 +1,10 @@
-#Feature: Create Timelines
-#  In order to manage timelines
-#  As a authenticated user
-#  I want to be able to cerate and edit timelines
-#
-#  Scenario: A user can create a new timeline and add an event
-#    Given I am a authenticated user guest
+Feature: Create Timelines
+  In order to manage timelines
+  As a authenticated user
+  I want to be able to cerate and edit timelines
+
+  Scenario: A user can create a new timeline and add an event
+    Given I am an authenticated user
 #    And I go to "New Timeline"
 #		And I fill in "Event Name" with "
 #    And I fill in "Start:" with "1600"
