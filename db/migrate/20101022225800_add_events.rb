@@ -4,8 +4,7 @@ class AddEvents < ActiveRecord::Migration
       t.string :title
       t.datetime :start
       t.datetime :end
-      t.text :description
-      t.string :link
+      t.integer :timeline_chart_id
       t.timestamps
     end
 

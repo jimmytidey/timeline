@@ -6,11 +6,11 @@
   </p>
   <p>
     <%= f.label :start_date %><br />
-    <%= f.datetime_select :start_date , :start_year => -1000, :discard_month => true, :discard_day => true, :discard_hour => true, :discard_minute => true%>
+     <%= select_year(1800, :start_year => 0, :end_year => 2050, :field_name => 'start_date') %>
   </p>
   <p>
     <%= f.label :end_date %><br />
-    <%= f.datetime_select :end_date , :start_year => -1000, :discard_month => true, :discard_day => true, :discard_hour => true, :discard_minute => true%>
+    <%= select_year(1900, :start_year => 0, :end_year => 2050, :field_name => 'end_date') %>
   </p>
   <p><%= f.submit 'Create timeline' %></p>
 <% end %>

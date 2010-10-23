@@ -23,6 +23,9 @@ class TimelineChartsController < ApplicationController
   
   def create
     @timeline_chart = TimelineChart.new(params[:timeline_chart])
+    @timeline_chart.start_date = Date.parse("1-1-" + params['date']['start_date'])
+    @timeline_chart.end_date = Date.parse("1-1-" + params['date']['end_date'])
+    
 
     @timeline_chart.granularity = 'years' # RFU 'minutes', 'seconds', 'months', 'centurys', 'million_years' etc
     @timeline_chart.user_id = current_user

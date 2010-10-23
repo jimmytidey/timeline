@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101021041255) do
+ActiveRecord::Schema.define(:version => 20101022225800) do
+
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.datetime "start"
+    t.datetime "end"
+    t.integer  "timeline_chart_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "timeline_charts", :force => true do |t|
     t.integer  "user_id"

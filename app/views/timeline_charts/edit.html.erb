@@ -2,3 +2,18 @@
 
 <%= render 'form' %>
 
+<%= form_for 'events' do %>
+  <p>
+  <%= label_tag 'event_title', 'Event name' %>
+  <%= text_field 'event', 'title' %>
+  </p>
+  <p>
+  <%= label_tag 'event_start_date', 'Start' %>
+  <%= text_field 'event', 'start_date' %>
+  </p>
+  <p>
+  <%= label_tag 'event_end_date', 'End' %>
+  <%= text_field 'event', 'end_date' %>
+  </p>
+  <%= submit_tag 'Add event' %>
+<% end %>
