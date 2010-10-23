@@ -1,20 +1,16 @@
 <%= form_for @timeline_chart do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </p>
-  <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
   </p>
   <p>
-    <%= f.label :start %><br />
-    <%= f.datetime_select :start %>
+    <%= f.label :start_date %><br />
+    <%= f.datetime_select :start_date , :start_year => -1000, :discard_month => true, :discard_day => true, :discard_hour => true, :discard_minute => true%>
   </p>
   <p>
-    <%= f.label :end %><br />
-    <%= f.datetime_select :end %>
+    <%= f.label :end_date %><br />
+    <%= f.datetime_select :end_date , :start_year => -1000, :discard_month => true, :discard_day => true, :discard_hour => true, :discard_minute => true%>
   </p>
-  <p><%= f.submit %></p>
+  <p><%= f.submit 'Create timeline' %></p>
 <% end %>

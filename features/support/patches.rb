@@ -14,7 +14,7 @@ class UsersController
 
     RPXNow.expects(:user_data).with('123456').returns({:email => "rpxuser@email.com",:identifier => "test",:username => "rpxusername"})
     params[:token] = '123456'
-    create
+    self.create
   end
 end
 

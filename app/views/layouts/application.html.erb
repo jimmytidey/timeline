@@ -13,15 +13,12 @@
   <body>
     <div id="container">
       <div id="user_nav">
-        <p>
           <% if current_user %>
-             Hello <%= current_user.name %>, <%= button_to 'Log out', current_user, :method=>:delete %>
+            <%= button_to 'Log out', current_user, :method=>:delete %>
           <% else %>
-             Hi stranger, please 
-           <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",'timeline', users_url)).html_safe %>
+            <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",'timeline', users_url)).html_safe %>
           <% end %>
-        </p>
-  </div>
+      </div>
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>

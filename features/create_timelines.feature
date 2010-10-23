@@ -5,10 +5,14 @@ Feature: Create Timelines
 
   Scenario: A user can create a new timeline and add an event
     Given I am an authenticated user
-#    And I go to "New Timeline"
-#		And I fill in "Event Name" with "
-#    And I fill in "Start:" with "1600"
-#    And I fill in "End:" with "1700"
+    And I go to create a new timeline
+    And I fill in "Title" with "The last 50 years in computing"
+Then show me the page
+    And I select "1960" from "timeline_chart_start_date_1i"
+    And I select "2010" from "timeline_chart_end_date_1i"
+		And I press "Create timeline"
+    And I fill in "Start" with "1960" within "new_event"
+#    And I fill in "End" with "1700"
 #    And I click "Save"
 #		And I fill in "Event Name" with "Great Fire of London"
 #		And I fill in "Start" with "1660"

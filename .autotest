@@ -1,2 +1,2 @@
 require 'test_notifier/runner/autotest'
-AUTOFEATURE=true
+#AUTOFEATURE=true 

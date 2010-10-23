@@ -14,13 +14,13 @@ describe UsersController do
 
   describe "index and show are admin only" do
 
-    it "should be forbidden" do
+    it "index should be forbidden" do
       invalidate_credentials
       get 'index'
       response.status.should == 401 # Forbidden
     end
 
-    it "should be forbidden" do
+    it "show should be forbidden" do
       invalidate_credentials
       get 'show', :id => 1
       response.status.should == 401 # Forbidden

@@ -13,6 +13,9 @@ module NavigationHelpers
 
     when /list the users/
       '/users'
+
+    when /create a new timeline/
+      url_for(:controller => 'timeline_charts', :action => 'new')
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
