@@ -6,6 +6,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'jquery-rails'
 gem 'rpx_now'
 gem 'nifty-generators'
+gem 'simple_form'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -13,7 +14,6 @@ gem 'nifty-generators'
 # Deploy
 # gem 'capistrano'
 gem 'heroku'
-
 
 # To use debugger
 gem 'ruby-debug'
@@ -41,5 +41,5 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'launchy'    # So you can do Then show me the page
   gem 'machinist', '>= 2.0.0.beta2' # Generate mock objects
+  gem "mocha"
 end
-gem "mocha", :group => :test

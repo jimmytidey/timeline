@@ -1,0 +1,8 @@
+<%= simple_form_for @event do |f| %>
+  <%= f.error_messages %>
+  <%= f.input :title %>
+  <%= f.input :start_date, :as => :string %>
+  <%= f.input :end_date, :as => :string %>
+  <%= f.hidden_field :timeline_chart_id, :value => @timeline_chart.id %>
+  <%= f.submit %>
+<% end %>

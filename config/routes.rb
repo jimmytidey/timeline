@@ -1,4 +1,6 @@
 Timeline::Application.routes.draw do
+  resources :events
+
   resources :timeline_charts
   get "home/index"
   get "home/new"

@@ -2,8 +2,8 @@ class AddEvents < ActiveRecord::Migration
   def self.up
     create_table :events do |t|
       t.string :title
-      t.datetime :start
-      t.datetime :end
+      t.datetime :start_date
+      t.datetime :end_date
       t.integer :timeline_chart_id
       t.timestamps
     end

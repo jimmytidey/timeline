@@ -27,7 +27,7 @@ function getMoreData(data) {
   });
 }
 
-function setDates(start_date, end_date){
+function setDates(start_date, end_date) {
   start_date = start_date.substring(0,4);
   end_date = end_date.substring(0,4);
   $('#event_start_date').val(start_date);
