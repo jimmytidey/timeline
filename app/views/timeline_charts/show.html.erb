@@ -1,22 +1,23 @@
 <% title "Timeline Chart" %>
 
-<p>
+<div id="timeline_summary_info">
   <strong>Created by:</strong>
   <%= @timeline_chart.user %>
-</p>
-<p>
   <strong>Title:</strong>
   <%= @timeline_chart.title %>
-</p>
-<p>
   <strong>Start date:</strong>
-  <%= @timeline_chart.start_date %>
-</p>
-<p>
+  <%= @timeline_chart.start_date.year %>
   <strong>End date:</strong>
-  <%= @timeline_chart.end_date %>
-</p>
+  <%= @timeline_chart.end_date.year %>
+</div>
 
+<%= render :partial => 'chart', :locals => {:all_events => @timeline_chart.events.all} %>
+<noscript>
+  This page uses Javascript to show you a Timeline. Please enable Javascript in your browser to see the full page. Thank you.
+</noscript>
+
+<% if current_user.id == @timeline_chart.user.id then %>
 <p>
-  <%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %> |
+<%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %>
 </p>
+<% end %>

@@ -26,7 +26,7 @@ class TimelineChartsController < ApplicationController
     @timeline_chart = TimelineChart.new(params[:timeline_chart])
 
     @timeline_chart.granularity = 'years' # RFU 'minutes', 'seconds', 'months', 'centurys', 'million_years' etc
-    @timeline_chart.user_id = current_user
+    @timeline_chart.user_id = current_user.id
 
     if @timeline_chart.save
       flash[:notice] = "Now add some events to your timeline."

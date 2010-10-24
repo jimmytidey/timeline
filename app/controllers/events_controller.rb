@@ -8,8 +8,6 @@ class EventsController < ApplicationController
     @event.start_date = Date.parse('1/1/' + params[:event]['start_date'])
     @event.end_date = Date.parse('1/1/' + params[:event]['end_date'])
 
-    debugger
-
     if @event.save
       flash[:notice] = "Successfully created event."
       redirect_to root_url

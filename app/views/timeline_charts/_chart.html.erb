@@ -1,0 +1,53 @@
+
+
+<div id="my-timeline" style="height: 150px; border: 1px solid #aaa"></div>
+
+<script>
+
+/*********** simile timeline functions **/
+
+var tl;
+$(document).ready(function() {
+   var eventSource = new Timeline.DefaultEventSource(); 
+   var bandInfos = [
+     Timeline.createBandInfo({
+         width:          "100%", 
+         intervalUnit:   Timeline.DateTime.DECADE, 
+         intervalPixels: 60,
+         eventSource: eventSource,
+     }),
+   ];
+   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+   eventSource.loadJSON(events, '');
+ }
+);
+
+var resizeTimerID = null;
+$(document).resize(function() {
+     if (resizeTimerID == null) {
+         resizeTimerID = window.setTimeout(function() {
+             resizeTimerID = null;
+             tl.layout();
+         }, 500);
+     }
+});
+
+var events = {
+  <% if all_events %>
+    'dateTimeFormat': 'iso8601',
+    'events': [
+    <% all_events.each_with_index do |event, i| %>
+      {
+        <% if event.start_date and event.end_date %>
+          'start': '<%= event.start_date.iso8601 %>',
+          'end'  : '<%= event.end_date.iso8601 %>',
+        <% end %>
+        'title': '<%= event.title %>',
+        'description': 'This is a sample event called <%= event.title %>'
+        }<% if i != all_events.length - 1 -%>, <% end -%>
+    <% end %>
+    ]
+  <% end %>       
+};
+
+</script>

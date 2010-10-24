@@ -1,3 +1,5 @@
+/*********** freebase functions ***/
+
 $(document).ready(function() {
     $("#event_title")
     .suggest({
@@ -21,9 +23,6 @@ function getMoreData(data) {
           var end_date = response.result[0]["/time/event/start_date"];
           setDates(start_date, end_date);
         }
-        else {
-            //What to do here? Maybe set flash?
-        }
   });
 }
 
@@ -33,3 +32,5 @@ function setDates(start_date, end_date) {
   $('#event_start_date').val(start_date);
   $('#event_end_date').val(end_date);
 }
+
+
