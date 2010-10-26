@@ -7,5 +7,5 @@
     <%= f.input :end_date, :as => :date, :default => Date.parse('1900/1/1'), :start_year => 0, 
                             :end_year => 2020,  :discard_month => true, :discard_day => true,
                             :order => [:month, :year] %>
-    <%= f.button :submit%>
+    <%= f.button :submit, 'Save' %>
 <% end %>

@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  attr_accessible :title, :start_date, :end_date, :timeline_chart_id 
+
   belongs_to :timeline_chart
   validates_presence_of :title
   validates_presence_of :start_date

@@ -1,5 +1,6 @@
 <% title "Edit Timeline Chart" %>
 
 <%= render 'form' %>
+<%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all} %>
 <%= render :partial => 'events/form' %>
 

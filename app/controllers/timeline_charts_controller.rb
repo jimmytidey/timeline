@@ -24,7 +24,6 @@ class TimelineChartsController < ApplicationController
   
   def create
     @timeline_chart = TimelineChart.new(params[:timeline_chart])
-
     @timeline_chart.granularity = 'years' # RFU 'minutes', 'seconds', 'months', 'centurys', 'million_years' etc
     @timeline_chart.user_id = current_user.id
 

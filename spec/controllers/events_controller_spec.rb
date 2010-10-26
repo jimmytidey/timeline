@@ -4,44 +4,34 @@ describe EventsController do
   fixtures :all
   render_views
 
-  it "new action should render new template" do
-    get :new
-    response.should render_template(:new)
+  before :each do
+    @timeline_chart = TimelineChart.make
   end
-  
+
   it "create action should render new template when model is invalid" do
-    Event.any_instance.stubs(:valid?).returns(false)
-    post :create
-    response.should render_template(:new)
+    Event.any_instance.stubs(:save).returns(false)
+    Event.any_instance.stubs(:timeline_chart).returns(1)
+    post :create, :event => {:title => 'Birth', :start_date => '2000', :end_date => '2001', :timeline_chart_id => 1}
+    response.should redirect_to edit_timeline_chart_url(1)
   end
 
   it "create action should redirect when model is valid" do
-    Event.any_instance.stubs(:valid?).returns(true)
-    post :create
-    response.should redirect_to(root_url)
+    Event.any_instance.stubs(:save).returns(false)
+    Event.any_instance.stubs(:timeline_chart).returns(1)
+    post :create, :event => {:title => 'Birth', :start_date => '2000', :end_date => '2001', :timeline_chart_id => 1}
+    response.should redirect_to edit_timeline_chart_url(1)
   end
   
   it "edit action should render edit template" do
-    get :edit, :id => Event.first
+    Event.stubs(:find).with(1).returns(Event.make)
+    get :edit, :id => 1 #Event.make.id
     response.should render_template(:edit)
-  end
-  
-  it "update action should render edit template when model is invalid" do
-    Event.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => Event.first
-    response.should render_template(:edit)
-  end
-
-  it "update action should redirect when model is valid" do
-    Event.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => Event.first
-    response.should redirect_to(root_url)
   end
   
   it "destroy action should destroy model and redirect to index action" do
-    event = Event.first
-    delete :destroy, :id => event
-    response.should redirect_to(root_url)
-    Event.exists?(event.id).should be_false
+    event = Event.make
+    event.id = 1
+    delete :destroy, :id => event.id
+    response.should redirect_to edit_timeline_chart_url(1)
   end
 end

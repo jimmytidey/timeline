@@ -77,3 +77,47 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+.timeline_chart label {  
+  float: left;  
+  text-align: right;  
+  margin: 2px 10px;  
+}  
+  
+.timeline_chart div.input {  
+  float: left;  
+}  
+
+.timeline_chart input.string {  
+  width:140px;
+}  
+
+.timeline_chart input[type='submit'] {  
+  margin-left: 20px;  
+}  
+
+.event label {  
+  width: 100px;  
+  text-align: right;  
+  margin: 2px 10px;  
+}
+
+#event_title {  
+  width:140px;
+}  
+
+.event input.string {  
+  width:40px;
+}  
+.event div.input {  
+  margin-bottom: 10px;  
+}  
+  
+.event input[type='submit'] {  
+  margin-left: 120px;  
+}  
+  
+.event div.boolean label {  
+  float: none;  
+  margin: 0;  
+}  
