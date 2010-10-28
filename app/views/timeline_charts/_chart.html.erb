@@ -1,6 +1,6 @@
 
 
-<div id='new_duration' style='width:200px; border:1px solid black;z-index:4000'>Duration </div> 
+<div id='new_duration' style='width:200px; border:1px solid black;z-index:4000' data-message='<%= @timeline_chart.id %>'>Duration </div> 
 
 
 
@@ -25,7 +25,7 @@ $('#new_duration').draggable(
 });		
 	
 	
-function addDuration(element_id, title, content) 
+function addDuration(element_id, title, content, chart) 
 {	
 		
 	//get where the duration has been dropped in pixels 
@@ -38,8 +38,11 @@ function addDuration(element_id, title, content)
 	layer 	= parseInt(layer)/18;
 	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 
+	//get timelinechart number
+	chart 	= $("#"+element_id).attr('data-message');
 	
-	alert (" layer="+layer+"  begin"+begin+"  end="+end);   
+  //alert (" layer="+layer+"  begin"+begin+"  end="+end);
+  submit_event_to_server(begin, end, chart);
 };
 
 

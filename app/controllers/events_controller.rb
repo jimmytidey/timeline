@@ -3,15 +3,23 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(params[:event])
     @timeline_chart = @event.timeline_chart
-    @event.start_date = Date.parse('1/1/' + params[:event]['start_date'])
-    @event.end_date = Date.parse('1/1/' + params[:event]['end_date'])
+    
+    begin
+      @event.start_date = Date.parse(params[:event]['start_date'])
+      @event.end_date = Date.parse(params[:event]['end_date'])
+    rescue
+      @event.start_date = Date.parse('1/1/' + params[:event]['start_date'])
+      @event.end_date = Date.parse('1/1/' + params[:event]['end_date'])
+    end
+
     if @event.save
-      flash[:notice] = "Successfully created event."
-      redirect_to edit_timeline_chart_url(@event.timeline_chart)
-    else
-      flash[:error] = "The event did not save due to a problem."
-      render 'timeline_charts/edit'
+      #flash[:notice] = "Successfully created event."
       #redirect_to edit_timeline_chart_url(@event.timeline_chart)
+      render 'add_event_ajax_success'
+    else
+      #flash[:error] = "The event did not save due to a problem."
+      #redirect_to edit_timeline_chart_url(@event.timeline_chart)
+      render 'add_event_ajax_failed'
     end
   end
   

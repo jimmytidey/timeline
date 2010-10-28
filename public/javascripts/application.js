@@ -38,3 +38,7 @@ function setDates(start_date, end_date) {
   $('#event_start_date').val(start_date);
   $('#event_end_date').val(end_date);
 }
+
+function submit_event_to_server(begin, end, chart) {
+  $.post("/events", { 'event': {'title':'Added via Drag & Drop', 'start_date': begin.toString(), 'end_date': end.toString(), 'timeline_chart_id' : chart}} );
+}

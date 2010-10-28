@@ -5,7 +5,7 @@
   <strong>Created by:</strong> <%= @timeline_chart.user %>
 </div>
 
-<%= render :partial => 'chart', :locals => {:all_events => @timeline_chart.events.all} %>
+<%= render :partial => 'old_chart', :locals => {:all_events => @timeline_chart.events.all} %>
 <noscript>
   This page uses Javascript to show you a Timeline. Please enable Javascript in your browser to see the full page. Thank you.
 </noscript>
