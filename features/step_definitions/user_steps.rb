@@ -14,15 +14,15 @@ end
 
 Then /^I should see the button "([^"]*)"$/ do | label |
   txt = label
-  find_button(txt).node.values.include? txt
+  find_button(txt).native.attributes['value'].value
+end
+
+Given /^I don't know the admin password$/ do
+  #Capybara.app_host = "http://admin:whatever@cap:9887"
 end
 
 Given /^I know the admin password$/ do
   Capybara.app_host = "http://admin:#{HTTP_BASIC_PASSWORD}@cap:9887"
-end
-
-Given /^I don't know the admin password$/ do
-  Capybara.app_host = "http://admin:whatever@cap:9887"
 end
 
 Then /^debug$/ do

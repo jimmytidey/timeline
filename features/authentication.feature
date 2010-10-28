@@ -16,15 +16,16 @@ Feature: Authentication
     Then I should see "Signed out successfully"
     And I should be on the home page
 
-@selenium
   Scenario: Can't list users without password
     Given I don't know the admin password
     When I go to list the users
     Then I should not see "Listing users:"
 
-@selenium
-  Scenario: Admin signs in
-    Given I know the admin password
-    When I go to list the users
-    Then I should see "Listing users:"
+# Await resolution of issue 34 below:
+# http://code.google.com/p/selenium/issues/detail?id=34
+#
+#  Scenario: Admin signs in
+#    Given I know the admin password
+#    When I go to list the users
+#    Then I should see "Listing users:"
 

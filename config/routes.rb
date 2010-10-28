@@ -1,4 +1,6 @@
 Timeline::Application.routes.draw do
+  get "users/cuke" if Rails.env.test?
+
   resources :users
   resources :timeline_charts
   resources :events
@@ -6,7 +8,6 @@ Timeline::Application.routes.draw do
   get "home/index"
   get "home/new"
 
-  get "users/cuke" if Rails.env.test?
 
   root :to => "home#index"
 

@@ -10,7 +10,8 @@ class EventsController < ApplicationController
       redirect_to edit_timeline_chart_url(@event.timeline_chart)
     else
       flash[:error] = "The event did not save due to a problem."
-      redirect_to edit_timeline_chart_url(@event.timeline_chart)
+      render 'timeline_charts/edit'
+      #redirect_to edit_timeline_chart_url(@event.timeline_chart)
     end
   end
   

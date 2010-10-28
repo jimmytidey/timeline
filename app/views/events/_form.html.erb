@@ -1,6 +1,6 @@
 <%= simple_form_for @event do |f| %>
   <%= f.error_messages %>
-  <%= f.input :title %>
+  <%= f.input :title, :label => 'Event' %>
   
   <div class="input string required">
     <label class="string required" for="event_start_date">

@@ -24,12 +24,12 @@ class TimelineChartsController < ApplicationController
   
   def create
     @timeline_chart = TimelineChart.new(params[:timeline_chart])
-    @timeline_chart.granularity = 'years' # RFU 'minutes', 'seconds', 'months', 'centurys', 'million_years' etc
+    @timeline_chart.granularity = 'years' # RFU 'months', 'centurys', 'years' etc
     @timeline_chart.user_id = current_user.id
 
     if @timeline_chart.save
       flash[:notice] = "Now add some events to your timeline."
-      redirect_to @timeline_chart
+      redirect_to edit_timeline_chart_url(@timeline_chart)
     else
       render :action => 'new'
     end

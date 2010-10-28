@@ -4,11 +4,11 @@
     <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
     <%= stylesheet_link_tag "application" %>
     <% if Rails.env.production? then %>
-      <%= javascript_include_tag 'jquery/jquery-ui.min' %>
       <%= javascript_include_tag 'jquery/jquery.min' %>
+      <%= javascript_include_tag 'jquery/jquery-ui.min' %>
     <% else %>
-      <%= javascript_include_tag 'jquery/jquery-ui' %>
       <%= javascript_include_tag 'jquery/jquery' %>
+      <%= javascript_include_tag 'jquery/jquery-ui' %>
     <% end %>
     <%= javascript_include_tag 'rails' %>
     <%= javascript_include_tag 'application' %>

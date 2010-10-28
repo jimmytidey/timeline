@@ -1,26 +1,66 @@
 
 
-<div id="my-timeline" style="height: 150px; border: 1px solid #aaa"></div>
+<div id='new_duration' style='width:200px; border:1px solid black;z-index:4000'>Duration </div> 
+
+
+
+
+<div id="my-timeline" style="height: 150px; border: 1px solid #aaa;"></div>
 
 <script>
+
+$(document).ready(function()
+{	
+	
+//Make the new duration draggable 
+$('#new_duration').draggable(
+{	
+	stop: function(event, ui) 
+	{
+		addDuration('new_duration', 'click to give me a name','');
+	},
+	
+	containment: '#my-timeline',		
+	grid: [1,18]		
+});		
+	
+	
+function addDuration(element_id, title, content) 
+{	
+		
+	//get where the duration has been dropped in pixels 
+	left 	= $("#"+element_id).css('left');
+	width 	= $("#"+element_id).css('width');
+	layer	= $("#"+element_id).css('top'); 	
+	
+	//convert to a date
+	begin 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left));
+	layer 	= parseInt(layer)/18;
+	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
+
+	
+	alert (" layer="+layer+"  begin"+begin+"  end="+end);   
+};
+
+
 
 /*********** simile timeline functions **/
 
 var tl;
-$(document).ready(function() {
-   var eventSource = new Timeline.DefaultEventSource(); 
-   var bandInfos = [
-     Timeline.createBandInfo({
-         width:          "100%", 
-         intervalUnit:   Timeline.DateTime.DECADE, 
-         intervalPixels: 60,
-         eventSource: eventSource,
-     }),
-   ];
-   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
-   eventSource.loadJSON(events, '');
- }
-);
+
+var eventSource = new Timeline.DefaultEventSource(); 
+
+var bandInfos = [
+ Timeline.createBandInfo({
+	 width:          "100%", 
+	 intervalUnit:   Timeline.DateTime.DECADE, 
+	 intervalPixels: 100,
+	 eventSource: eventSource,
+ }),
+];
+tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+eventSource.loadJSON(events, '');
+
 
 var resizeTimerID = null;
 $(document).resize(function() {
@@ -49,5 +89,14 @@ var events = {
     ]
   <% end %>       
 };
+
+
+
+
+});
+
+
+
+
 
 </script>
