@@ -3,10 +3,13 @@ Feature: Create Timelines
   As a authenticated user
   I want to be able to cerate and edit timelines
 
+	@javascript
   Scenario: A user can create a new timeline and add an event
     Given I am an authenticated user
     And I go to create a new timeline
-    And I fill in "Title" with "The last 50 years in computing"
+    Then I should see "Edit Timeline Chart"
+    And I "timeline_chart_title" should by filled out with "Untitled"
+    When I fill in "Title" with "The last 50 years in computing"
     And I select "1960" from "timeline_chart_start_date_1i"
     And I select "2010" from "timeline_chart_end_date_1i"
 		And I press "Save"

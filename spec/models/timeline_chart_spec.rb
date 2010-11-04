@@ -8,4 +8,10 @@ describe TimelineChart do
       @timeline_chart.should_not be_valid
     end
   end
+
+  it "should validate start date is not after the end date" do
+    @timeline_chart = TimelineChart.make(:start_date => Time.now, :end_date => Time.now - 1.year)
+    @timeline_chart.save
+    @timeline_chart.should_not be_valid
+  end
 end

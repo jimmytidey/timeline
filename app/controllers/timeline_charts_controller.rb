@@ -1,4 +1,6 @@
 class TimelineChartsController < ApplicationController
+  before_filter :verify_owner, :only => ['edit', 'update', 'destroy']
+  
   def show
     @timeline_chart = TimelineChart.find(params[:id])
   end
@@ -11,15 +13,17 @@ class TimelineChartsController < ApplicationController
   def update
     @timeline_chart = TimelineChart.find(params[:id])
     if @timeline_chart.update_attributes(params[:timeline_chart])
-      flash[:notice] = "Successfully updated timeline chart."
-      redirect_to @timeline_chart
+      render 'edit_succeeded'
     else
-      render :action => 'edit'
+      render 'edit_failed'
     end
   end
   
   def new
-      @timeline_chart = TimelineChart.new
+    params[:timeline_chart] = { :title => 'Untitled',  
+      "start_date(1i)"=>"1800", "start_date(2i)"=>"1", "start_date(3i)"=>"1", 
+      "end_date(1i)"=>"1900", "end_date(2i)"=>"1", "end_date(3i)"=>"1" }
+    create
   end
   
   def create
@@ -35,4 +39,16 @@ class TimelineChartsController < ApplicationController
     end
   end
 
+  def destroy
+    @timeline_chart = TimelineChart.find(params[:id])
+    @timeline_chart.destroy
+    render 'destroy_succeeded'
+  end
+
+  def verify_owner
+    @timeline_chart = TimelineChart.find(params[:id])
+    unless current_user.nil? || @timeline_chart.user_id == current_user.id
+      render 'destroy_failed'
+    end
+  end
 end

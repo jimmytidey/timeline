@@ -1,0 +1,13 @@
+<% flash_message = "The event saved, but events are only visible if you go to #{timeline_chart_url(@timeline_chart)}" %>
+  /*Hide any flash notice divs*/
+  $(".flash_notice").hide(300);
+  $(".flash_error").hide(300);
+  $(".error_messages").hide(300);
+
+  /*Update the html of the div flash_notice with the new one*/
+  $("#ajax_flash_notice").html("<%= escape_javascript(flash_message)%>");
+
+  /*Show the div post_errors*/
+  $("#ajax_flash_notice").show(300);
+
+<%# chart = render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all} %>

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UsersController do
 
   before :each do
-    RPXNow.expects(:user_data).with("123456").returns({:email => 'rpxuser@email.com',:identifier => 'test',:username => 'rpxusername'})
+    RPXNow.stubs(:user_data).with("123456").returns({:email => 'rpxuser@email.com',:identifier => 'test',:username => 'rpxusername'})
     @credentials = ActionController::HttpAuthentication::Basic.encode_credentials('admin', 'SeaMonster1000bc')
     @request.env['HTTP_AUTHORIZATION'] = @credentials
   end

@@ -12,7 +12,7 @@ class UsersController
   def cuke
     raise 'Testing only' unless Rails.env.test? # better safe than sorry
 
-    RPXNow.expects(:user_data).with('123456').returns({:email => "rpxuser@email.com",:identifier => "test",:username => "rpxusername"})
+    RPXNow.stubs(:user_data).with('123456').returns({:email => "rpxuser@email.com",:identifier => "test",:username => "rpxusername"})
     params[:token] = '123456'
     self.create
   end

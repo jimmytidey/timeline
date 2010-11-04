@@ -39,6 +39,41 @@ function setDates(start_date, end_date) {
   $('#event_end_date').val(end_date);
 }
 
+/*********** AJAX functions ***
+ *
+ * These functions deal with http 
+ * submissions to the rails app.
+ *
+ **********************************/
+
+/* Extend jQuery with functions for PUT and DELETE requests. */
+function _ajax_request(url, data, callback, type, method) {
+    if (jQuery.isFunction(data)) {
+        callback = data;
+        data = {};
+    }
+    return jQuery.ajax({
+        type: method,
+        url: url,
+        data: data,
+        success: callback,
+        dataType: type
+        });
+}
+
+jQuery.extend({
+    put: function(url, data, callback, type) {
+        return _ajax_request(url, data, callback, type, 'PUT');
+    },
+    delete_: function(url, data, callback, type) {
+        return _ajax_request(url, data, callback, type, 'DELETE');
+    }
+});
+
 function submit_event_to_server(begin, end, chart) {
   $.post("/events", { 'event': {'title':'Added via Drag & Drop', 'start_date': begin.toString(), 'end_date': end.toString(), 'timeline_chart_id' : chart}} );
+}
+
+function deleteTimeline(id) {
+  $.delete_("/timeline_charts/" + id);
 }

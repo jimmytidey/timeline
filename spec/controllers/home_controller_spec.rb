@@ -4,6 +4,7 @@ describe HomeController do
 
   describe "GET 'index'" do
     it "should be successful" do
+      HomeController.any_instance.stubs(:current_user).returns(User.make)
       get 'index'
       response.should be_success
     end

@@ -13,13 +13,9 @@ class EventsController < ApplicationController
     end
 
     if @event.save
-      #flash[:notice] = "Successfully created event."
-      #redirect_to edit_timeline_chart_url(@event.timeline_chart)
-      render 'add_event_ajax_success'
+      render 'create_succeeded'
     else
-      #flash[:error] = "The event did not save due to a problem."
-      #redirect_to edit_timeline_chart_url(@event.timeline_chart)
-      render 'add_event_ajax_failed'
+      render 'create_failed'
     end
   end
   
@@ -28,7 +24,7 @@ class EventsController < ApplicationController
     @timeline_chart = @event.timeline_chart
   end
   
- # Pending Jimmies descision
+ # Pending modified simile Timeline
  # def update
  #   @event = Event.find(params[:id])
  #   @timeline_chart = @event.timeline_chart
