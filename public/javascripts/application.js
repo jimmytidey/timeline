@@ -104,7 +104,7 @@ function initialiseTimeline() {
   initialiseDragAndDrop();
 }
 
-//Make the new duration draggable 
+//Make the new duration draggable, called by initialiseTimeline()
 function initialiseDragAndDrop() {	
   $('#new_duration').draggable(
   {	

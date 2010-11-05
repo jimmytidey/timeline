@@ -48,7 +48,10 @@ class TimelineChartsController < ApplicationController
   def verify_owner
     @timeline_chart = TimelineChart.find(params[:id])
     if current_user.nil? || @timeline_chart.user_id != current_user.id
-      render 'modify_failed'
+      respond_to do |format|
+        format.js { render 'modify_failed' }
+        format.html { render :file => 'public/401.html', :status => 401 }
+      end
     end
   end
 end
