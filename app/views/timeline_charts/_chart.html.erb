@@ -1,80 +1,8 @@
-
-
 <div id='new_duration' style='width:200px; border:1px solid black;z-index:4000' data-message='<%= @timeline_chart.id %>'>Duration </div> 
-
-
-
-
 <div id="my-timeline" style="height: 150px; border: 1px solid #aaa;"></div>
 
 <script>
-
-$(document).ready(function()
-{	
-	
-//Make the new duration draggable 
-$('#new_duration').draggable(
-{	
-	stop: function(event, ui) 
-	{
-		addDuration('new_duration', 'click to give me a name','');
-	},
-	
-	containment: '#my-timeline',		
-	grid: [1,18]		
-});		
-	
-	
-function addDuration(element_id, title, content, chart) 
-{	
-		
-	//get where the duration has been dropped in pixels 
-	left 	= $("#"+element_id).css('left');
-	width 	= $("#"+element_id).css('width');
-	layer	= $("#"+element_id).css('top'); 	
-	
-	//convert to a date
-	begin 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left));
-	layer 	= parseInt(layer)/18;
-	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
-
-	//get timelinechart number
-	chart 	= $("#"+element_id).attr('data-message');
-	
-  //alert (" layer="+layer+"  begin"+begin+"  end="+end);
-  submit_event_to_server(begin, end, chart);
-};
-
-
-
 /*********** simile timeline functions **/
-
-var tl;
-
-var eventSource = new Timeline.DefaultEventSource(); 
-
-var bandInfos = [
- Timeline.createBandInfo({
-	 width:          "100%", 
-	 intervalUnit:   Timeline.DateTime.DECADE, 
-	 intervalPixels: 100,
-	 eventSource: eventSource,
- }),
-];
-tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
-eventSource.loadJSON(events, '');
-
-
-var resizeTimerID = null;
-$(document).resize(function() {
-     if (resizeTimerID == null) {
-         resizeTimerID = window.setTimeout(function() {
-             resizeTimerID = null;
-             tl.layout();
-         }, 500);
-     }
-});
-
 var events = {
   <% if all_events %>
     'dateTimeFormat': 'iso8601',
@@ -93,13 +21,7 @@ var events = {
   <% end %>       
 };
 
-
-
-
-});
-
-
-
-
-
+$(document).ready(
+  initialiseTimeline()
+);
 </script>

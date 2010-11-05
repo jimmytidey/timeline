@@ -77,3 +77,68 @@ function submit_event_to_server(begin, end, chart) {
 function deleteTimeline(id) {
   $.delete_("/timeline_charts/" + id);
 }
+
+/*********** SIMILE functions ***
+ *
+ * These functions deal with the 
+ * timeline.
+ *
+ **********************************/
+
+var tl;
+var eventSource = new Timeline.DefaultEventSource(); 
+var resizeTimerID = null;
+var bandInfos = [];
+
+function initialiseTimeline() {	
+  bandInfos = [
+  Timeline.createBandInfo({
+	  width:          "100%", 
+	  intervalUnit:   Timeline.DateTime.DECADE, 
+	  intervalPixels: 100,
+	  eventSource: eventSource,
+  }),
+  ];
+  tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+  eventSource.loadJSON(events, '');
+  initialiseDragAndDrop();
+}
+
+//Make the new duration draggable 
+function initialiseDragAndDrop() {	
+  $('#new_duration').draggable(
+  {	
+  	stop: function(event, ui) 
+  	{
+  		addDuration('new_duration', 'click to give me a name','');
+  	},
+  	
+  	containment: '#my-timeline',		
+  	grid: [1,18]		
+  });		
+}
+
+$(document).resize(function() {
+     if (resizeTimerID == null) {
+         resizeTimerID = window.setTimeout(function() {
+             resizeTimerID = null;
+             tl.layout();
+         }, 500);
+     }
+});
+
+function addDuration(element_id, title, content, chart) 
+{	
+	//get where the duration has been dropped in pixels 
+	left 	= $("#"+element_id).css('left');
+	width 	= $("#"+element_id).css('width');
+	layer	= $("#"+element_id).css('top'); 	
+	//convert to a date
+	begin 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left));
+	layer 	= parseInt(layer)/18;
+	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
+	//get timelinechart number
+	chart 	= $("#"+element_id).attr('data-message');
+  //alert (" layer="+layer+"  begin"+begin+"  end="+end);
+  submit_event_to_server(begin, end, chart);
+};

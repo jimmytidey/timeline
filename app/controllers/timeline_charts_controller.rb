@@ -47,8 +47,8 @@ class TimelineChartsController < ApplicationController
 
   def verify_owner
     @timeline_chart = TimelineChart.find(params[:id])
-    unless current_user.nil? || @timeline_chart.user_id == current_user.id
-      render 'destroy_failed'
+    if current_user.nil? || @timeline_chart.user_id != current_user.id
+      render 'modify_failed'
     end
   end
 end
