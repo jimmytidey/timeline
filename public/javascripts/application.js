@@ -112,7 +112,6 @@ function initialiseDragAndDrop() {
   	{
   		addDuration('new_duration', 'click to give me a name','');
   	},
-  	
   	containment: '#my-timeline',		
   	grid: [1,18]		
   });		

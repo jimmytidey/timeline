@@ -18,9 +18,9 @@ require 'capybara/session'
 require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 require 'capybara/envjs'
 
-#Capybara.javascript_driver = :culerity
-#Capybara.javascript_driver = :selenium # Full integration test
-Capybara.javascript_driver = :envjs # github.com/smparkes/capybara-envjs
+#Capybara.javascript_driver = :culerity # Call this directly via @culerity to get hooks.rb to load
+Capybara.javascript_driver = :selenium # Full integration test
+#Capybara.javascript_driver = :envjs # github.com/smparkes/capybara-envjs
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd

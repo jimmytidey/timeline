@@ -30,10 +30,10 @@ describe TimelineChartsController do
     response.should render_template 'edit'
   end
 
-  it "Owner can not edit a timeline chart that they have created" do
+  it "Owner can not edit a timeline chart that they have not created" do
     TimelineChart.stubs(:find).with(1).returns(TimelineChart.make)
     TimelineChartsController.any_instance.stubs(:current_user).returns(User.make(:id => 999))
     get :edit, { :id => 1 }
-    response.should render_template 'modify_failed'
+    response.should render_template '401'
   end
 end

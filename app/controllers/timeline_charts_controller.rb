@@ -35,7 +35,8 @@ class TimelineChartsController < ApplicationController
       flash[:notice] = "Now add some events to your timeline."
       redirect_to edit_timeline_chart_url(@timeline_chart)
     else
-      render :action => 'new'
+      flash[:error] = "Could not create timeline chart."
+      redirect_to '/'
     end
   end
 

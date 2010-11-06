@@ -18,7 +18,7 @@ Before("@culerity,@celerity") do |scenario|
   ENV['PATH'] = ENV['PATH'] + ":"
 end
 
-After("@culerity,@celerity,@javascript") do |scenario|
+After("@culerity,@celerity") do |scenario|
   @env_defaults.each do |k, v|
     ENV[k] = v
   end
