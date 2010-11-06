@@ -26,14 +26,16 @@
     <%= yield(:head) %>
   </head>
   <body>
+ 
     <div id="container">
-      <div id="user_nav">
-          <% if current_user %>
-            <%= button_to 'Log out', current_user, :method=>:delete %>
-          <% else %>
-            <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",'timeline', users_url)).html_safe %>
-          <% end %>
-      </div>
+	  <div id="user_nav">
+		<% if current_user %>
+		  <%= button_to 'Log out', current_user, :method=>:delete %>
+		<% else %>
+		  <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",'timeline', users_url)).html_safe %>
+		<% end %>
+	  </div>  
+ 
       <div id="flash_error" style="display:none"></div>
       <div id="flash_notice" style="display:none"></div>
       <% flash.each do |name, msg| %>
