@@ -1,15 +1,7 @@
-<% flash[:error] = "You are not logged in as the owner of the timeline you are trying to modify." %>
-  /*Hide any flash notice divs*/
-  $(".flash_notice").hide(300);
-  $(".flash_error").hide(300);
-  $(".error_messages").hide(300);
+<%= render :file => 'global/hide_flash_and_errors' %>
 
-  /*Update the html of the div flash_notice with the new one*/
-  $(".flash_error").html("<%= escape_javascript(flash[:error])%>");
-
-  /*Update the html of the div post_errors with the new one*/
-  $("#event_errors").html("<%= escape_javascript(error_messages_for(@event))%>");
-
-  /*Show the div post_errors*/
-  $("#event_errors").show(300);
-  $("#flash_error").show(300);
+<% flash_message = "There was a problem saving your changes." %>
+$(".flash_error").html("<%= escape_javascript(flash_message)%>");
+$("#timeline_chart_errors").html("<%= escape_javascript(error_messages_for(@timeline_chart))%>");
+$("#timeline_chart_errors").show(300);
+$("#ajax_flash_error").show(300);

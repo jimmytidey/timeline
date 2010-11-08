@@ -89,19 +89,38 @@ var tl;
 var eventSource = new Timeline.DefaultEventSource(); 
 var resizeTimerID = null;
 var bandInfos = [];
+var stTheme = Timeline.ClassicTheme.create();
 
 function initialiseTimeline() {	
   bandInfos = [
-  Timeline.createBandInfo({
-	  width:          "100%", 
-	  intervalUnit:   Timeline.DateTime.DECADE, 
-	  intervalPixels: 100,
-	  eventSource: eventSource,
-  }),
+    Timeline.createBandInfo({
+  	  width:          "80%", 
+  	  intervalUnit:   Timeline.DateTime.DECADE, 
+  	  intervalPixels: 100,
+  	  eventSource: eventSource,
+      theme: stTheme
+    }),
+    Timeline.createBandInfo({
+      width: "20%",
+      intervalUnit: Timeline.DateTime.CENTURY,
+      intervalPixels: 100,
+      eventSource: eventSource,
+      theme: stTheme, 
+      layout: 'overview' // original, overview, detailed
+    })
   ];
+  bandInfos[1].syncWith = 0;
+  bandInfos[1].highlight = true;
+  initialiseTheme();
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
   initialiseDragAndDrop();
+}
+
+//Stop timeline scrolling for ever
+function initialiseTheme() {
+    stTheme.timeline_start = new Date(tc_start_date);
+    stTheme.timeline_stop  = new Date(tc_end_date)
 }
 
 //Make the new duration draggable, called by initialiseTimeline()
@@ -137,7 +156,6 @@ function addDuration(element_id, title, content, chart)
 	layer 	= parseInt(layer)/18;
 	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	//get timelinechart number
-	chart 	= $("#"+element_id).attr('data-message');
-  //alert (" layer="+layer+"  begin"+begin+"  end="+end);
+	chart 	= $("#"+element_id).attr('data-id');
   submit_event_to_server(begin, end, chart);
 };

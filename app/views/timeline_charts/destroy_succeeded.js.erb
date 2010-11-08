@@ -1,1 +1,7 @@
+<%= render :file => 'global/hide_flash_and_errors' %>
+
+<% flash_message = "Deleted timeline" %>
+$("#ajax_flash_notice").html("<%= escape_javascript(flash_message)%>");
+$("#ajax_flash_notice").show(300);
+
 $("#chart_summary_<%= @timeline_chart.id %>").hide(500).remove;

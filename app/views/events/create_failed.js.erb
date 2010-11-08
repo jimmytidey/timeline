@@ -1,15 +1,7 @@
+<%= render :file => 'global/hide_flash_and_errors' %>
+
 <% flash_message = "The event did not save due to a problem." %>
-  /*Hide any flash notice divs*/
-  $(".flash_notice").hide(300);
-  $(".flash_error").hide(300);
-  $(".error_messages").hide(300);
-
-  /*Update the html of the div flash_notice with the new one*/
-  $("#ajax_flash_error").html("<%= escape_javascript(flash_message)%>");
-
-  /*Update the html of the div post_errors with the new one*/
-  $("#event_errors").html("<%= escape_javascript(error_messages_for(@event))%>");
-
-  /*Show the div post_errors*/
-  $("#event_errors").show(300);
-  $("#ajax_flash_error").show(300);
+$("#ajax_flash_error").html("<%= escape_javascript(flash_message)%>");
+$("#event_errors").html("<%= escape_javascript(error_messages_for(@event))%>");
+$("#ajax_flash_error").show(300);
+$("#event_errors").show(300);

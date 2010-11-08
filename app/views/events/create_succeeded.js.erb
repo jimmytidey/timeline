@@ -1,16 +1,7 @@
+<%= render :file => 'global/hide_flash_and_errors' %>
+
 <% flash_message = "Added an event." %>
-/*Hide any flash notice divs*/
-$(".flash_notice").hide(300);
-$(".flash_error").hide(300);
-$(".error_messages").hide(300);
-
-/*Update the html of the div flash_notice with the new one*/
 $("#ajax_flash_notice").html("<%= escape_javascript(flash_message)%>");
-
-/*Show the div post_errors*/
 $("#ajax_flash_notice").show(300);
 
-/* clear events from memory */
-eventSource.clear();
-<% events = render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all} %>
-$("#inline_script").html('<%= escape_javascript events %>');
+<%= render :file => 'global/re-render_chart' %>
