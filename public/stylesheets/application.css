@@ -1,16 +1,62 @@
-body {
+/* YUI stylesheet reset */ 
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+	margin:0;
+	padding:0;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img { 
+	border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+	font-style:normal;
+	font-weight:normal;
+}
+ol,ul {
+	list-style:none;
+}
+
+/* Global CSS */ 
+
+body, html  {
   background-color: #9CB4CA;
   font-family: Verdana, Helvetica, Arial;
   font-size: 14px;
   color: #333333;
-}
 
-a img {
-  border: none;
 }
 
 a {
   color: #0000FF;
+}
+
+/* Index Page */ 
+
+#top_timelines { 
+	position:absolute; 
+	left:20px;
+	top:100px;
+}
+
+#top_timelines { 
+	position:absolute; 
+	left:20px;
+	top:100px;
+}
+
+#user_timelines {
+	position:absolute; 
+	left:500px;
+	top:100px;
+}
+
+#add_timeline {
+	position:absolute; 
+	left:500px;
+	top:150px;
 }
 
 .clear {
@@ -20,18 +66,90 @@ a {
 }
 
 #container {
-  /* TODO: Remove this provisional CSS3 stuff as IE can't do it yet */
-  -moz-border-radius:8px 8px 8px 8px;
-  -moz-box-shadow:0 2px 4px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius:8px 8px 8px 8px;
-  -webkit-box-shadow:0 2px 4px rgba(0, 0, 0, 0.5);
-  background:none repeat scroll 0 0 #FFFFFF;
-  margin:50px auto 0;
-  padding:30px 40px;
-  width:80%;
+  left:5%;
+  margin:0 auto;
+  position:absolute;
+  width:90%;
+  background-color:white;
+  bottom:0px;
+  top:0px;
 }
 
-.flash_notice, .flash_error, .flash_alert {
+#user_nav {
+	position:absolute;
+	right:20px;
+	top:30px;
+	width:200px;
+}
+
+#user_nav input {
+	float:right;
+	background-color:white; 
+	border:1px solid black;
+}
+
+/*  EDIT PAGE */ 
+
+#my-timeline {
+    position: absolute; 
+    top:160px;
+    left:20px;
+    right:20px;    
+}
+
+
+/* for titles */
+h1 {
+	position:absolute; 
+	top:20px; 
+	left:20px;
+}
+
+/* controls */
+
+#edit_timeline_chart_1 {
+   background-color:#EEEEEE;
+   left:20px;
+   position:absolute;
+   top:73px;
+   width:570px;
+}
+
+#new_event {
+   background-color:#EEEEEE;   
+   position:absolute;
+   right:20px;
+   top:75px;
+   width:530px;
+}
+
+#new_duration {
+   margin-left:20px;
+   margin-top:118px;
+}	
+
+label {  
+	margin:2px 2px 2px 0; 
+}  
+
+.timeline_chart input, .timeline_chart select {  
+  margin-right:10px;
+}  
+
+.required {
+	display:inline;
+}
+
+/* Hack to remove abbr */ 
+
+abbr {
+	display:none; 
+}	
+
+
+ /* Stuff that rails has done... */ 
+
+#flash_notice, #flash_error, #flash_alert {
   padding: 5px 8px;
   margin: 10px 0;
 }
@@ -77,12 +195,6 @@ a {
 .error_messages ul {
   margin: 0;
 }
-
-.timeline_chart label {  
-  float: left;  
-  text-align: right;  
-  margin: 2px 10px;  
-}  
   
 .timeline_chart div.input {  
   float: left;  
@@ -91,16 +203,6 @@ a {
 .timeline_chart input.string {  
   width:140px;
 }  
-
-.timeline_chart input[type='submit'] {  
-  margin-left: 20px;  
-}  
-
-.event label {  
-  width: 100px;  
-  text-align: right;  
-  margin: 2px 10px;  
-}
 
 #event_title {  
   width:140px;
@@ -112,11 +214,7 @@ a {
 .event div.input {  
   margin-bottom: 10px;  
 }  
-  
-.event input[type='submit'] {  
-  margin-left: 120px;  
-}  
-  
+
 .event div.boolean label {  
   float: none;  
   margin: 0;  
