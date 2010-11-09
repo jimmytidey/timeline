@@ -11,12 +11,13 @@ class Event < ActiveRecord::Base
   validates_presence_of :timeline_chart_id
 
   def check_dates
-    if start_date.respond_to? '>' then
-      begin
-        errors[:base] << "The start date can not be before the end date." if start_date > end_date
-      rescue ArgumentError
-        #End date is probably nil, let validations catch this.
+    begin
+      errors[:base] << "The start date can not be before the end date." if start_date > end_date
+      if start_date.year == 0 || end_date.year == 0 then
+        errors[:base] << "0 is an invalid year. See http://en.wikipedia.org/wiki/0_(year) for the explanation."
       end
+    rescue ArgumentError, NoMethodError
+      #End date is probably not set, let validations catch this.
     end
   end
 end

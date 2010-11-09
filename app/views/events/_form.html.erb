@@ -1,6 +1,5 @@
 <div id="new_event_form">
 <%= simple_form_for @event, :remote => true do |f| %>
-  <div id= "event_errors" style="display:none"></div>
   <%= f.error_messages %>
   <%= f.input :title, :label => 'Event' %>
   

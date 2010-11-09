@@ -1,5 +1,4 @@
 <%= simple_form_for @timeline_chart, :remote => true do |f| %>
-  <div id= "timeline_chart_errors" style="display:none"></div>
   <%= f.error_messages %>
     <%= f.input :title %>
     <%= f.input :start_date, :as => :date, :default => Date.parse('1800/1/1'), :start_year => 0, 
