@@ -12,6 +12,8 @@ class TimelineChartsController < ApplicationController
   
   def update
     @timeline_chart = TimelineChart.find(params[:id])
+      @timeline_chart.start_date = Date.parse('1/1/' + params[:timeline_chart]['start_year'])
+      @timeline_chart.end_date = Date.parse('1/1/' + params[:timeline_chart]['end_year'])
     if @timeline_chart.update_attributes(params[:timeline_chart])
       render 'edit_succeeded'
     else
@@ -21,14 +23,14 @@ class TimelineChartsController < ApplicationController
   
   def new
     params[:timeline_chart] = { :title => 'Untitled',  
-      "start_date(1i)"=>"1800", "start_date(2i)"=>"1", "start_date(3i)"=>"1", 
-      "end_date(1i)"=>"1900", "end_date(2i)"=>"1", "end_date(3i)"=>"1" }
+      "start_date(1i)"=>"100", "start_date(2i)"=>"1", "start_date(3i)"=>"1", 
+      "end_date(1i)"=>"2500", "end_date(2i)"=>"1", "end_date(3i)"=>"1" }
     create
   end
   
   def create
     @timeline_chart = TimelineChart.new(params[:timeline_chart])
-    @timeline_chart.granularity = 'years' # RFU 'months', 'centurys', 'years' etc
+    @timeline_chart.granularity = TimelineChart::PERIOD[:Decade]
     @timeline_chart.user_id = current_user.id
 
     if @timeline_chart.save

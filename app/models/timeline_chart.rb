@@ -1,8 +1,10 @@
 class TimelineChart < ActiveRecord::Base
+  PERIOD = { :Month => 6, :Year => 7, :Decade => 8, :Century => 9 }
+
   belongs_to :user
   has_many :events
 
-  attr_accessible :user_id, :title, :start_date, :end_date
+  attr_accessible :user_id, :title, :start_date, :end_date, :granularity
 
   before_validation :check_dates
 
@@ -23,4 +25,6 @@ class TimelineChart < ActiveRecord::Base
       #End date is probably not set, let validations catch this.
     end
   end
+  
 end
+

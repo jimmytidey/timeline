@@ -91,18 +91,18 @@ var resizeTimerID = null;
 var bandInfos = [];
 var stTheme = Timeline.ClassicTheme.create();
 
-function initialiseTimeline() {	
+function initialiseTimeline(granularity) {	
   bandInfos = [
     Timeline.createBandInfo({
   	  width:          "80%", 
-  	  intervalUnit:   Timeline.DateTime.DECADE, 
+  	  intervalUnit:   granularity, 
   	  intervalPixels: 100,
   	  eventSource: eventSource,
       theme: stTheme
     }),
     Timeline.createBandInfo({
       width: "20%",
-      intervalUnit: Timeline.DateTime.CENTURY,
+      intervalUnit: granularity + 1,
       intervalPixels: 100,
       eventSource: eventSource,
       theme: stTheme, 
@@ -131,6 +131,7 @@ function initialiseDragAndDrop() {
   	{
   		addDuration('new_duration', 'click to give me a name','');
   	},
+  	//revert: true, // This causes problems
   	containment: '#my-timeline',		
   	grid: [1,18]		
   });		
