@@ -23,7 +23,7 @@ ol,ul {
 
 body, html  {
   background-color: #9CB4CA;
-  font-family: Verdana, Helvetica, Arial;
+  font-family: “Helvetica Neue”, Arial, Helvetica, sans-serif; 
   font-size: 14px;
   color: #333333;
 
@@ -33,30 +33,39 @@ a {
   color: #0000FF;
 }
 
+.timeline-copyright {
+	display:none;
+}
+
+/* for titles */
+h1 {
+	position:absolute; 
+	top:20px; 
+	left:0px;
+}
+
+#strap {
+	left:0px;
+	position:absolute;
+	top:50px;
+}
+
 /* Index Page */ 
 
 #top_timelines { 
 	position:absolute; 
 	left:20px;
-	top:100px;
-}
-
-#top_timelines { 
-	position:absolute; 
-	left:20px;
-	top:100px;
+	top:30px;
 }
 
 #user_timelines {
 	position:absolute; 
 	left:500px;
-	top:100px;
+	top:30px;
 }
 
 #add_timeline {
-	position:absolute; 
-	left:500px;
-	top:150px;
+	margin-top:20px;
 }
 
 .clear {
@@ -66,13 +75,21 @@ a {
 }
 
 #container {
-  left:5%;
+  left:50%; 
   margin:0 auto;
+  margin-left:-500px;
   position:absolute;
-  width:90%;
-  background-color:white;
+  width:1000px;
   bottom:0px;
   top:0px;
+}
+
+#content_container { 
+	position:absolute; 
+	top:70px;
+	bottom:0px;
+	width:100%;
+	background-color: white;
 }
 
 #user_nav {
@@ -83,49 +100,65 @@ a {
 }
 
 #user_nav input {
-	float:right;
-	background-color:white; 
+	background-color:white;
 	border:1px solid black;
+	height:43px;
+	position:absolute;
+	right:-18px;
+	top:-11px;
+	width:200px;
+}
+
+/* HOME PAGE */ 
+
+#timeline_summary { 
+	width:200px;
+	float:left;
+}
+
+#edit_timeline_link {
+	float:left;
+	width:60px;
+}
+
+#delete_timeline_link {
+	float:left;
 }
 
 /*  EDIT PAGE */ 
 
 #my-timeline {
     position: absolute; 
-    top:160px;
+    top:100px;
     left:20px;
     right:20px;    
 }
 
-
-/* for titles */
-h1 {
-	position:absolute; 
-	top:20px; 
-	left:20px;
-}
-
 /* controls */
 
-#edit_timeline_chart_1 {
+#edit_timeline_chart {
    background-color:#EEEEEE;
    left:20px;
    position:absolute;
-   top:73px;
-   width:570px;
+   top:20px;
 }
 
 #new_event {
-   background-color:#EEEEEE;   
-   position:absolute;
-   right:20px;
-   top:75px;
-   width:530px;
+	background-color:#EEEEEE;
+	position:absolute;
+	right:20px;
+	top:60px;
+	width:530px;
 }
 
+
 #new_duration {
-   margin-left:20px;
-   margin-top:118px;
+	border:1px solid black;
+	left:20px;
+	position:absolute;
+	top:60px;
+	width:200px;
+	z-index:4000;
 }	
 
 label {  

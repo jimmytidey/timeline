@@ -158,5 +158,7 @@ function addDuration(element_id, title, content, chart)
 	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
-  submit_event_to_server(begin, end, chart);
+  	submit_event_to_server(begin, end, chart);
+	$("#new_duration").css('left', '20px')
+	$("#new_duration").css('top', '60px')	
 };

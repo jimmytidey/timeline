@@ -1,9 +1,21 @@
-<h1>Welcome to Timelines</h1>
-<div id="add_timeline">
-  <%= button_to 'Add a new timeline', 'home/new', :remote => true, :method => :get %>
+<h1>Timeliner</h1>
+<p id="strap">Build and share timelines of historical events<p> 
+
+<div id='content_container'>
+
+	<h3 id="top_timelines">Already built</h3>
+	
+	<div id="user_timelines">	
+		<h3>Your Timelines</h3>
+	 
+		<% if current_user %>
+
+		<%= render :partial => "chart_summary", :collection => @timeline_charts %>
+
+		<%= button_to 'Add a new timeline', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 	
+	<% else %> 
+		<p>Sign in to add your timeline</p> 
+	<% end %>
+	
+	</div> 
 </div>
-<h3 id="top_timelines">Top Timelines</h3>
-<% if current_user %>
-  <h3 id="user_timelines">Your Timelines</h3>
-  <%= render :partial => "chart_summary", :collection => @timeline_charts %>
-<% end %>
