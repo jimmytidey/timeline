@@ -4,7 +4,7 @@ class TimelineChart < ActiveRecord::Base
   belongs_to :user
   has_many :events
 
-  attr_accessible :user_id, :title, :start_date, :end_date, :granularity
+  attr_accessible :user_id, :title, :start_date, :end_date, :granularity, :private
 
   before_validation :check_dates
 
@@ -26,5 +26,8 @@ class TimelineChart < ActiveRecord::Base
     end
   end
   
+  def self.top_charts(num)
+    self.where(["private = ?", false]).order("hits DESC").limit(20)
+  end
 end
 

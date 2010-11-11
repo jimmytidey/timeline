@@ -36,4 +36,9 @@ describe TimelineChartsController do
     get :edit, { :id => 1 }
     response.should render_template '401'
   end
+
+  it "Provides route to show timeline 1 at 'example.com/1/untitled'" do
+    assert_recognizes({ :controller => "timeline_charts", :action => "show", :id => "1", :name => "untitled" }, "/1/untitled")
+  end
+
 end

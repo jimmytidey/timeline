@@ -3,14 +3,18 @@
 
 <div id='content_container'>
 
-	<h3 id="top_timelines">Already built</h3>
+  <div id="top_timelines">
+    <h3>Already built</h3>
+		<%= render :partial => "top_chart", :collection => @top_charts %>
+  </div>
+
 	
 	<div id="user_timelines">	
 		<h3>Your Timelines</h3>
 	 
 		<% if current_user %>
 
-		<%= render :partial => "chart_summary", :collection => @timeline_charts %>
+		<%= render :partial => "chart_summary", :collection => @user_charts %>
 
 		<%= button_to 'Add a new timeline', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 	
 	<% else %> 

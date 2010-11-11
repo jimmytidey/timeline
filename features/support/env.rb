@@ -15,7 +15,12 @@ require 'cucumber/web/tableish'
 require 'capybara/rails'
 require 'capybara/cucumber'
 require 'capybara/session'
-require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
+
+# The following is supposed to lets you click links with onclick javascript handlers 
+# without using @culerity or @javascript, but breaks follow "" within ""
+# see https://github.com/jnicklas/capybara/issues/issue/110
+# require 'cucumber/rails/capybara_javascript_emulation'
+
 require 'capybara/envjs'
 
 #Capybara.javascript_driver = :culerity # Call this directly via @culerity to get hooks.rb to load

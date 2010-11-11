@@ -1,11 +1,10 @@
-<div id="chart_summary_<%= chart_summary.id %>">
+<div id="user_chart_summary_<%= chart_summary.id %>">
   <p>
-    <div id='timeline_summary'> 
+    <div class='timeline_summary'> 
     <%= chart_summary.title %> 
     (<%= chart_summary.start_date.year %> to <%= chart_summary.end_date.year %>)
    	</div > 
-   	<%= link_to 'edit', edit_timeline_chart_url(chart_summary), :id => :edit_timeline_link  %>
-    <%= button_to_function "Delete", "if (confirm('Are you sure?')) deleteTimeline(#{chart_summary.id})", :id => :delete_timeline_link %>
- 
+   	<%= link_to 'edit', edit_timeline_chart_url(chart_summary), :class => :timeline_link  %>
+    <%= button_to_function "Delete", "if (confirm('Are you sure?')) deleteTimeline(#{chart_summary.id})", :class => :delete_timeline_link %>
   </p>
 </div>

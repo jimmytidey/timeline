@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101109171418) do
+ActiveRecord::Schema.define(:version => 20101111144031) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(:version => 20101109171418) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "granularity", :limit => 255
+    t.boolean  "private"
+    t.integer  "hits"
   end
 
   create_table "users", :force => true do |t|

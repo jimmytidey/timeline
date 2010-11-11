@@ -1,0 +1,9 @@
+<div id="top_chart_summary_<%= top_chart.id %>">
+  <p>
+    <div class='timeline_summary'> 
+    <%= top_chart.title %> 
+    (<%= top_chart.start_date.year %> to <%= top_chart.end_date.year %>)
+   	</div > 
+    <%= link_to 'Show', top_chart.id.to_s , :class => "timeline_link"  %>
+  </p>
+</div>

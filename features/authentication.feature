@@ -7,7 +7,7 @@ Feature: Authentication
     Given I am a guest
     When I go to the home page
     Then I should see the button "Sign in"
-    And I should see the button "Add a new timeline"
+    And I should see "Sign in to add your timeline"
 
   Scenario: User can log-out
     Given I am an authenticated user

@@ -3,6 +3,10 @@ class TimelineChartsController < ApplicationController
   
   def show
     @timeline_chart = TimelineChart.find(params[:id])
+    if @timeline_chart.private? && @timeline_chart.user != current_user
+      flash[:notice] = "This timeline chart is private."
+      redirect_to '/'
+    end
   end
   
   def edit
@@ -30,6 +34,7 @@ class TimelineChartsController < ApplicationController
   
   def create
     @timeline_chart = TimelineChart.new(params[:timeline_chart])
+    @timeline_chart.private = false;
     @timeline_chart.granularity = TimelineChart::PERIOD[:Decade]
     @timeline_chart.user_id = current_user.id
 

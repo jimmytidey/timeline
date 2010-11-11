@@ -111,17 +111,17 @@ h1 {
 
 /* HOME PAGE */ 
 
-#timeline_summary { 
+.timeline_summary { 
 	width:200px;
 	float:left;
 }
 
-#edit_timeline_link {
+.timeline_link {
 	float:left;
 	width:60px;
 }
 
-#delete_timeline_link {
+.delete_timeline_link {
 	float:left;
 }
 

@@ -16,6 +16,8 @@ TimelineChart.blueprint do
   start_date { Time.now - 50}
   end_date { Time.now }
   granularity { 'years' }
+  private { false }
+  hits { 0 }
 end
 
 Event.blueprint do

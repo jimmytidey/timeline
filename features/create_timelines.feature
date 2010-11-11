@@ -1,3 +1,4 @@
+@wip
 Feature: Create Timelines
   In order to manage timelines
   As a authenticated user
@@ -10,8 +11,8 @@ Feature: Create Timelines
     Then I should see "Edit Timeline Chart"
     And "timeline_chart_title" should by filled out with "Untitled"
     When I fill in "Title" with "The last 50 years in computing"
-    And I select "1960" from "timeline_chart_start_date_1i"
-    And I select "2010" from "timeline_chart_end_date_1i"
+    And I fill in "Start Year" with "1960" within "#edit_timeline_chart"
+    And I fill in "End Year" with "2010" within "#edit_timeline_chart"
 		And I press "Save"
 		And I fill in "Event" with "Great Fire of London" within "#new_event"
     And I fill in "Start date" with "1960" within "#new_event"

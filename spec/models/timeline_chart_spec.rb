@@ -27,4 +27,21 @@ describe TimelineChart do
     @timeline_chart.should_not be_valid
   end
   
+  it "should never return non 'private' charts in the 'top  charts' list" do
+    @timeline_chart = TimelineChart.make(:private => false);
+    @timeline_chart.save
+    @top = TimelineChart.top_charts(100)
+    @top.all.should be_include(@timeline_chart)
+  end
+
+  it "should never reutrn 'private' charts in the 'top  charts' list" do
+    @timeline_chart = TimelineChart.make(:private => true);
+    @timeline_chart.save
+    @top = TimelineChart.top_charts(100)
+    @top.all.should_not be_include(@timeline_chart)
+  end
+
+  it "should increment the hit counter after non-owner views the timeline" do
+    false.should == true
+  end
 end

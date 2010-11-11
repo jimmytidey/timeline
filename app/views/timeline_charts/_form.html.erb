@@ -21,5 +21,6 @@
   </div>
 
     <%= f.input :granularity, :as => :select, :collection => TimelineChart::PERIOD, :prompt => ""%>
+    <%= f.input :private %>
     <%= f.button :submit, 'Save' %>
 <% end %>
