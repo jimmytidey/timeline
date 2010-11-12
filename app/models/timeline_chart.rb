@@ -4,7 +4,7 @@ class TimelineChart < ActiveRecord::Base
   belongs_to :user
   has_many :events
 
-  attr_accessible :user_id, :title, :start_date, :end_date, :granularity, :private
+  attr_accessible :user_id, :title, :start_date, :end_date, :zoom, :private
 
   before_validation :check_dates
 
@@ -12,7 +12,7 @@ class TimelineChart < ActiveRecord::Base
   validates_presence_of :start_date
   validates_presence_of :end_date
   validates_presence_of :user_id
-  validates_presence_of :granularity
+  validates_presence_of :zoom
   validates_numericality_of :user_id
 
   def check_dates

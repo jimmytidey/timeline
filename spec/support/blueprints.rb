@@ -15,7 +15,7 @@ TimelineChart.blueprint do
   title { "The Last 50 Years in Computing" }
   start_date { Time.now - 50}
   end_date { Time.now }
-  granularity { 'years' }
+  zoom { 'years' }
   private { false }
   hits { 0 }
 end

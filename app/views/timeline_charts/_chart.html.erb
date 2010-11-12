@@ -22,6 +22,6 @@ var tc_start_date = '<%= @timeline_chart.start_date.iso8601 %>'
 var tc_end_date = '<%= @timeline_chart.end_date.iso8601 %>'
 
 $(document).ready(
-  initialiseTimeline(<%= @timeline_chart.granularity %>)
+  initialiseTimeline(<%= @timeline_chart.zoom %>)
 );
 </script>

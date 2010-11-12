@@ -1,9 +1,11 @@
 class ChangeTimelineChartsGranularityFromStringToInteger < ActiveRecord::Migration
   def self.up
-    change_column :timeline_charts, :granularity, :integer
+    remove_column :timeline_charts, :granularity
+    add_column :timeline_charts, :zoom, :integer
   end
 
   def self.down
-    change_column :timeline_charts, :granularity, :string
+    remove_column :timeline_charts, :zoom
+    add_column :timeline_charts, :granularity, :string
   end
 end

@@ -35,7 +35,7 @@ class TimelineChartsController < ApplicationController
   def create
     @timeline_chart = TimelineChart.new(params[:timeline_chart])
     @timeline_chart.private = false;
-    @timeline_chart.granularity = TimelineChart::PERIOD[:Decade]
+    @timeline_chart.zoom = TimelineChart::PERIOD[:Decade]
     @timeline_chart.user_id = current_user.id
 
     if @timeline_chart.save

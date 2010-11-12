@@ -20,7 +20,7 @@
     value="<%= @timeline_chart.end_date.year if @timeline_chart.end_date%>" />
   </div>
 
-    <%= f.input :granularity, :as => :select, :collection => TimelineChart::PERIOD, :prompt => ""%>
+    <%= f.input :zoom, :as => :select, :collection => TimelineChart::PERIOD, :prompt => ""%>
     <%= f.input :private %>
     <%= f.button :submit, 'Save' %>
 <% end %>

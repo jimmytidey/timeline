@@ -91,18 +91,18 @@ var resizeTimerID = null;
 var bandInfos = [];
 var stTheme = Timeline.ClassicTheme.create();
 
-function initialiseTimeline(granularity) {	
+function initialiseTimeline(zoom) {	
   bandInfos = [
     Timeline.createBandInfo({
   	  width:          "80%", 
-  	  intervalUnit:   granularity, 
+  	  intervalUnit:   zoom, 
   	  intervalPixels: 100,
   	  eventSource: eventSource,
       theme: stTheme
     }),
     Timeline.createBandInfo({
       width: "20%",
-      intervalUnit: granularity + 1,
+      intervalUnit: zoom + 1,
       intervalPixels: 100,
       eventSource: eventSource,
       theme: stTheme, 

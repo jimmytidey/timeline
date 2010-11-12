@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20101111144031) do
     t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "granularity", :limit => 255
+    t.integer  "zoom"
     t.boolean  "private"
     t.integer  "hits"
   end
