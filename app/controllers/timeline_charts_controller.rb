@@ -3,10 +3,11 @@ class TimelineChartsController < ApplicationController
   
   def show
     @timeline_chart = TimelineChart.find(params[:id])
-    if @timeline_chart.private? && @timeline_chart.user != current_user
+    if @timeline_chart.forbidden?(current_user)
       flash[:notice] = "This timeline chart is private."
       redirect_to '/'
     end
+    @timeline_chart.increment_hits(current_user)
   end
   
   def edit
@@ -26,18 +27,15 @@ class TimelineChartsController < ApplicationController
   end
   
   def new
-    params[:timeline_chart] = { :title => 'Untitled',  
-      "start_date(1i)"=>"100", "start_date(2i)"=>"1", "start_date(3i)"=>"1", 
-      "end_date(1i)"=>"2500", "end_date(2i)"=>"1", "end_date(3i)"=>"1" }
     create
   end
   
   def create
-    @timeline_chart = TimelineChart.new(params[:timeline_chart])
-    @timeline_chart.private = false;
-    @timeline_chart.zoom = TimelineChart::PERIOD[:Decade]
-    @timeline_chart.user_id = current_user.id
+    params = TimelineChart::TEMPLATE
+    params[:user_id]= current_user.id
+    @timeline_chart = TimelineChart.new(params)
 
+    logger.debug(pp @timeline_chart)
     if @timeline_chart.save
       flash[:notice] = "Now add some events to your timeline."
       redirect_to edit_timeline_chart_url(@timeline_chart)

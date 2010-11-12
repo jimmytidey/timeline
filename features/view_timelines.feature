@@ -8,5 +8,6 @@ Feature: View timelines
     And some timelines have been created
     When I go to the home page
     Then I should see "Already built"
-    When I follow "Show" within "#top_timelines"
+    And I should see "Your Timelines"
+    When I follow "View" within "#top_timelines"
 		Then I should see "The Last 50 Years in Computing"

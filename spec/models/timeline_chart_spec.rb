@@ -34,14 +34,45 @@ describe TimelineChart do
     @top.all.should be_include(@timeline_chart)
   end
 
-  it "should never reutrn 'private' charts in the 'top  charts' list" do
+  it "should never return 'private' charts in the 'top  charts' list" do
     @timeline_chart = TimelineChart.make(:private => true);
     @timeline_chart.save
     @top = TimelineChart.top_charts(100)
     @top.all.should_not be_include(@timeline_chart)
   end
 
-  it "should increment the hit counter after non-owner views the timeline" do
-    false.should == true
+  it "should increment the hit counter if viewed by a guest" do
+    @user = User.first
+    @timeline_chart = @user.timeline_charts.first
+    before = @timeline_chart.hits
+    @timeline_chart.increment_hits(nil)
+    after = @timeline_chart.hits
+    after.should == (before + 1)
   end
+
+  it "should not increment the hit counter if viewed by the charts owner" do
+    @user = User.first
+    @timeline_chart = @user.timeline_charts.first
+    before = @timeline_chart.hits
+    @timeline_chart.increment_hits(@user)
+    after = @timeline_chart.hits
+    after.should == before
+  end
+
+  it "should forbid a non-owner from viewing a private chart" do
+    @tc = TimelineChart.where(['private = ?', true]).first
+    @u = User.make
+    @tc.should be_forbidden(@u)
+  end
+
+  it "should forbid a guest from viewing a private chart" do
+    @tc = TimelineChart.where(['private = ?', true]).first
+    @tc.should be_forbidden(nil)
+  end
+
+  it "should allow the owner to view their own private chart" do
+    @tc = TimelineChart.where(['private = ?', true]).first
+    @tc.should_not be_forbidden(@tc.user)
+  end
+
 end

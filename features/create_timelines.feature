@@ -1,4 +1,3 @@
-@wip
 Feature: Create Timelines
   In order to manage timelines
   As a authenticated user

@@ -1,4 +1,5 @@
 about
+clobber_rcov
 cstats
 cucumber
 cucumber:all
@@ -24,6 +25,12 @@ notes
 notes:custom
 rails:template
 rails:update
+rcov
+rcov:all
+rcov:c
+rcov:cucumber
+rcov:r
+rcov:rspec
 routes
 secret
 spec

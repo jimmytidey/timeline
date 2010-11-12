@@ -27,6 +27,7 @@ describe EventsController do
   end
   
   it "destroy action should destroy model and redirect to index action" do
+    Event.stubs(:find).with(1).returns(Event.make)
     event = Event.make
     event.id = 1
     delete :destroy, :id => event.id
