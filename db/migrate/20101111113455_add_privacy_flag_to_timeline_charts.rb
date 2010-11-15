@@ -4,6 +4,6 @@ class AddPrivacyFlagToTimelineCharts < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :timeline_charts, :private, :boolean
+    remove_column :timeline_charts, :private
   end
 end

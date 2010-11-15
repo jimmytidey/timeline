@@ -4,39 +4,6 @@ describe UsersController do
 
   before :each do
     RPXNow.stubs(:user_data).with("123456").returns({:email => 'rpxuser@email.com',:identifier => 'test',:username => 'rpxusername'})
-    @credentials = ActionController::HttpAuthentication::Basic.encode_credentials('admin', 'SeaMonster1000bc')
-    @request.env['HTTP_AUTHORIZATION'] = @credentials
-  end
-
-  def invalidate_credentials
-    @request.env['HTTP_AUTHORIZATION'] = ''
-  end
-
-  describe "index and show are admin only" do
-
-    it "index should be forbidden" do
-      invalidate_credentials
-      get 'index'
-      response.status.should == 401 # Forbidden
-    end
-
-    it "show should be forbidden" do
-      invalidate_credentials
-      get 'show', :id => 1
-      response.status.should == 401 # Forbidden
-    end
-
-    it "index should be accessable with a password" do
-      get 'index'
-      response.should be_success
-    end
-
-    it "show should be accessable with a password" do
-      user = User.new
-      User.expects(:find).with(1).returns(user)
-      get 'show', :id => 1
-      response.should be_success
-    end
   end
 
   describe "Create" do

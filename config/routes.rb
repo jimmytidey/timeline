@@ -1,9 +1,11 @@
 Timeline::Application.routes.draw do
   get "users/cuke" if Rails.env.test?
 
-  resources :users
+  resources :users, :only => [:create, :destroy]
   resources :timeline_charts, :except => [:show]
   resources :events
+
+  match 'admin' => 'admin#index'
 
   get "home/index"
   get "home/new"

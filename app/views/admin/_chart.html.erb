@@ -1,0 +1,11 @@
+<tr>
+  <td><%= chart.title %> </td>
+  <td>(<%= chart.start_date.year %> to <%= chart.end_date.year %>)</td>
+  <td><%= chart.hits %> </td>
+  <td><%= chart.private %> </td>
+  <td><%= chart.created_at.strftime("%d %b %y") %> </td>
+  <td><%= chart.updated_at.strftime("%d %b %y") %></td>
+  <td><%= link_to 'View', '/' + chart.id.to_s, :class => :timeline_link  %></td>
+  <td><%= link_to 'Edit', edit_timeline_chart_url(chart), :class => :timeline_link  %></td>
+  <td><%= button_to_function "Delete", "if (confirm('Are you sure?')) deleteTimeline(#{chart.id})", :class => :delete_timeline_link %></td>
+</tr>

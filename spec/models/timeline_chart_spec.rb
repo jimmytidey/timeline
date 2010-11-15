@@ -61,7 +61,7 @@ describe TimelineChart do
 
   it "should forbid a non-owner from viewing a private chart" do
     @tc = TimelineChart.where(['private = ?', true]).first
-    @u = User.make
+    @u = User.make(:id => 999)
     @tc.should be_forbidden(@u)
   end
 
@@ -72,6 +72,7 @@ describe TimelineChart do
 
   it "should allow the owner to view their own private chart" do
     @tc = TimelineChart.where(['private = ?', true]).first
+    pp @tc
     @tc.should_not be_forbidden(@tc.user)
   end
 

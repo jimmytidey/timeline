@@ -1,4 +1,6 @@
 class TimelineChart < ActiveRecord::Base
+  cattr_reader :per_page
+  @@per_page = 10
   PERIOD = { :Month => 6, :Year => 7, :Decade => 8, :Century => 9 }
   TEMPLATE = { :title => 'Untitled',  
                "start_date(1i)"=>"0100", "start_date(2i)"=>"1", "start_date(3i)"=>"1",
@@ -27,7 +29,14 @@ class TimelineChart < ActiveRecord::Base
   end
 
   def forbidden?(current_user)
-    self.private? && self.user != current_user
+    if current_user.nil? then #guest
+      return self.private?
+    elsif current_user.admin? then #admin
+      return false
+    elsif self.user == current_user #owner
+      return false
+    end
+    self.private? #authenicated non-owner
   end
 
   def increment_hits(current_user)

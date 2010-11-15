@@ -4,6 +4,6 @@ class AddHitCounterToTimelines < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :timeline_charts, :hits, :integer
+    remove_column :timeline_charts, :hits
   end
 end

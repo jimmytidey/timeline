@@ -12,26 +12,19 @@ Given /^I am an authenticated user$/ do
   Then %{I should see "Signed in successfully"}
 end
 
+Given /^I am an authenticated administrator$/ do
+  visit '/users/cuke' # create the user it he's not created
+  user = User.find_by_name('rpxusername')
+  user.admin = true
+  user.save
+end
+
 Then /^I should see the button "([^"]*)"$/ do | label |
   find_button(label)
 end
 
-Given /^I don't know the admin password$/ do
-  #Capybara.app_host = "http://admin:whatever@cap:9887"
-end
-
-Given /^I know the admin password$/ do
-  Capybara.app_host = "http://admin:#{HTTP_BASIC_PASSWORD}@cap:9887"
-end
-
 Then /^debug$/ do
   debugger;nil
-end
-
-Then /^"([^"]*)" should by filled out with "([^"]*)"$/ do |id, intended_text|
-  #Only envjs supports this, but is is bombing out.
-  #field_text = find_field(id).native.attributes['value'].value
-  #field_text == intended_text
 end
 
 Given /^some timelines have been created$/ do

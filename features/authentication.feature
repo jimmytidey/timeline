@@ -16,16 +16,18 @@ Feature: Authentication
     Then I should see "Signed out successfully"
     And I should be on the home page
 
-  Scenario: Can't list users without password
-    Given I don't know the admin password
-    When I go to list the users
-    Then I should not see "Listing users:"
+  Scenario: A guest can't get into admin area
+    Given I am a guest
+    When I go to the admin area
+    Then I should see "Please login first."
 
-# Await resolution of issue 34 below:
-# http://code.google.com/p/selenium/issues/detail?id=34
-#
-#  Scenario: Admin signs in
-#    Given I know the admin password
-#    When I go to list the users
-#    Then I should see "Listing users:"
+  Scenario: A non admin user can't get into admin area 
+    Given I am an authenticated user
+    When I go to the admin area
+    Then I should see "Please login first."
+
+  Scenario: Admin signs in
+    Given I am an authenticated administrator
+    When I go to the admin area
+    Then I should see "Admin Area"
 

@@ -5,10 +5,11 @@ User.blueprint do
   name { "Mr. #{sn}" }
   identifier { "http://www.facebook.com/profile.php?id=#{sn}" }
   email { "test#{sn}@example.com" }
+  admin { false }
 end
 
 TimelineChart.blueprint do
-  id { sn }
+  #id { sn }
   events(2)
   user_id { 1 }
   title { "The Last 50 Years in Computing" }
@@ -20,7 +21,7 @@ TimelineChart.blueprint do
 end
 
 TimelineChart.blueprint(:hidden) do
-  id { sn }
+  #id { sn }
   events(2)
   user_id { 1 }
   title { "The Lost Temple of Doom" }
@@ -32,15 +33,16 @@ TimelineChart.blueprint(:hidden) do
 end
 
 Event.blueprint do
-  id { sn }
+  #id { sn }
   title { "Life of Darwin" }
   start_date { Time.now - 10}
   end_date { Time.now }
   timeline_chart_id { 1 }
 end
 
+# Make a hidden chart. Note that this tests if the db is populated
+# because autotest doesn't reset the db, but the rake task does.
 if User.first.blank? then
   User.make!(2)
-  TimelineChart.make!(:hidden)
+  TimelineChart.make!(:hidden, :user_id => User.first.id)
 end
-#Make a hidden chart

@@ -1,10 +1,14 @@
 class AdminController < ApplicationController
-  before_filter :authenticate
+  before_filter :verify_authenticated
 
-  def authenticate
-    authenticate_or_request_with_http_basic('Administration') do |username, password|
-      username == 'admin' && password == HTTP_BASIC_PASSWORD
+  def verify_authenticated
+    unless admin?
+      render :file => 'public/401.html', :status => 401
     end
+  end
+
+  def index
+    @charts = TimelineChart.paginate :page => params[:page], :order => 'created_at DESC'
   end
 
 end

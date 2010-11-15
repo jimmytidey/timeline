@@ -1,14 +1,6 @@
-class UsersController < AdminController
+class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
   before_filter :authenticate, :only => [:index, :show]
-
-  def index
-    @users = User.all
-  end
-
-  def show
-    @user = User.find(params[:id])
-  end
 
   def create
     #Note that RPXNow.popup will post to users and hit this action, bypassing the 'new' action

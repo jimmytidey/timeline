@@ -1,11 +1,11 @@
 class TimelineChartsController < ApplicationController
-  before_filter :verify_owner, :only => ['edit', 'update', 'destroy']
+  before_filter :verify_permission, :only => ['edit', 'update', 'destroy']
   
   def show
     @timeline_chart = TimelineChart.find(params[:id])
     if @timeline_chart.forbidden?(current_user)
-      flash[:notice] = "This timeline chart is private."
-      redirect_to '/'
+      flash[:error] = "That timeline chart is private."
+      render :file => 'public/401.html', :status => 401
     end
     @timeline_chart.increment_hits(current_user)
   end
@@ -35,7 +35,6 @@ class TimelineChartsController < ApplicationController
     params[:user_id]= current_user.id
     @timeline_chart = TimelineChart.new(params)
 
-    logger.debug(pp @timeline_chart)
     if @timeline_chart.save
       flash[:notice] = "Now add some events to your timeline."
       redirect_to edit_timeline_chart_url(@timeline_chart)
@@ -51,9 +50,9 @@ class TimelineChartsController < ApplicationController
     render 'destroy_succeeded'
   end
 
-  def verify_owner
+  def verify_permission
     @timeline_chart = TimelineChart.find(params[:id])
-    if current_user.nil? || @timeline_chart.user_id != current_user.id
+    if current_user.nil? || (@timeline_chart.user_id != current_user.id && !admin?)
       respond_to do |format|
         format.js { render 'modify_failed' }
         format.html { render :file => 'public/401.html', :status => 401 }

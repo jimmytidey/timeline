@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-source "http://gems.github.com"
+source 'http://gems.github.com'
 
 gem 'rails', '3.0.1'
 gem 'sqlite3-ruby', :require => 'sqlite3'
@@ -7,6 +7,7 @@ gem 'jquery-rails'
 gem 'rpx_now'
 gem 'nifty-generators'
 gem 'simple_form'
+gem 'will_paginate', '~> 3.0.pre2'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -41,5 +42,5 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'launchy'    # So you can do Then show me the page
   gem 'machinist', '>= 2.0.0.beta2' # Generate mock objects
-  gem "mocha"
+  gem 'mocha'
 end

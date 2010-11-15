@@ -13,9 +13,12 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
-  def access_denied
-    flash[:error] = "You do not have access!"
-    redirect_to :controller => :user, :action => :new
+  def admin?
+    if current_user.nil?
+      return false
+    else
+      return current_user.admin?
+    end
   end
 
 end

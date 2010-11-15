@@ -11,8 +11,8 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
 
-    when /list the users/
-      '/users'
+    when /the admin area/
+      '/admin'
 
     when /create a new timeline/
       url_for(:controller => 'timeline_charts', :action => 'new')

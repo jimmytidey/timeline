@@ -1,0 +1,24 @@
+<%= stylesheet 'admin'  %>
+<%= javascript 'admin'  %>
+
+<div id="content_container">
+  <h1> Admin Area </h1>
+  <%= will_paginate @charts %>
+
+  <table id="tc-table">
+    <tr>
+      <th>Title</th>
+      <th>Dates</th>
+      <th>Hits</th>
+      <th>Private?</th>
+      <th>Created On</th>
+      <th>Updated On</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <div id="user_chart_summary">
+      <%= render :partial => "chart", :collection => @charts %>
+    </div>
+  </table>
+</div>
