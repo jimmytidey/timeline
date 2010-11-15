@@ -29,6 +29,18 @@ body, html  {
 
 }
 
+
+#container {
+  left:50%; 
+  margin:0 auto;
+  margin-left:-500px;
+  position:absolute;
+  width:1000px;
+  height:1000px;
+  top:0px;
+}
+
+
 a {
   color: #0000FF;
 }
@@ -74,15 +86,6 @@ h1 {
   overflow: hidden;
 }
 
-#container {
-  left:50%; 
-  margin:0 auto;
-  margin-left:-500px;
-  position:absolute;
-  width:1000px;
-  bottom:0px;
-  top:0px;
-}
 
 #content_container { 
 	position:absolute; 
@@ -130,8 +133,39 @@ h1 {
 #my-timeline {
     position: absolute; 
     top:100px;
-    left:20px;
-    right:20px;    
+    margin-left:20px;
+    width:940px;  
+    height:400px!important;
+    z-index:0;
+}
+
+.pencil {
+    cursor:help
+}
+
+/* TIMELINE */ 
+
+.info {font-size:9px;}
+
+.timeline-event-label {
+	width:auto!important;
+	margin-top:-11px;	
+}
+
+.timeline-event-tape {
+	height:7px!important; 
+}
+
+#auto_add {
+	position:absolute; 
+	top:600px;
+	left:20px;
+
+}
+
+#auto_add textarea {
+	width:540px;
+	height:200px;
 }
 
 /* controls */
@@ -155,10 +189,10 @@ h1 {
 #new_duration {
 	border:1px solid black;
 	left:20px;
-	position:absolute;
 	top:60px;
+	position:absolute;
 	width:200px;
-	z-index:4000;
+	z-index:10;
 }	
 
 label {  
@@ -252,3 +286,54 @@ abbr {
   float: none;  
   margin: 0;  
 }  
+
+
+/* MODAL WINDOW CSS */ 
+
+.modal-overlay
+{
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	height:100%;
+	width:100%;
+	margin:0;
+	padding:0;
+	background:#fff;
+	opacity:.75;
+	filter: alpha(opacity=75);
+	-moz-opacity: 0.75;
+	z-index:101;
+}
+.modal-window
+{
+	position:fixed;
+	top:50%;
+	left:50%;
+	margin:0;
+	padding:0;
+	z-index:102;
+}
+.close-window
+{
+	position:absolute;
+	width:32px;
+	height:32px;
+	right:8px;
+	top:8px;
+	background:transparent url('/examples/modal-simple/close-button.png') no-repeat scroll right top;
+	text-indent:-99999px;
+	overflow:hidden;
+	cursor:pointer;
+	opacity:.5;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+}
+.close-window:hover
+{
+	opacity:.99;
+	filter: alpha(opacity=99);
+	-moz-opacity: 0.99;
+}
