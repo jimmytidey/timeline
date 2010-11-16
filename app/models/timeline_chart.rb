@@ -1,6 +1,6 @@
 class TimelineChart < ActiveRecord::Base
   cattr_reader :per_page
-  @@per_page = 10
+  @@per_page = 14
   PERIOD = { :Month => 6, :Year => 7, :Decade => 8, :Century => 9 }
   TEMPLATE = { :title => 'Untitled',  
                "start_date(1i)"=>"0100", "start_date(2i)"=>"1", "start_date(3i)"=>"1",
@@ -10,7 +10,7 @@ class TimelineChart < ActiveRecord::Base
                :private => false }
 
   belongs_to :user
-  has_many :events
+  has_many :events, :dependent => :destroy
 
   attr_accessible :user_id, :title, :start_date, :end_date, :zoom, :private, :hits
 
@@ -43,6 +43,29 @@ class TimelineChart < ActiveRecord::Base
     if self.user != current_user then
       self.hits += 1
       self.save
+    end
+  end
+
+  def num_events
+    self.events.length
+  end
+
+  def edited_at
+    if num_events == 0
+      self.updated_at
+    else
+      ee = self.events
+      ee.sort.first.updated_at
+    end
+  end
+
+  def <=>(tc)
+    if self.edited_at < tc.edited_at then
+      1
+    elsif self.edited_at > tc.edited_at then
+      -1
+    else
+      0
     end
   end
 

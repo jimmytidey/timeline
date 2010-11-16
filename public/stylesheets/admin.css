@@ -1,4 +1,15 @@
-#tc-table
+#pagination
+{
+  font-family:"Lucida Sans Unicode", "Lucida Grande", 
+  Sans-Serif;font-size:12px;
+  width:960px;
+  text-align:center;
+  border-collapse:collapse;
+  border-top:7px solid #9baff1;
+  border-bottom:7px solid #9baff1;
+  margin:20px;
+}
+.tc-table
 {
   font-family:"Lucida Sans Unicode", "Lucida Grande", 
   Sans-Serif;font-size:12px;
@@ -10,7 +21,7 @@
   margin:20px;
 }
 
-#tc-table th
+.tc-table th
 {
   font-size:13px;
   font-weight:normal;
@@ -20,7 +31,7 @@
   color:#039;
   padding:8px;
 }
-#tc-table td
+.tc-table td
 {
   background:#e8edff;
   border-right:1px solid #aabcfe;
@@ -28,3 +39,12 @@
   color:#669;
   padding:8px;
 }
+
+td.link {
+  width: 100px;
+}
+
+td.action {
+  width: 30px;
+}
+

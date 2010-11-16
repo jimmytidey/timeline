@@ -20,4 +20,14 @@ class Event < ActiveRecord::Base
       #End date is probably not set, let validations catch this.
     end
   end
+
+  def <=>(event)
+    if self.updated_at < event.updated_at then
+      1
+    elsif self.updated_at > event.updated_at then
+      -1
+    else
+      0
+    end
+  end
 end

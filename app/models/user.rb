@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :timeline_charts
+  has_many :timeline_charts, :dependent => :destroy
 
   attr_protected :admin
 

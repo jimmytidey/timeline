@@ -1,24 +1,39 @@
 <%= stylesheet 'admin'  %>
 <%= javascript 'admin'  %>
 
+<h1> Admin Area </h1>
 <div id="content_container">
-  <h1> Admin Area </h1>
-  <%= will_paginate @charts %>
 
-  <table id="tc-table">
+  <table class="tc-table">
+    <tr>
+      <td class="link">
+        <%= link_to "Sort by hits", admin_url(:sort_by => 'hits') %>
+      </td>
+      <td class="link">
+        <%= link_to "Sort by date created", admin_url(:sort_by => 'created') %>
+      </td>
+      <td class="link">
+        <%= link_to "Sort by date edited", admin_url(:sort_by => 'edited') %>
+      </td>
+      <td>
+        <%= will_paginate @charts %>
+      </td>
+    </tr>
+  </table>
+
+  <table class="tc-table">
     <tr>
       <th>Title</th>
       <th>Dates</th>
       <th>Hits</th>
       <th>Private?</th>
       <th>Created On</th>
-      <th>Updated On</th>
+      <th>Edited On</th>
+      <th>Events Added</th>
       <th></th>
       <th></th>
       <th></th>
     </tr>
-    <div id="user_chart_summary">
       <%= render :partial => "chart", :collection => @charts %>
-    </div>
   </table>
 </div>

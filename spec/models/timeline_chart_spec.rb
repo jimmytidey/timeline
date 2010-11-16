@@ -59,21 +59,29 @@ describe TimelineChart do
     after.should == before
   end
 
+  it "should count its events" do
+    TimelineChart.make.num_events.should == 2
+  end
+  
   it "should forbid a non-owner from viewing a private chart" do
-    @tc = TimelineChart.where(['private = ?', true]).first
+    @tc = TimelineChart.make(:private => true)
     @u = User.make(:id => 999)
     @tc.should be_forbidden(@u)
   end
 
   it "should forbid a guest from viewing a private chart" do
-    @tc = TimelineChart.where(['private = ?', true]).first
+    @tc = TimelineChart.make(:private => true)
     @tc.should be_forbidden(nil)
   end
 
   it "should allow the owner to view their own private chart" do
-    @tc = TimelineChart.where(['private = ?', true]).first
-    pp @tc
+    @tc = TimelineChart.make(:private => true)
     @tc.should_not be_forbidden(@tc.user)
   end
 
+  it "should allow an admin to view someone else chart" do
+    @tc = TimelineChart.make(:private => true)
+    @u = User.make(:id => 999, :admin => true)
+    @tc.should_not be_forbidden(@u)
+  end
 end
