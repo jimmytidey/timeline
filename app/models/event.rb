@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
   attr_accessible :title, :start_date, :end_date, :timeline_chart_id 
 
   before_validation :check_dates
+  after_save :mark_timeline_as_updated
 
   validates_presence_of :title
   validates_presence_of :start_date
@@ -21,13 +22,9 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def <=>(event)
-    if self.updated_at < event.updated_at then
-      1
-    elsif self.updated_at > event.updated_at then
-      -1
-    else
-      0
-    end
+  def mark_timeline_as_updated
+    tc = self.timeline_chart
+    tc.updated_at = Time.now
+    tc.save
   end
 end

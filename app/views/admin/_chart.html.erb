@@ -1,10 +1,11 @@
 <tr id="user_chart_summary_<%= chart.id %>">
+  <td><%= link_to chart.user_id, user_url(chart.user_id) %> </td>
   <td><%= chart.title %> </td>
   <td>(<%= chart.start_date.year %> to <%= chart.end_date.year %>)</td>
   <td><%= chart.hits %> </td>
   <td><%= chart.private %> </td>
   <td><%= chart.created_at.strftime("%d %b %y | %H:%M") %> </td>
-  <td><%= chart.edited_at.strftime("%d %b %y | %H:%M") %></td>
+  <td><%= chart.updated_at.strftime("%d %b %y | %H:%M") %></td>
   <td><%= chart.num_events %></td>
   <td class="action"><%= link_to 'View', '/' + chart.id.to_s  %></td>
   <td class="action"><%= link_to 'Edit', edit_timeline_chart_url(chart)  %></td>

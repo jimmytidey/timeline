@@ -21,4 +21,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def verify_authenticated_as_admin
+    unless admin?
+      render :file => 'public/401.html', :status => 401
+    end
+  end
+
 end

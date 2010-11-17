@@ -50,25 +50,6 @@ class TimelineChart < ActiveRecord::Base
     self.events.length
   end
 
-  def edited_at
-    if num_events == 0
-      self.updated_at
-    else
-      ee = self.events
-      ee.sort.first.updated_at
-    end
-  end
-
-  def <=>(tc)
-    if self.edited_at < tc.edited_at then
-      1
-    elsif self.edited_at > tc.edited_at then
-      -1
-    else
-      0
-    end
-  end
-
   protected
   def check_dates
     begin

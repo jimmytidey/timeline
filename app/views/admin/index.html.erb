@@ -1,11 +1,14 @@
 <%= stylesheet 'admin'  %>
-<%= javascript 'admin'  %>
+<%# javascript 'admin'  %>
 
 <h1> Admin Area </h1>
 <div id="content_container">
 
   <table class="tc-table">
     <tr>
+      <td class="link">
+        <%= link_to "Administer Users", users_url %>
+      </td>
       <td class="link">
         <%= link_to "Sort by hits", admin_url(:sort_by => 'hits') %>
       </td>
@@ -23,6 +26,7 @@
 
   <table class="tc-table">
     <tr>
+      <th>User</th>
       <th>Title</th>
       <th>Dates</th>
       <th>Hits</th>

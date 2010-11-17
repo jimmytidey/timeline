@@ -1,6 +1,18 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
-  before_filter :authenticate, :only => [:index, :show]
+  before_filter :verify_authenticated_as_admin, :only => [:index, :show, :update]
+
+  def index
+    #User is authenticacted, but protect against SQL injection just incase
+    sort_field = case params[:sort_by]
+      #when "id" then "id"
+      when "name" then "name ASC"
+      when "email" then "email ASC"
+      when "created" then "created_at DESC"
+      else "id ASC"
+    end
+    @users = User.paginate :page => params[:page], :order => "#{sort_field}"
+  end
 
   def create
     #Note that RPXNow.popup will post to users and hit this action, bypassing the 'new' action
@@ -24,4 +36,13 @@ class UsersController < ApplicationController
     redirect_to '/'
   end
   
+  def update
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to admin_url
+  end
+
+  def show
+    @user = User.find(params[:id])
+  end
 end

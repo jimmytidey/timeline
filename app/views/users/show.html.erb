@@ -1,0 +1,30 @@
+<%= stylesheet 'admin'  %>
+<%# javascript 'admin'  %>
+
+<h1> User Info</h1>
+<div id="content_container">
+  <table class="tc-table">
+    <tr>
+      <th>User Info</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td> Name </td>
+      <td> <%= @user.name %> </td>
+    </tr>
+    <tr>
+      <td> RPX Identifier </td>
+      <td> <%= @user.identifier %> </td>
+    </tr>
+    <tr>
+      <td> email </td>
+      <td> <%= @user.email %> </td>
+    <tr>
+    </tr>
+    <tr>
+      <td> Number Of Timelines </td>
+      <td> <%= @user.timeline_charts.count %> </td>
+    </tr>
+  </table>
+  <%= button_to('Delete User', user_url(@user), :confirm => "This user and all their timelines will be deleted.\n\n   Are you sure?", :method => "put") %>
+</div>

@@ -26,4 +26,69 @@ describe UsersController do
     end
   end
 
+  describe "show" do
+    it "should not be acessible to a guest" do
+      UsersController.any_instance.stubs(:current_user).returns(nil)
+      get :show, :id => 1
+      response.status.should eql(401)
+      response.should render_template("public/401.html")
+    end
+
+    it "should not be acessible to a non-admin user" do
+      UsersController.any_instance.stubs(:current_user).returns(User.make)
+      get :show, :id => 1
+      response.status.should eql(401)
+      response.should render_template("public/401.html")
+    end
+
+    it "should be acessible to an admin" do
+      UsersController.any_instance.stubs(:current_user).returns(User.make(:admin => true))
+      get :show, :id => 1
+      response.should_not render_template("public/401.html")
+    end
+  end
+
+  describe "update" do
+    it "should not be acessible to a guest" do
+      UsersController.any_instance.stubs(:current_user).returns(nil)
+      get :update, :id => 1
+      response.status.should eql(401)
+      response.should render_template("public/401.html")
+    end
+
+    it "should not be acessible to a non-admin user" do
+      UsersController.any_instance.stubs(:current_user).returns(User.make)
+      get :update, :id => 1
+      response.status.should eql(401)
+      response.should render_template("public/401.html")
+    end
+
+    it "should be acessible to an admin" do
+      UsersController.any_instance.stubs(:current_user).returns(User.make(:admin => true))
+      get :update, :id => 1
+      response.should_not render_template("public/401.html")
+    end
+  end
+
+  describe "index" do
+    it "should not be acessible to a guest" do
+      UsersController.any_instance.stubs(:current_user).returns(nil)
+      get :index
+      response.status.should eql(401)
+      response.should render_template("public/401.html")
+    end
+
+    it "should not be acessible to a non-admin user" do
+      UsersController.any_instance.stubs(:current_user).returns(User.make)
+      get :index
+      response.status.should eql(401)
+      response.should render_template("public/401.html")
+    end
+
+    it "should be acessible to an admin" do
+      UsersController.any_instance.stubs(:current_user).returns(User.make(:admin => true))
+      get :index
+      response.should_not render_template("public/401.html")
+    end
+  end
 end

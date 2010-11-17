@@ -28,4 +28,16 @@ describe Event do
     @event.should_not be_valid
   end
   
+  it "should mark it's timeline as updated when modified / created" do
+    ee = Event.first
+    tc = ee.timeline_chart
+    time = Time.parse("1999/02/03")
+    tc.updated_at = time
+    tc.save
+
+    ee.title = "Big Bongo Competetion"
+    ee.save
+    
+    tc.updated_at.should_not eql(time)
+  end
 end

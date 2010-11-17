@@ -1,7 +1,7 @@
 Timeline::Application.routes.draw do
   get "users/cuke" if Rails.env.test?
 
-  resources :users, :only => [:create, :destroy]
+  resources :users, :except => [:new, :edit]
   resources :timeline_charts, :except => [:show]
   resources :events
 
