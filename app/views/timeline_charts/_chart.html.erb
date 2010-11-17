@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 /*********** simile timeline functions **/
 var events = {
   <% if all_events %>
@@ -11,7 +11,8 @@ var events = {
           'end'  : '<%= event.end_date.iso8601 %>',
         <% end %>
         'title': '<%= event.title %>',
-        'description': 'This is a sample event called <%= event.title %>'
+        'description': 'This is a sample event called <%= event.title %>',
+        'eventID' : <%= event.id %>,
         }<% if i != all_events.length - 1 -%>, <% end -%>
     <% end %>
     ]
@@ -22,6 +23,6 @@ var tc_start_date = '<%= @timeline_chart.start_date.iso8601 %>'
 var tc_end_date = '<%= @timeline_chart.end_date.iso8601 %>'
 
 $(document).ready(
-  initialiseTimeline(<%= @timeline_chart.zoom %>)
+    initialiseTimeline(<%= edit_mode %>, <%= @timeline_chart.zoom %>)
 );
 </script>

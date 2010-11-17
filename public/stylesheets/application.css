@@ -323,7 +323,7 @@ abbr {
 	height:32px;
 	right:8px;
 	top:8px;
-	background:transparent url('/examples/modal-simple/close-button.png') no-repeat scroll right top;
+	background:transparent url('/images/close-button.png') no-repeat scroll right top;
 	text-indent:-99999px;
 	overflow:hidden;
 	cursor:pointer;

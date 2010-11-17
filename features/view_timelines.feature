@@ -10,4 +10,4 @@ Feature: View timelines
     Then I should see "Already built"
     And I should see "Your Timelines"
     When I follow "View" within "#top_timelines"
-		Then I should see "The Last 50 Years in Computing"
+		Then I should see "Created by:"

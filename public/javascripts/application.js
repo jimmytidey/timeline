@@ -20,7 +20,6 @@ $(document).ready(function() {
         });
     });
 
-
 // Called by the above
 function getMoreData(data) {
   var query = [{'id': data.id, '/time/event/start_date': null, '/time/event/end_date': null}];
@@ -36,6 +35,7 @@ function getMoreData(data) {
         }
   });
 }
+
 // Called by the above
 function setDates(start_date, end_date) {
   start_date = start_date.substring(0,4);
@@ -53,30 +53,36 @@ function setDates(start_date, end_date) {
 
 /* Extend jQuery with functions for PUT and DELETE requests. */
 function _ajax_request(url, data, callback, type, method) {
-    if (jQuery.isFunction(data)) {
-        callback = data;
-        data = {};
-    }
-    return jQuery.ajax({
-        type: method,
-        url: url,
-        data: data,
-        success: callback,
-        dataType: type
-        });
+  if (jQuery.isFunction(data)) {
+      callback = data;
+      data = {};
+  }
+  return jQuery.ajax({
+    type: method,
+    url: url,
+    data: data,
+    success: callback,
+    dataType: type
+    });
 }
 
 jQuery.extend({
-    put: function(url, data, callback, type) {
-        return _ajax_request(url, data, callback, type, 'PUT');
-    },
-    delete_: function(url, data, callback, type) {
-        return _ajax_request(url, data, callback, type, 'DELETE');
-    }
+  put: function(url, data, callback, type) {
+    return _ajax_request(url, data, callback, type, 'PUT');
+  },
+  delete_: function(url, data, callback, type) {
+    return _ajax_request(url, data, callback, type, 'DELETE');
+  }
 });
 
 function submit_event_to_server(begin, end, chart) {
-  $.post("/events", { 'event': {'title' : 'Click to rename', 'start_date': begin.toString(), 'end_date': end.toString(), 'timeline_chart_id' : chart}} );
+  $.post("/events", { 'event':
+    {
+      'title' : 'Click to rename',
+      'start_date': begin.toString(),
+      'end_date': end.toString(),
+      'timeline_chart_id' : chart}
+    });
 }
 
 function deleteTimeline(id) {
@@ -98,7 +104,7 @@ var stTheme = Timeline.ClassicTheme.create();
 //Mod the theme
 stTheme.event.tape.height = 20;
 
-function initialiseTimeline(zoom) {	
+function initialiseTimeline(editMode, zoom) {	
   bandInfos = [
     Timeline.createBandInfo({
   	  width:          "100%", 
@@ -116,20 +122,25 @@ function initialiseTimeline(zoom) {
       layout: 'overview' // original, overview, detailed
     }) */
   ];
- // bandInfos[1].syncWith = 0;
- // bandInfos[1].highlight = true;
+  // bandInfos[1].syncWith = 0;
+  // bandInfos[1].highlight = true;
   initialiseTheme();
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
+
+  if (editMode) {
+   initialiseEditFunctions();
+  }
+}
+
+// If this function is called, then the timeline is drawn in "edit" mode. If not
+// then it is drawn in view mode.
+function initialiseEditFunctions() {
   initialiseDragAndDrop();
   initialiseResize();
   initialiseLables();
-  initaliseEdit();
-  
-  
- Timeline.OriginalEventPainter.prototype._showBubble = function(x, y, evt) {
-   //stop the bubble from appearing!
-   }  
+  initialiseEdit();
+  initalialiseBubblePopper();
 }
 
 //Stop timeline scrolling for ever
@@ -160,13 +171,6 @@ function initialiseDragAndDrop() {
 	});
 }
 
-// when user drags the tape it needs to make the lable move with it 
-function moveLabel(id) {
-	left 	= $("#"+id).css('left');	
-	id = "#label"+ id.substr(5);
-	$(id).css('left', parseInt(left)+"px");
-}
-
 function initialiseLables() 
 {
 	$('.timeline-event-label').each(function() 	{
@@ -174,8 +178,6 @@ function initialiseLables()
 		recalculateEventDate($(this).attr('id'));	
 	});	
 }
-
-
 
 function initialiseResize() {
 	$(".timeline-event-tape").resizable(
@@ -187,13 +189,25 @@ function initialiseResize() {
 		});
 }	
 
-function initaliseEdit() { 
-// making the pencil open a modal 
-$('.pencil').click(function() {
-	openMyModal();
-});
+function initialiseEdit() { 
+  // making the pencil open a modal 
+  $('.pencil').click(function() {
+      
+      openMyModal("id");
+      });
+}
 
+function initalialiseBubblePopper() {
+  Timeline.OriginalEventPainter.prototype._showBubble = function(x, y, evt) {
+    //stop the bubble from appearing!
+  }
+}
 
+// when user drags the tape it needs to make the lable move with it 
+function moveLabel(id) {
+	left 	= $("#"+id).css('left');	
+	id = "#label"+ id.substr(5);
+	$(id).css('left', parseInt(left)+"px");
 }
 
 function recalculateEventDate(id) 
@@ -213,19 +227,6 @@ function recalculateEventDate(id)
 	$('#'+id+" .info").replaceWith(' <span class="info">('+begin.getFullYear()+' - '+ end.getFullYear()+')</span>');	
 }
 
-
-/* WHAT DOES THIS DO ? IT SEEMS TO INTERFERE WITH RESIZING DIVS
-$(document).resize(function() {
-     if (resizeTimerID == null) {
-         resizeTimerID = window.setTimeout(function() {
-             resizeTimerID = null;
-             tl.layout();
-         }, 500);
-     }
-});
-
-*/
-
 function eventSave() {};
 
 function addDuration(element_id, title, content, chart) 
@@ -234,14 +235,11 @@ function addDuration(element_id, title, content, chart)
 	left 	= $("#"+element_id).css('left');
 	width 	= $("#"+element_id).css('width');
 	layer	= $("#"+element_id).css('top'); 	
-	
 
 	//convert to a date
 	begin 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)-20);
 	layer 	= parseInt(layer)/18;
 	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
-	
-	
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
@@ -249,7 +247,6 @@ function addDuration(element_id, title, content, chart)
 	$("#new_duration").css('left', '20px')
 	$("#new_duration").css('top', '60px')	
 };
-
 
 function autoAdd() {
 	
@@ -270,10 +267,7 @@ function autoAdd() {
 
 function parseAutoAdd(dates) {
 	dateObject = eval(dates); 
-
-
 }
-
 
 // Bringing up a modal 
 var modalWindow = {
@@ -291,9 +285,13 @@ var modalWindow = {
 	{
 		var modal = "";
 		modal += "<div class=\"modal-overlay\"></div>";
-		modal += "<div id=\"" + this.windowId + "\" class=\"modal-window\" style=\"width:" + this.width + "px; height:" + this.height + "px; margin-top:-" + (this.height / 2) + "px; margin-left:-" + (this.width / 2) + "px;\">";
+		modal += "<div id=\"" + this.windowId + "\" class=\"modal-window\" style=\"width:"
+      + this.width + "px; height:"
+      + this.height + "px; margin-top:-"
+      + (this.height / 2) + "px; margin-left:-"
+      + (this.width / 2) + "px;\">";
 		modal += this.content;
-		modal += "</div>";	
+		modal += "</div>";
 
 		$(this.parent).append(modal);
 
@@ -303,12 +301,12 @@ var modalWindow = {
 	}
 };
 
-var openMyModal = function(source)
+function openMyModal(id)
 {
 	modalWindow.windowId = "myModal";
 	modalWindow.width = 480;
 	modalWindow.height = 405;
-	modalWindow.content = "<p>Edit me here</p>";
+	modalWindow.content = "<p>Edit " + id + " here</p>";
 	modalWindow.open();
 }; 
 
