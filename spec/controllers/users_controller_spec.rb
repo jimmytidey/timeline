@@ -42,8 +42,10 @@ describe UsersController do
     end
 
     it "should be acessible to an admin" do
-      UsersController.any_instance.stubs(:current_user).returns(User.make(:admin => true))
-      get :show, :id => 1
+      user = User.make(:id => 676, :admin => true)
+      UsersController.any_instance.stubs(:current_user).returns(user)
+      User.stubs(:find).with(user.id).returns(user)
+      get :show, :id => user.id
       response.should_not render_template("public/401.html")
     end
   end
@@ -57,15 +59,17 @@ describe UsersController do
     end
 
     it "should not be acessible to a non-admin user" do
-      UsersController.any_instance.stubs(:current_user).returns(User.make)
-      get :update, :id => 1
+      UsersController.any_instance.stubs(:current_user).returns(User.make(:id => 123))
+      get :update, :id => 123
       response.status.should eql(401)
       response.should render_template("public/401.html")
     end
 
     it "should be acessible to an admin" do
-      UsersController.any_instance.stubs(:current_user).returns(User.make(:admin => true))
-      get :update, :id => 1
+      user = User.make(:id => 321, :admin => true)
+      UsersController.any_instance.stubs(:current_user).returns(user)
+      User.stubs(:find).with(user.id).returns(user)
+      get :update, :id => 321
       response.should_not render_template("public/401.html")
     end
   end

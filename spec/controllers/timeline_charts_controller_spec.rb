@@ -9,7 +9,9 @@ describe TimelineChartsController do
     end
 
     it "Non admin can not view a timeline chart created by someone else if it's private" do
-      TimelineChart.stubs(:find).with(1).returns(TimelineChart.make(:private => true))
+      # Work around ActiveRecord bug. It gets confused by blueprints when attempting to perform
+      # a transactional operation to increment the hit counter.
+      TimelineChart.stubs(:find).returns(TimelineChart.make(:private => true))
       TimelineChartsController.any_instance.stubs(:current_user).returns(User.make(:id => 999))
       get :show, { :id => 1 }
       flash[:error].should == "That timeline chart is private."
