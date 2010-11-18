@@ -22,27 +22,30 @@ class EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     @timeline_chart = @event.timeline_chart
+
+    respond_to do |format|
+      format.js { render 'edit' }
+      format.html { render 'edit' }
+    end
   end
-  
- # Pending modified simile Timeline
- # def update
- #   @event = Event.find(params[:id])
- #   @timeline_chart = @event.timeline_chart
- #   params[:event]['start_date'] = Date.parse('1/1/' + params[:event]['start_date'])
- #   params[:event]['end_date'] = Date.parse('1/1/' + params[:event]['end_date'])
- #   if @event.update_attributes(params[:event])
- #     flash[:notice] = "Successfully updated event."
- #     redirect_to edit_timeline_chart_url(@event.timeline_chart)
- #   else
- #     flash[:error] = "The event did not save due to a problem."
- #     render :controller => 'timeline_charts', :action => 'edit', :id => @timeline_chart.id
- #   end
- # end
-  
+
+  def update
+    @event = Event.find(params[:id])
+    @timeline_chart = @event.timeline_chart
+    params[:event]['start_date'] = Date.parse('1/1/' + params[:event]['start_date'])
+    params[:event]['end_date'] = Date.parse('1/1/' + params[:event]['end_date'])
+    if @event.update_attributes(params[:event])
+      render 'edit_succeeded'
+    else
+      # Re-render to ensure errors get passed
+      render :controller => 'timeline_charts', :action => 'edit', :id => @timeline_chart.id
+    end
+  end
+
   def destroy
     @event = Event.find(params[:id])
+    @timeline_chart = @event.timeline_chart
     @event.destroy
-    flash[:notice] = "Successfully destroyed event."
-    redirect_to edit_timeline_chart_url(@event.timeline_chart)
+    render 'delete_succeeded'
   end
 end

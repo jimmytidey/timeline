@@ -75,14 +75,22 @@ jQuery.extend({
   }
 });
 
+function request_form_to_edit_event_from_server(the_event) {
+  $.get("/events/" + the_event + "/edit");
+}
+
 function submit_event_to_server(begin, end, chart) {
   $.post("/events", { 'event':
     {
-      'title' : 'Click to rename',
+      'title' : 'click to rename',
       'start_date': begin.toString(),
       'end_date': end.toString(),
       'timeline_chart_id' : chart}
     });
+}
+
+function send_delete_request_to_server(the_event) {
+  $.delete_("/events/" + the_event);
 }
 
 function deleteTimeline(id) {
@@ -140,6 +148,7 @@ function initialiseEditFunctions() {
   initialiseResize();
   initialiseLables();
   initialiseEdit();
+  initialiseDestroy();
   initalialiseBubblePopper();
 }
 
@@ -149,7 +158,7 @@ function initialiseTheme() {
     stTheme.timeline_stop  = new Date(tc_end_date)
 }
 
-//Make the durations draggable, called by initialiseTimeline()
+//Make the durations draggable
 function initialiseDragAndDrop() {	
   $('#new_duration').draggable(
   {	
@@ -175,6 +184,7 @@ function initialiseLables()
 {
 	$('.timeline-event-label').each(function() 	{
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
+		$(this).append('<span class="info"></span><img src="/images/bin.png" alt="close" class="bin" />');
 		recalculateEventDate($(this).attr('id'));	
 	});	
 }
@@ -192,8 +202,22 @@ function initialiseResize() {
 function initialiseEdit() { 
   // making the pencil open a modal 
   $('.pencil').click(function() {
-      
-      openMyModal("id");
+      class = $(this).parent().attr('class');
+      // class = "label-2991 2991 timeline-event-label"
+      event_number = class.match(/ \d+ /);
+      // event_number now contains 2991
+      request_form_to_edit_event_from_server(event_number);
+      });
+}
+
+function initialiseDestroy() { 
+  // making the bin trash the event 
+  $('.bin').click(function() {
+      class_ = $(this).parent().attr('class');
+      // class = "label-2991 2991 timeline-event-label"
+      event_number = class_.match(/ \d+ /);
+      // event_number now contains 2991
+      send_delete_request_to_server(event_number);
       });
 }
 

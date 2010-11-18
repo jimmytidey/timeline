@@ -13,6 +13,7 @@ var events = {
         'title': '<%= event.title %>',
         'description': 'This is a sample event called <%= event.title %>',
         'eventID' : <%= event.id %>,
+        'classname'  : <%= event.id %>
         }<% if i != all_events.length - 1 -%>, <% end -%>
     <% end %>
     ]
@@ -22,7 +23,5 @@ var events = {
 var tc_start_date = '<%= @timeline_chart.start_date.iso8601 %>'
 var tc_end_date = '<%= @timeline_chart.end_date.iso8601 %>'
 
-$(document).ready(
-    initialiseTimeline(<%= edit_mode %>, <%= @timeline_chart.zoom %>)
-);
+initialiseTimeline(<%= edit_mode %>, <%= @timeline_chart.zoom %>);
 </script>

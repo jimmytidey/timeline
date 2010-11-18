@@ -26,11 +26,27 @@ describe EventsController do
     response.should render_template(:edit)
   end
   
-  it "destroy action should destroy model and redirect to index action" do
-    Event.stubs(:find).with(1).returns(Event.make)
-    event = Event.make
-    event.id = 1
-    delete :destroy, :id => event.id
-    response.should redirect_to edit_timeline_chart_url(1)
+  it "update action should render correct rjs when model is valid" do
+    Event.stubs(:find).with(111).returns(Event.make(:id => 111))
+    Event.any_instance.stubs(:timeline_chart).returns(TimelineChart.make)
+    Event.any_instance.stubs(:update_attributes).returns(true)
+    xhr :put, :update, :id => 111, :event => {:title => 'Birth', :start_date => '2000', :end_date => '2001', :timeline_chart_id => 222}
+    response.should render_template 'edit_succeeded'
+  end
+  
+  it "update action should render correct rjs when model is invalid" do
+    Event.stubs(:find).with(111).returns(Event.make(:id => 111))
+    Event.any_instance.stubs(:timeline_chart).returns(TimelineChart.make)
+    Event.any_instance.stubs(:update_attributes).returns(false)
+    xhr :put, :update, :id => 111, :event => {:title => 'Birth', :start_date => '2004', :end_date => '0', :timeline_chart_id => 222}
+    response.should render_template 'edit'
+  end
+
+  it "Destroy action must call destroy" do
+    Event.stubs(:find).with(111).returns(Event.make(:id => 111))
+    Event.any_instance.stubs(:timeline_chart).returns(TimelineChart.make)
+    Event.any_instance.expects(:destroy).once
+    xhr :delete, :destroy, :id => 111, :event => {:title => 'Birth', :start_date => '2004', :end_date => '0', :timeline_chart_id => 222}
+    response.should render_template 'delete_succeeded'
   end
 end
