@@ -75,8 +75,8 @@ jQuery.extend({
   }
 });
 
-function request_form_to_edit_event_from_server(the_event) {
-  $.get("/events/" + the_event + "/edit");
+function request_form_to_edit_event_from_server(theEvent) {
+  $.get("/events/" + theEvent + "/edit");
 }
 
 function submit_event_to_server(begin, end, chart) {
@@ -89,8 +89,19 @@ function submit_event_to_server(begin, end, chart) {
     });
 }
 
-function send_delete_request_to_server(the_event) {
-  $.delete_("/events/" + the_event);
+function update_dates_for_event_on_the_server(theEvent, startYear, endYear) {
+  $.put("/events/" + theEvent,
+    { 'event':
+      {
+        'start_date': startYear.toString(), 
+        'end_date': endYear.toString(),
+      }
+    }
+  );
+}
+
+function send_delete_request_to_server(theEvent) {
+  $.delete_("/events/" + theEvent);
 }
 
 function deleteTimeline(id) {
@@ -173,7 +184,7 @@ function initialiseDragAndDrop() {
   
 	$('.timeline-event-tape').draggable(
 	{	
-		stop: function(event, ui) {eventSave($(this).attr('id'));},
+		stop: function(event, ui) {eventSave($(this));},
 		drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id'));},
 		containment: 'parent', 
 		grid: [1, 20],
@@ -192,7 +203,7 @@ function initialiseLables()
 function initialiseResize() {
 	$(".timeline-event-tape").resizable(
 		{							 
-		stop: function(event, ui) {eventSave($(this).attr('id'));  recalculateEventDate($(this).attr('id')); },
+		stop: function(event, ui) {recalculateEventDate($(this).attr('id')); eventSave($(this));  },
 		resize: function(event, ui) {},
 		maxHeight:(20),
 		minHeight:(20)
@@ -202,7 +213,7 @@ function initialiseResize() {
 function initialiseEdit() { 
   // making the pencil open a modal 
   $('.pencil').click(function() {
-      request_form_to_edit_event_from_server(getDataBaseId(this));
+      request_form_to_edit_event_from_server(getDataBaseId($(this).parent()));
   });
 }
 
@@ -210,7 +221,7 @@ function initialiseDestroy() {
   // making the bin trash the event 
   $('.bin').click(function() {
       if (confirm("Are you sure?")){
-        send_delete_request_to_server(getDataBaseId(this));
+        send_delete_request_to_server(getDataBaseId($(this).parent()));
       }
   });
 }
@@ -228,10 +239,10 @@ function moveLabel(id) {
 	$(id).css('left', parseInt(left)+"px");
 }
 
-// Pass this function the child of a tape or label and it will return the
+// Pass this function the a tape or label and it will return the
 // id of the event in the database
 function getDataBaseId(child) {
-  return  $(child).parent().attr('class').match(/\d+/);
+  return  $(child).attr('class').match(/\d+/);
 }
 
 function recalculateEventDate(id) 
@@ -252,9 +263,11 @@ function recalculateEventDate(id)
 }
 
 function eventSave(id) {
-  alert(getDataBaseId(this));
-  null
-  null
+  dbId = getDataBaseId(id);
+  info = id.next('.' + dbId).children('.info');
+  start = info.html().match(/\d+/);
+  end = info.html().match(/ \d+/);
+  update_dates_for_event_on_the_server(dbId, start, end); 
 };
 
 function addDuration(element_id, title, content, chart) 
