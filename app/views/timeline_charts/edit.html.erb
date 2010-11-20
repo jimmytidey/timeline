@@ -6,7 +6,7 @@
 <div id='content_container'>
 	<div id="edit_timeline_chart"> <%= render 'form' %> </div>
 	
-	<%= render 'events/form' %>
+  <%= render :partial => 'events/form', :locals => { :type => 'new'} %>
 	
   <div id='new_duration' style='width:200px; border:1px solid black;z-index:4000'
     data-id='<%= @timeline_chart.id %>'>Drag onto the timeline to add</div> 

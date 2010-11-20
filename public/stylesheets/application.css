@@ -203,8 +203,12 @@ label {
   margin-right:10px;
 }  
 
-.required {
+#new_event_form .required {
 	display:inline;
+}
+
+#edit_event_form .required {
+	display:block;
 }
 
 /* Hack to remove abbr */ 
@@ -321,8 +325,8 @@ abbr {
 	position:absolute;
 	width:32px;
 	height:32px;
-	right:8px;
-	top:8px;
+	right:-80px;
+	top:-30px;
 	background:transparent url('/images/close-button.png') no-repeat scroll right top;
 	text-indent:-99999px;
 	overflow:hidden;
