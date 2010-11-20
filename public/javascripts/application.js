@@ -184,7 +184,7 @@ function initialiseLables()
 {
 	$('.timeline-event-label').each(function() 	{
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
-		$(this).append('<span class="info"></span><img src="/images/bin.png" alt="close" class="bin" />');
+		$(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 		recalculateEventDate($(this).attr('id'));	
 	});	
 }
@@ -202,23 +202,17 @@ function initialiseResize() {
 function initialiseEdit() { 
   // making the pencil open a modal 
   $('.pencil').click(function() {
-      class = $(this).parent().attr('class');
-      // class = "label-2991 2991 timeline-event-label"
-      event_number = class.match(/ \d+ /);
-      // event_number now contains 2991
-      request_form_to_edit_event_from_server(event_number);
-      });
+      request_form_to_edit_event_from_server(getDataBaseId(this));
+  });
 }
 
 function initialiseDestroy() { 
   // making the bin trash the event 
   $('.bin').click(function() {
-      class_ = $(this).parent().attr('class');
-      // class = "label-2991 2991 timeline-event-label"
-      event_number = class_.match(/ \d+ /);
-      // event_number now contains 2991
-      send_delete_request_to_server(event_number);
-      });
+      if (confirm("Are you sure?")){
+        send_delete_request_to_server(getDataBaseId(this));
+      }
+  });
 }
 
 function initalialiseBubblePopper() {
@@ -232,6 +226,12 @@ function moveLabel(id) {
 	left 	= $("#"+id).css('left');	
 	id = "#label"+ id.substr(5);
 	$(id).css('left', parseInt(left)+"px");
+}
+
+// Pass this function the child of a tape or label and it will return the
+// id of the event in the database
+function getDataBaseId(child) {
+  return  $(child).parent().attr('class').match(/\d+/);
 }
 
 function recalculateEventDate(id) 
@@ -251,7 +251,11 @@ function recalculateEventDate(id)
 	$('#'+id+" .info").replaceWith(' <span class="info">('+begin.getFullYear()+' - '+ end.getFullYear()+')</span>');	
 }
 
-function eventSave() {};
+function eventSave(id) {
+  alert(getDataBaseId(this));
+  null
+  null
+};
 
 function addDuration(element_id, title, content, chart) 
 {	
