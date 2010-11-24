@@ -208,28 +208,28 @@ h1 {
 	margin-top:3px;
 }	
 
-#timeline_chart_start_year input{
+#timeline_chart_start_year_wrapper input{
 	width:60px;
 }
 
-#timeline_chart_end_year input{
+#timeline_chart_end_year_wrapper input{
 	width:60px;
 }
 
-#timeline_chart_start_year {
+#timeline_chart_start_year_wrapper {
 	width:77px!important;
 }
 
-#timeline_chart_end_year {
+#timeline_chart_end_year_wrapper {
 	width:77px!important;
 }
 
-#timeline_chart_zoom {
+#timeline_chart_zoom_wrapper {
 	width:70px!important;
 	margin-top:-3px;
 }
 
-#timeline_chart_zoom label{
+#timeline_chart_zoom_wrapper label{
 	display:block;
 }	
 

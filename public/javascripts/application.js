@@ -1,3 +1,31 @@
+/*********** Doug Crockford's functions ***
+ *
+ * These functions add syntactic sugar that 
+ * should probably be in the language anyway.
+ *
+ **********************************/
+
+/* Neater prototypal inheritance http://javascript.crockford.com/prototypal.html */
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+
+if (typeof Object.beget !== 'function') {
+     Object.beget = function (o) {
+         var F = function () {};
+         F.prototype = o;
+         return new F();
+     };
+}
+
+/* Augment a basic type */
+Function.prototype.method = function (name, func) {
+    this.prototype[name] = func;
+    return this;
+};
+
 /*********** freebase functions ***
  *
  * The next three functions tie 
@@ -195,6 +223,7 @@ function initialiseLables()
 {
 	$('.timeline-event-label').each(function() 	{
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
+    $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 		recalculateEventDate($(this).attr('id'));	
 	});	
 }
