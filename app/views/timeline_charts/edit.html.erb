@@ -4,12 +4,17 @@
 <p id="strap">Build and share timelines of historical events<p> 
 
 <div id='content_container'>
+	
+	<a href='/' id='home_link'>Home </a>   
+	
 	<div id="edit_timeline_chart"> <%= render 'form' %> </div>
 	
   <%= render :partial => 'events/form', :locals => { :type => 'new'} %>
 	
-  <div id='new_duration' style='width:200px; border:1px solid black;z-index:4000'
-    data-id='<%= @timeline_chart.id %>'>Drag onto the timeline to add</div> 
+  <div id='new_duration' 
+    data-id='<%= @timeline_chart.id %>'><span>Drag onto the timeline to add</span></div> 
+    
+    
 	<div id="my-timeline" style="height: 150px; border: 1px solid #aaa;"></div>
   <div id="inline_script">
 	  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>

@@ -1,26 +1,36 @@
 <%= simple_form_for @timeline_chart, :remote => true do |f| %>
   <%= f.error_messages %>
-    <%= f.input :title %>
+    
+  <div id='timeline_chart_title'>
+  	<%= f.input :title %>
+  </div>
 
-  <div class="input string required">
+  <div class="input string required" id="timeline_chart_start_year" >
     <label class="string required" for="timeline_chart_start_year">
       Start Year
     </label>
-    <input class="string required" id="timeline_chart_start_year"
+    <input class="string required" 
     name="timeline_chart[start_year]" size="10" type="text" 
     value="<%= @timeline_chart.start_date.year if @timeline_chart.start_date %>" />
   </div>
 
-  <div class="input string required">
+  <div class="input string required" id="timeline_chart_end_year">
     <label class="string required" for="timeline_chart_end_year">
       End Year
     </label>
-    <input class="string required" id="timeline_chart_end_year"
+    <input class="string required" 
     name="timeline_chart[end_year]" size="10" type="text" 
     value="<%= @timeline_chart.end_date.year if @timeline_chart.end_date%>" />
   </div>
-
-    <%= f.input :zoom, :as => :select, :collection => TimelineChart::PERIOD, :prompt => ""%>
-    <%= f.input :private %>
-    <%= f.button :submit, 'Save' %>
+  
+	<div id='timeline_chart_zoom'>
+	 <%= f.input :zoom, :as => :select, :collection => TimelineChart::PERIOD, :prompt => ""%>
+	</div>
+	
+	<div id='timeline_chart_private_div'>
+		<%= f.label :private   %>
+		<%= f.check_box :private   %>
+	</div>
+  	
+   <%= f.button :submit, 'Save' %>
 <% end %>

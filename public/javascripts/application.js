@@ -195,14 +195,14 @@ function initialiseLables()
 {
 	$('.timeline-event-label').each(function() 	{
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
-		$(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 		recalculateEventDate($(this).attr('id'));	
 	});	
 }
 
 function initialiseResize() {
 	$(".timeline-event-tape").resizable(
-		{							 
+		{		
+		handles: 'e',
 		stop: function(event, ui) {recalculateEventDate($(this).attr('id')); eventSave($(this));  },
 		resize: function(event, ui) {},
 		maxHeight:(20),
@@ -214,6 +214,7 @@ function initialiseEdit() {
   // making the pencil open a modal 
   $('.pencil').click(function() {
       request_form_to_edit_event_from_server(getDataBaseId($(this).parent()));
+      initialiseDestroy();
   });
 }
 
@@ -295,8 +296,6 @@ function autoAdd() {
 	text = escape(text); 
 	var json_url = 'http://jimmytidey.co.uk/timeline/open_calais/index.php?query_text='+text+'&callback=?';
 	
-	alert(text);
-	
 	$.ajax({
 	  type: "GET",
 	  url: json_url,
@@ -308,6 +307,11 @@ function autoAdd() {
 
 function parseAutoAdd(dates) {
 	dateObject = eval(dates); 
+	$.each(dateObject, function(key, value) { 
+		$('#auto_add_result').append('<p>'+value.title+' Begins: '+value.start+' Ends: '+value.end+'</p> ');
+		
+	});
+	
 }
 
 // Bringing up a modal 

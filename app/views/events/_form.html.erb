@@ -1,18 +1,21 @@
 <div id="<%= type %>_event_form">
 <%= simple_form_for @event, :remote => true do |f| %>
   <%= f.error_messages %>
-  <%= f.input :title, :label => 'Event' %>
   
-  <div class="input string required">
+  <div id="new_event_title"> 
+  	<%= f.input :title, :label => 'Event' %>
+  </div>
+  
+  <div class="input string required" id="new_event_start_date" >
     <label class="string required" for="event_start_date">
       Start date
     </label>
-    <input class="string required" id="event_start_date" 
+    <input class="string required" 
     name="event[start_date]" size="50" type="text"
     value="<%= @event.start_date.year if @event.start_date %>" />
   </div>
 
-  <div class="input string required">
+  <div class="input string required" id="new_event_end_date">
     <label class="string required" for="event_end_date">
       End date
     </label>
@@ -22,6 +25,7 @@
   </div>
 
   <%= f.hidden_field :timeline_chart_id, :value => @timeline_chart.id %>
-  <%= f.submit %>
+  
+  <%= f.submit :value => 'Add »' %>
 <% end %>
 </div>
