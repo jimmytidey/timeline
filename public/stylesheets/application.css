@@ -245,29 +245,39 @@ h1 {
 	width:60px;
 }
 
-#new_event {
-	
+#new_event_form {
+	display:inline;
 	position:absolute;
 	right:20px;
 	top:60px;
-	width:352px;
+	width:436px;
 }
 
-#new_event div{
+#new_event_form div{
 	float:left;
+  margin-bottom: 10px;  
 }	
 
-#new_event_title {
+#new_event_form .event_title input.string {
 	width:140px;
 }
 
-#new_event_start_date{
+#new_event_form input.string {  
+  width:40px;
+}  
+
+#new_event_form .start_date{
 	margin-left:20px;
 }
-#new_event_start_date, #new_event_end_date {
-	width:60px;
+
+#edit_event {
+	display:block;
+	width:252px;
 }
 
+#edit_event_form input.string {  
+  width:80px;
+}  
 
 #new_duration {
 	left:20px;
@@ -299,14 +309,6 @@ label {
 .timeline_chart input, .timeline_chart select {  
   margin-right:10px;
 }  
-
-#new_event_form .required {
-	display:inline;
-}
-
-#edit_event_form .required {
-	display:block;
-}
 
 /* Hack to remove abbr */ 
 
@@ -371,23 +373,6 @@ abbr {
 .timeline_chart input.string {  
   width:140px;
 }  
-
-#event_title {  
-  width:140px;
-}  
-
-.event input.string {  
-  width:40px;
-}  
-.event div.input {  
-  margin-bottom: 10px;  
-}  
-
-.event div.boolean label {  
-  float: none;  
-  margin: 0;  
-}  
-
 
 /* MODAL WINDOW CSS */ 
 
