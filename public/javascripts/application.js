@@ -142,15 +142,11 @@ function deleteTimeline(id) {
  **********************************/
 
 var tl;
-var eventSource = new Timeline.DefaultEventSource(); 
-var resizeTimerID = null;
-var bandInfos = [];
-var stTheme = Timeline.ClassicTheme.create();
-//Mod the theme
-stTheme.event.tape.height = 20;
 
 function initialiseTimeline(editMode, zoom) {	
-  bandInfos = [
+  var eventSource = new Timeline.DefaultEventSource(), 
+    stTheme = Timeline.ClassicTheme.create(),
+    bandInfos = [
     Timeline.createBandInfo({
       width: "100%", 
       intervalUnit: zoom, 
@@ -158,7 +154,7 @@ function initialiseTimeline(editMode, zoom) {
       eventSource: eventSource,
       theme: stTheme
     })];
-  initialiseTheme();
+  initialiseTheme(stTheme);
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
 
@@ -179,9 +175,10 @@ function initialiseEditFunctions() {
 }
 
 //Stop timeline scrolling for ever
-function initialiseTheme() {
-    stTheme.timeline_start = new Date(tc_start_date);
-    stTheme.timeline_stop  = new Date(tc_end_date)
+function initialiseTheme(stTheme) {
+  stTheme.event.tape.height = 40;
+  stTheme.timeline_start = new Date(tc_start_date);
+  stTheme.timeline_stop  = new Date(tc_end_date)
 }
 
 //Make the durations draggable
@@ -269,9 +266,9 @@ function recalculateEventDate(id)
 	width 	= $("#"+id).css('width');	
 	
 	//caluclate and remove offset from begining of timeline
-	offset= parseInt(bandInfos[0].ether._band._viewOffset);	
-	begin 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+offset);
-	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(width)+offset+parseInt(left));
+	offset= parseInt(tl.getBand(0)._bandInfo.ether._band._viewOffset);	
+	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+offset);
+	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(width)+offset+parseInt(left));
 		 
 	id = "label"+ id.substr(5);
 	
@@ -294,9 +291,9 @@ function addDuration(element_id, title, content, chart)
 	layer	= $("#"+element_id).css('top'); 	
 
 	//convert to a date
-	begin 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)-20);
+	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-20);
 	layer 	= parseInt(layer)/18;
-	end 	= bandInfos[0].ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
+	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
