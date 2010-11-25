@@ -10,8 +10,8 @@ var events = {
           'start': '<%= event.start_date.iso8601 %>',
           'end'  : '<%= event.end_date.iso8601 %>',
         <% end %>
-        'title': '<%= event.title %>',
-        'description': 'This is a sample event called <%= event.title %>',
+        'title': '<%= escape_javascript event.title %>',
+        'description': '',
         'eventID' : <%= event.id %>,
         'classname'  : <%= event.id %>
         }<% if i != all_events.length - 1 -%>, <% end -%>

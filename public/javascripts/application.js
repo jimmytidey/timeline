@@ -77,6 +77,14 @@ $(document).ready(function() {
  *
  **********************************/
 
+function savePosition() {
+  savedPosition = tl.getBand(0).getCenterVisibleDate();
+}
+
+function restorePosition() {
+  tl.getBand(0).setCenterVisibleDate(savedPosition);
+}
+
 /* Extend jQuery with functions for PUT and DELETE requests. */
 function jq_ajax_request(url, data, callback, type, method) {
   if (jQuery.isFunction(data)) {
@@ -106,6 +114,7 @@ function request_form_to_edit_event_from_server(theEvent) {
 }
 
 function submit_event_to_server(begin, end, chart) {
+  savePosition();
   $.post("/events", { 'event':
     {
       'title' : 'click to rename',
@@ -116,6 +125,7 @@ function submit_event_to_server(begin, end, chart) {
 }
 
 function update_dates_for_event_on_the_server(theEvent, startYear, endYear) {
+  savePosition();
   $.put("/events/" + theEvent,
     { 'event':
       {
@@ -127,10 +137,12 @@ function update_dates_for_event_on_the_server(theEvent, startYear, endYear) {
 }
 
 function send_delete_request_to_server(theEvent) {
+  savePosition();
   $.delete_it("/events/" + theEvent);
 }
 
 function deleteTimeline(id) {
+  savePosition();
   $.delete_it("/timeline_charts/" + id);
 }
 
@@ -142,10 +154,11 @@ function deleteTimeline(id) {
  **********************************/
 
 var tl;
+var savedPosition;
+var eventSource = new Timeline.DefaultEventSource();
 
 function initialiseTimeline(editMode, zoom) {	
-  var eventSource = new Timeline.DefaultEventSource(), 
-    stTheme = Timeline.ClassicTheme.create(),
+  var stTheme = Timeline.ClassicTheme.create(),
     bandInfos = [
     Timeline.createBandInfo({
       width: "100%", 
@@ -160,6 +173,9 @@ function initialiseTimeline(editMode, zoom) {
 
   if (editMode) {
     initialiseEditFunctions();
+    if (restorePosition()) {
+      restorePosition();
+    }
   }
 }
 
@@ -176,7 +192,7 @@ function initialiseEditFunctions() {
 
 //Stop timeline scrolling for ever
 function initialiseTheme(stTheme) {
-  stTheme.event.tape.height = 40;
+  stTheme.event.tape.height = 20;
   stTheme.timeline_start = new Date(tc_start_date);
   stTheme.timeline_stop  = new Date(tc_end_date)
 }
@@ -196,8 +212,8 @@ function initialiseDragAndDrop() {
   
   $('.timeline-event-tape').draggable(
   {	
-    stop: function(event, ui) {eventSave($(this));},
-    drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id'));},
+    stop: function(event, ui) { eventSave($(this)); },
+    drag: function(event, ui) { recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
     containment: 'parent', 
     grid: [1, 20],
 	});
@@ -208,18 +224,18 @@ function initialiseLables()
 	$('.timeline-event-label').each(function() 	{
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
     $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
-		recalculateEventDate($(this).attr('id'));	
+    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
 	});	
 }
 
 function initialiseResize() {
 	$(".timeline-event-tape").resizable(
 		{		
-		handles: 'e',
-		stop: function(event, ui) {recalculateEventDate($(this).attr('id')); eventSave($(this));  },
-		resize: function(event, ui) {},
-		maxHeight:(20),
-		minHeight:(20)
+	  	handles: 'e',
+		  stop: function(event, ui) { eventSave($(this)) },
+		  resize: function(event, ui) {recalculateEventDate($(this).attr('id')) },
+		  maxHeight:(20),
+		  minHeight:(20)
 		});
 }	
 
@@ -261,6 +277,7 @@ function getDataBaseId(child) {
 
 function recalculateEventDate(id) 
 {
+  // TODO: This is sometimes 'off by one'
 	// covert tape element ID to ID for the relevant lable  
 	left 	= $("#"+id).css('left');
 	width 	= $("#"+id).css('width');	
@@ -297,7 +314,7 @@ function addDuration(element_id, title, content, chart)
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
-  	submit_event_to_server(begin, end, chart);
+  submit_event_to_server(begin, end, chart);
 	$("#new_duration").css('left', '20px')
 	$("#new_duration").css('top', '60px')	
 };

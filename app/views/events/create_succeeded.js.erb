@@ -4,4 +4,5 @@
 $("#ajax_flash_notice").html("<%= escape_javascript(flash_message)%>");
 $("#ajax_flash_notice").show(300);
 
+$('#new_event_form input.string').attr('value','')
 <%= render :file => 'global/re-render_chart' %>
