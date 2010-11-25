@@ -294,7 +294,7 @@ function recalculateEventDate(id)
 
 function eventSave(id) {
   dbId = getDataBaseId(id);
-  info = id.next('.' + dbId).children('.info');
+  info = id.next().children('.info');
   start = info.html().match(/\d+/);
   end = info.html().match(/ \d+/);
   update_dates_for_event_on_the_server(dbId, start, end); 
