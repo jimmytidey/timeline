@@ -15,7 +15,7 @@ var events = {
         'color' : '<%= event.color %>',
         'textColor' : 'black',
         'eventID' : <%= event.id %>,
-        'classname'  : <%= event.id %>
+        'classname'  : "<%= event.id.to_s %> <%= event.color %>"
         }<% if i != all_events.length - 1 -%>, <% end -%>
     <% end %>
     ]
