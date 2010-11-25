@@ -1,3 +1,4 @@
+/*globals $ Timeline jQuery document*/
 /*********** Doug Crockford's functions ***
  *
  * These functions add syntactic sugar that 
@@ -13,11 +14,11 @@ function object(o) {
 }
 
 if (typeof Object.beget !== 'function') {
-     Object.beget = function (o) {
-         var F = function () {};
-         F.prototype = o;
-         return new F();
-     };
+  Object.beget = function (o) {
+    var F = function () {};
+    F.prototype = o;
+    return new F();
+  };
 }
 
 /* Augment a basic type */
@@ -34,43 +35,40 @@ Function.prototype.method = function (name, func) {
  * a couple of dates.
  *
  **********************************/
-$(document).ready(function() {
-    //adds the click function to the auto add button 
-    $('#auto_add_submit').click(function() {autoAdd(); });
-    
-    $("#event_title")
-    .suggest({
-      "type": ["/time/event"],
-      "type_strict": "any",
-      all_types:true
-      }).bind("fb-select", function(e, data) {
-          getMoreData(data);
-        });
-    });
-
-// Called by the above
+// Called by the function below
 function getMoreData(data) {
-  var query = [{'id': data.id, '/time/event/start_date': null, '/time/event/end_date': null}];
-  var query_envelope = {'query' : query};
-  var service_url = 'http://api.freebase.com/api/service/mqlread';
+  var query = [{'id': data.id, '/time/event/start_date': null, '/time/event/end_date': null}],
+      query_envelope = {'query' : query},
+      service_url = 'http://api.freebase.com/api/service/mqlread',
+      start_date,
+      end_date;
 
   $.getJSON(service_url + '?callback=?', {query:JSON.stringify(query_envelope)}, function(response) {
       
-       if (response.code == "/api/status/ok" && response.result ) {
-          var start_date = response.result[0]["/time/event/start_date"];
-          var end_date = response.result[0]["/time/event/end_date"];
-          setDates(start_date, end_date);
+       if (response.code === "/api/status/ok" && response.result ) {
+          start_date = response.result[0]["/time/event/start_date"];
+          end_date = response.result[0]["/time/event/end_date"];
+          start_date = start_date.substring(0,4);
+          end_date = end_date.substring(0,4);
+          $('#new_event_form .event_start_date').val(start_date);
+          $('#new_event_form .event_end_date').val(end_date);
         }
   });
 }
 
-// Called by the above
-function setDates(start_date, end_date) {
-  start_date = start_date.substring(0,4);
-  end_date = end_date.substring(0,4);
-  $('#new_event_form .start_date').val(start_date);
-  $('#new_event_form .end_date').val(end_date);
-}
+$(document).ready(function() {
+    //adds the click function to the auto add button 
+    $('#auto_add_submit').click(function() {autoAdd(); });
+    
+    $('#new_event_form .event_title input').suggest({
+      "type": ["/time/event"],
+      "type_strict": "any",
+      all_types:true
+    }).bind("fb-select", function(e, data) {
+        getMoreData(data);
+    });
+});
+
 
 /*********** AJAX functions ***
  *
@@ -80,7 +78,7 @@ function setDates(start_date, end_date) {
  **********************************/
 
 /* Extend jQuery with functions for PUT and DELETE requests. */
-function _ajax_request(url, data, callback, type, method) {
+function jq_ajax_request(url, data, callback, type, method) {
   if (jQuery.isFunction(data)) {
       callback = data;
       data = {};
@@ -96,10 +94,10 @@ function _ajax_request(url, data, callback, type, method) {
 
 jQuery.extend({
   put: function(url, data, callback, type) {
-    return _ajax_request(url, data, callback, type, 'PUT');
+    return jq_ajax_request(url, data, callback, type, 'PUT');
   },
-  delete_: function(url, data, callback, type) {
-    return _ajax_request(url, data, callback, type, 'DELETE');
+  delete_it: function(url, data, callback, type) {
+    return jq_ajax_request(url, data, callback, type, 'DELETE');
   }
 });
 
@@ -122,18 +120,18 @@ function update_dates_for_event_on_the_server(theEvent, startYear, endYear) {
     { 'event':
       {
         'start_date': startYear.toString(), 
-        'end_date': endYear.toString(),
+        'end_date': endYear.toString()
       }
     }
   );
 }
 
 function send_delete_request_to_server(theEvent) {
-  $.delete_("/events/" + theEvent);
+  $.delete_it("/events/" + theEvent);
 }
 
 function deleteTimeline(id) {
-  $.delete_("/timeline_charts/" + id);
+  $.delete_it("/timeline_charts/" + id);
 }
 
 /*********** SIMILE functions ***
@@ -154,29 +152,18 @@ stTheme.event.tape.height = 20;
 function initialiseTimeline(editMode, zoom) {	
   bandInfos = [
     Timeline.createBandInfo({
-  	  width:          "100%", 
-  	  intervalUnit:   zoom, 
-  	  intervalPixels: 100,
-  	  eventSource: eventSource,
-      theme: stTheme
-    }) /*,
-    Timeline.createBandInfo({
-      width: "20%",
-      intervalUnit: zoom + 1,
+      width: "100%", 
+      intervalUnit: zoom, 
       intervalPixels: 100,
       eventSource: eventSource,
-      theme: stTheme, 
-      layout: 'overview' // original, overview, detailed
-    }) */
-  ];
-  // bandInfos[1].syncWith = 0;
-  // bandInfos[1].highlight = true;
+      theme: stTheme
+    })];
   initialiseTheme();
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
 
   if (editMode) {
-   initialiseEditFunctions();
+    initialiseEditFunctions();
   }
 }
 
@@ -201,21 +188,21 @@ function initialiseTheme() {
 function initialiseDragAndDrop() {	
   $('#new_duration').draggable(
   {	
-  	stop: function(event, ui) 
-  	{
-  		addDuration('new_duration', 'click to give me a name','');
-  	},
-  	//revert: true, // This causes problems
-  	containment: '#my-timeline',		
-  	grid: [1,18]		
+    stop: function(event, ui) 
+    {
+      addDuration('new_duration', 'click to give me a name','');
+    },
+    //revert: true, // This causes problems
+    containment: '#my-timeline',		
+    grid: [1,18]		
   });
   
-	$('.timeline-event-tape').draggable(
-	{	
-		stop: function(event, ui) {eventSave($(this));},
-		drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id'));},
-		containment: 'parent', 
-		grid: [1, 20],
+  $('.timeline-event-tape').draggable(
+  {	
+    stop: function(event, ui) {eventSave($(this));},
+    drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id'));},
+    containment: 'parent', 
+    grid: [1, 20],
 	});
 }
 
@@ -259,7 +246,7 @@ function initialiseDestroy() {
 function initalialiseBubblePopper() {
   Timeline.OriginalEventPainter.prototype._showBubble = function(x, y, evt) {
     //stop the bubble from appearing!
-  }
+  };
 }
 
 // when user drags the tape it needs to make the lable move with it 
@@ -277,7 +264,6 @@ function getDataBaseId(child) {
 
 function recalculateEventDate(id) 
 {
-	
 	// covert tape element ID to ID for the relevant lable  
 	left 	= $("#"+id).css('left');
 	width 	= $("#"+id).css('width');	
@@ -320,9 +306,8 @@ function addDuration(element_id, title, content, chart)
 };
 
 function autoAdd() {
-	
 	var text = $('#auto_add_text').val(); 
-	text = escape(text); 
+  text = escape(text); 
 	var json_url = 'http://jimmytidey.co.uk/timeline/open_calais/index.php?query_text='+text+'&callback=?';
 	
 	$.ajax({
@@ -383,5 +368,3 @@ function openMyModal(id)
 	modalWindow.content = "<p>Edit " + id + " here</p>";
 	modalWindow.open();
 }; 
-
-
