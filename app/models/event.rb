@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :timeline_chart
 
-  attr_accessible :title, :start_date, :end_date, :timeline_chart_id, :color
+  attr_accessible :title, :start_date, :end_date, :timeline_chart_id, :color, :band
 
   before_validation :check_dates
   after_save :mark_timeline_as_updated

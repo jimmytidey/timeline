@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101125053658) do
+ActiveRecord::Schema.define(:version => 20101125063815) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20101125053658) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "color"
+    t.integer  "band"
   end
 
   create_table "timeline_charts", :force => true do |t|
