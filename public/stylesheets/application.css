@@ -46,7 +46,6 @@ body, html  {
 
 a {
   color: black;
-  
 }
 
 .timeline-copyright {
@@ -220,9 +219,9 @@ h1 {
 	border-top: 1px solid black;
 	border-left: 1px solid black;
 	border-right: 1px solid black;
-	background-color:transparent!important; 
+	/* background-color:transparent!important; */
 	overflow: visible!important;
-	background-image:url(/images/bkg_tape_blue.png);
+	background-image:url(/images/bkg_tape_overlay.png);
 }
 
 

@@ -1,5 +1,6 @@
 <tr id="user_chart_summary_<%= chart.id %>">
   <td><%= link_to chart.user_id, user_url(chart.user_id) %> </td>
+  <td><%= chart.id %> </td>
   <td><%= chart.title %> </td>
   <td>(<%= chart.start_date.year %> to <%= chart.end_date.year %>)</td>
   <td><%= chart.hits %> </td>

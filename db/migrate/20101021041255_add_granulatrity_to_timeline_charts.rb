@@ -4,6 +4,6 @@ class AddGranulatrityToTimelineCharts < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :timeline_charts, :granularity, :string
+    remove_column :timeline_charts, :granularity
   end
 end

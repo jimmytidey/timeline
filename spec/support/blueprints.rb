@@ -38,6 +38,7 @@ Event.blueprint do
   start_date { Date.civil((1000...1130).to_a.rand,1,1) }
   end_date { Date.civil((1131...1200).to_a.rand,1,1) }
   timeline_chart_id { 1 }
+  color { %w{red yellow blue green orange}.rand }
 end
 
 # Make a hidden chart. Note that this tests if the db is populated

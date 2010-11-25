@@ -12,6 +12,8 @@ var events = {
         <% end %>
         'title': '<%= escape_javascript event.title %>',
         'description': '',
+        'color' : '<%= event.color %>',
+        'textColor' : 'black',
         'eventID' : <%= event.id %>,
         'classname'  : <%= event.id %>
         }<% if i != all_events.length - 1 -%>, <% end -%>
