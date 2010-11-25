@@ -22,10 +22,11 @@ ol,ul {
 /* Global CSS */ 
 
 body, html  {
-  background-color: #9CB4CA;
+  background-color: #d3cbc2;
+  background-image:url(/images/bkg.png);
   font-family: “Helvetica Neue”, Arial, Helvetica, sans-serif; 
   font-size: 12px;
-  color: #333333;
+  color: black;
 
 }
 
@@ -36,60 +37,27 @@ body, html  {
   margin-left:-500px;
   position:absolute;
   width:1000px;
-  height:1000px;
+  height:700px;
   top:0px;
+  background-image:url(/images/bkg_header.png);
+  background-repeat: repeat-x;
+  border-left:1px solid black; 
+  border-right:1px solid black; 
 }
 
 
 a {
-  color: #0000FF;
+  color: black;
+  
 }
 
 .timeline-copyright {
 	display:none;
 }
 
-/* for titles */
-h1 {
-	position:absolute; 
-	top:20px; 
-	left:0px;
-}
-
-#strap {
-	left:0px;
-	position:absolute;
-	top:50px;
-}
-
-/* Index Page */ 
-
-#top_timelines { 
-	position:absolute; 
-	left:20px;
-	top:30px;
-}
-
-#user_timelines {
-	position:absolute; 
-	left:500px;
-	top:30px;
-}
-
-#add_timeline {
-	margin-top:20px;
-}
-
-.clear {
-  clear: both;
-  height: 0;
-  overflow: hidden;
-}
-
-
 #content_container { 
 	position:absolute; 
-	top:70px;
+	top:100px;
 	bottom:0px;
 	width:100%;
 	background-color: white;
@@ -104,15 +72,86 @@ h1 {
 
 #user_nav input {
 	background-color:white;
-	border:1px solid black;
+	border:medium none;
+	font-size:22px;
+	font-weight:bold;
 	height:43px;
 	position:absolute;
-	right:-18px;
-	top:-11px;
-	width:200px;
+	right:0;
+	text-decoration:underline;
+	text-transform:capitalize;
+	top:-25px;
+	width:100px;
 }
 
-/* HOME PAGE */ 
+#home_link {
+	background-color:white;
+	border:medium none;
+	color:black;
+	font-size:22px;
+	font-weight:bold;
+	height:20px;
+	position:absolute;
+	right:14px;
+	text-transform:capitalize;
+	top:-53px;
+	width:100px;
+}
+
+
+/* for titles */
+h1 {
+	position:absolute; 
+	top:20px; 
+	left:0px;
+	display:none;
+}
+
+#strap {
+	left:0px;
+	position:absolute;
+	top:50px;
+	display:none;
+}
+
+/* Index Page */ 
+
+#top_timelines { 
+	border-right:1px solid black;
+	height:400px;
+	left:20px;
+	position:absolute;
+	top:30px;
+	width:480px;
+}
+
+#top_timelines h3 {
+	margin-bottom:10px;
+}
+
+.top_chart_summary {
+	width:480px;
+	clear:left;
+}
+
+#user_timelines {
+	position:absolute; 
+	left:540px;
+	top:30px;
+}
+
+#user_timelines h3 {
+	margin-bottom:10px;
+}
+
+#add_timeline {
+	background-color:white;
+	border:medium none;
+	font-size:20px;
+	margin-top:20px;
+	text-decoration:underline !important;
+	text-transform:uppercase;
+}
 
 .timeline_summary { 
 	width:200px;
@@ -121,12 +160,27 @@ h1 {
 
 .timeline_link {
 	float:left;
-	width:60px;
+	width:40px;
+	display: block;
 }
+
 
 .delete_timeline_link {
 	float:left;
+	width:40px;
+	display: block;
+	text-decoration:underline;
+	background-color:white;
+	border:none; 
 }
+
+.clear {
+  clear: both;
+  height: 0;
+  overflow: hidden;
+}
+
+
 
 /*  EDIT PAGE */ 
 
@@ -134,7 +188,7 @@ h1 {
     position: absolute; 
     top:100px;
     margin-left:20px;
-    width:940px;  
+    width:960px;  
     height:400px!important;
     z-index:0;
 }
@@ -226,11 +280,17 @@ h1 {
 
 #timeline_chart_zoom {
 	width:70px!important;
-	margin-top:-3px;
+	margin-top:-1px!important;
+}
+
+#timeline_chart_zoom select{
+	height:10px;
 }
 
 #timeline_chart_zoom label{
 	display:block;
+	position:relative; 
+	top:-2px;
 }	
 
 #timeline_chart_private_div {
@@ -246,11 +306,14 @@ h1 {
 }
 
 #new_event {
-	
 	position:absolute;
-	right:20px;
-	top:60px;
+	right:0px;
+	top:22px;
 	width:352px;
+}
+
+#event_submit {
+	margin-top:15px;
 }
 
 #new_event div{
@@ -317,23 +380,37 @@ abbr {
 
  /* Stuff that rails has done... */ 
 
-#flash_notice, #flash_error, #flash_alert {
-  padding: 5px 8px;
-  margin: 10px 0;
-}
+
 
 .flash_notice {
-  background-color: #CFC;
-  border: solid 1px #6C6;
+	color:black;
+	font-size:20px;
+	font-weight:bold;
+	left:320px;
+	position:absolute;
+	text-align:left;
+	text-transform:uppercase;
+	top:36px;
+	width:600px;
 }
 
-.flash_error, .flash_alert {
-  background-color: #FCC;
-  border: solid 1px #C66;
+.flash_error {
+	color:black;
+	font-size:20px;
+	font-weight:bold;
+	left:320px;
+	position:absolute;
+	text-align:left;
+	text-transform:uppercase;
+	top:36px;
+	width:600px;
+	color:red;
 }
+
 
 .fieldWithErrors {
   display: inline;
+  background-color:red; 
 }
 
 .error_messages {
@@ -344,6 +421,7 @@ abbr {
   margin-bottom: 20px;
   background-color: #f0f0f0;
   font-size: 12px;
+  visibility:hidden;
 }
 
 .error_messages h2 {
@@ -354,6 +432,13 @@ abbr {
   margin: 0;
   background-color: #c00;
   color: #fff;
+}
+
+.error_messages ul {
+	left:321px;
+	position:absolute;
+	top:60px;
+	visibility:visible;
 }
 
 .error_messages p {
@@ -408,30 +493,38 @@ abbr {
 	-moz-opacity: 0.75;
 	z-index:101;
 }
+
 .modal-window
 {
-	position:fixed;
-	top:50%;
+	background-color:white;
+	border:1px solid black;
 	left:50%;
-	margin:0;
-	padding:0;
+	margin-left:-200px !important;
+	padding:10px;
+	position:absolute;
+	top:83px;
+	width:400px;
 	z-index:102;
 }
+
+.modal-window #new_event_start_date {
+	margin-left:0px;
+}
+
 .close-window
 {
-	position:absolute;
-	width:32px;
-	height:32px;
-	right:-80px;
-	top:-30px;
-	background:transparent url('/images/close-button.png') no-repeat scroll right top;
-	text-indent:-99999px;
-	overflow:hidden;
+	background:url("/images/close-button.png") no-repeat scroll right top transparent;
 	cursor:pointer;
-	opacity:.5;
-	filter: alpha(opacity=50);
-	-moz-opacity: 0.5;
+	height:32px;
+	opacity:0.5;
+	overflow:hidden;
+	position:absolute;
+	right:10px;
+	text-indent:-99999px;
+	top:10px;
+	width:32px;
 }
+
 .close-window:hover
 {
 	opacity:.99;
