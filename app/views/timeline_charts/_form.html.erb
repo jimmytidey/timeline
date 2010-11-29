@@ -3,22 +3,13 @@
     
   <%= f.input :title %>
 
-  <div class="input string required" id="timeline_chart_start_year_wrapper" >
-    <label class="string required" for="timeline_chart_start_year">
-      Start Year
+  <div class="input string required" id="timeline_chart_center_year_wrapper" >
+    <label class="string required" for="timeline_chart_center_year">
+      Center Year
     </label>
-    <input class="string required"  id="timeline_chart_start_year"
-    name="timeline_chart[start_year]" size="10" type="text" 
-    value="<%= @timeline_chart.start_date.year if @timeline_chart.start_date %>" />
-  </div>
-
-  <div class="input string required" id="timeline_chart_end_year_wrapper">
-    <label class="string required" for="timeline_chart_end_year">
-      End Year
-    </label>
-    <input class="string required" id="timeline_chart_end_year"
-    name="timeline_chart[end_year]" size="10" type="text" 
-    value="<%= @timeline_chart.end_date.year if @timeline_chart.end_date%>" />
+    <input class="string required"  id="timeline_chart_center_year"
+    name="timeline_chart[center_year]" size="10" type="text" 
+    value="<%# @timeline_chart.center_date.year if @timeline_chart.center_date %>" />
   </div>
   
   <div id='timeline_chart_zoom_wrapper'>

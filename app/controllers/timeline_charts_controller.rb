@@ -17,8 +17,6 @@ class TimelineChartsController < ApplicationController
   
   def update
     @timeline_chart = TimelineChart.find(params[:id])
-      @timeline_chart.start_date = Date.parse('1/1/' + params[:timeline_chart]['start_year'])
-      @timeline_chart.end_date = Date.parse('1/1/' + params[:timeline_chart]['end_year'])
     if @timeline_chart.update_attributes(params[:timeline_chart])
       render 'edit_succeeded'
     else

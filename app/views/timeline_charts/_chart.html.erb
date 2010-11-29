@@ -22,8 +22,8 @@ var events = {
   <% end %>       
 };
 
-var tc_start_date = '<%= @timeline_chart.start_date.iso8601 %>'
-var tc_end_date = '<%= @timeline_chart.end_date.iso8601 %>'
+var tc_start_year = '<%= @timeline_chart.start_year %>'
+var tc_end_year = '<%= @timeline_chart.end_year %>'
 
 initialiseTimeline(<%= edit_mode %>, <%= @timeline_chart.zoom %>);
 </script>

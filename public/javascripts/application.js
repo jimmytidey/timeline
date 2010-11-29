@@ -167,7 +167,12 @@ function initialiseTimeline(editMode, zoom) {
       eventSource: eventSource,
       theme: stTheme
     })];
+
   initialiseTheme(stTheme);
+  if(!editMode) {
+    limitScollingOfTimeline(stTheme);
+  }
+
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
 
@@ -177,6 +182,16 @@ function initialiseTimeline(editMode, zoom) {
       restorePosition();
     }
   }
+}
+
+function initialiseTheme(stTheme) {
+  stTheme.event.tape.height = 20;
+}
+
+//Stop timeline scrolling for ever in View mode
+function limitScollingOfTimeline(stTheme) {
+  stTheme.timeline_start = Date.parse(tc_start_year,0,0,0,0,0,0);
+  stTheme.timeline_stop  = Date.parse(tc_end_year,0,0,0,0,0,0);
 }
 
 // If this function is called, then the timeline is drawn in "edit" mode. If not
@@ -190,12 +205,6 @@ function initialiseEditFunctions() {
   initalialiseBubblePopper();
 }
 
-//Stop timeline scrolling for ever
-function initialiseTheme(stTheme) {
-  stTheme.event.tape.height = 20;
-  stTheme.timeline_start = new Date(tc_start_date);
-  stTheme.timeline_stop  = new Date(tc_end_date)
-}
 
 //Make the durations draggable
 function initialiseDragAndDrop() {	
@@ -370,7 +379,6 @@ var modalWindow = {
 
 		$(".modal-window").append("<a class=\"close-window\"></a>");
 		$(".close-window").click(function(){modalWindow.close();});
-		$(".modal-overlay").click(function(){modalWindow.close();});
 	}
 };
 

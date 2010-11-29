@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101125063815) do
+ActiveRecord::Schema.define(:version => 20101129110505) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -26,8 +26,6 @@ ActiveRecord::Schema.define(:version => 20101125063815) do
   create_table "timeline_charts", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.datetime "start_date"
-    t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "zoom"
