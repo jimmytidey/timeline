@@ -10,7 +10,7 @@ class TimelineChart < ActiveRecord::Base
   belongs_to :user
   has_many :events, :dependent => :destroy
 
-  attr_accessible :user_id, :title, :zoom, :private, :hits
+  attr_accessible :user_id, :title, :zoom, :private, :hits, :center_date
 
   validates_presence_of :title
   validates_presence_of :user_id
@@ -18,12 +18,39 @@ class TimelineChart < ActiveRecord::Base
   validates_presence_of :zoom
   validates_numericality_of :user_id
   
+  def center_year
+    if self.events.length < 1
+      return Time.now.year
+    elsif center_date.nil?
+      dif = end_date - start_date
+      return (start_date + (dif / 2)).year
+    else
+      return center_date.year
+    end
+  end
+
   def start_year
-    self.events.order("start_date ASC").first.start_date.year
+    start_date && start_date.year
   end
 
   def end_year
-    self.events.order("end_date DESC").first.end_date.year
+    end_date && end_date.year
+  end
+
+  def start_date
+    begin
+      self.events.order("start_date ASC").first.start_date
+    rescue NoMethodError
+      nil
+    end
+  end
+
+  def end_date
+    begin
+      self.events.order("end_date DESC").first.end_date
+    rescue NoMethodError
+      nil
+    end
   end
 
   def self.top_charts(num)

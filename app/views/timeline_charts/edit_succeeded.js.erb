@@ -1,6 +1,6 @@
 <%= render :file => 'global/hide_flash_and_errors' %>
 
-<% flash_message = "Saved #{@timeline_chart.title}: #{@timeline_chart.start_date.year} - #{@timeline_chart.end_date.year}" %>
+<% flash_message = "Saved #{@timeline_chart.title}: #{@timeline_chart.start_year} - #{@timeline_chart.end_year}" %>
 $("#ajax_flash_notice").html("<%= escape_javascript(flash_message)%>");
 $("#ajax_flash_notice").show(300);
 

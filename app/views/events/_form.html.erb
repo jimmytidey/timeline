@@ -3,10 +3,10 @@
   <%= f.error_messages %>
   
   <div class="input string required event_title" >
-    <label class="string required">
+    <label class="string required"
       Event
     </label>
-    <input class="string required" 
+    <input class="string required"
     name="event[title]" size="50" type="text"
     value="<%= @event.title %>" />
   </div>
@@ -15,7 +15,7 @@
     <label class="string required">
       Start date
     </label>
-    <input class="string required event_start_date" 
+    <input class="string required event_start_date"
     name="event[start_date]" size="50" type="text"
     value="<%= @event.start_date.year if @event.start_date %>" />
   </div>

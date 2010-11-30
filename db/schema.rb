@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101129110505) do
+ActiveRecord::Schema.define(:version => 20101129210241) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20101129110505) do
     t.integer  "zoom"
     t.boolean  "private"
     t.integer  "hits"
+    t.datetime "center_date"
   end
 
   create_table "users", :force => true do |t|

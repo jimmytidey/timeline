@@ -2,31 +2,37 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe TimelineChart do
 
-  %w(title start_date end_date zoom).each do |attrib|
+  %w(title zoom).each do |attrib|
     it "should validates presence of #{attrib}" do
       tc = TimelineChart.make( attrib.to_sym => nil )
       tc.should_not be_valid
     end
   end
 
-  it "should validate start date is not after the end date" do
-    tc = TimelineChart.make(:start_date => Time.now, :end_date => Time.now - 1.year)
-    tc.save
-    tc.should_not be_valid
-  end
-
-  it "should not be possible to set a start date with year 0000" do
-    tc = TimelineChart.make(:start_date => (DateTime.parse '0000/01/01'), :end_date => Time.now)
-    tc.save
-    tc.should_not be_valid
-  end
-
-  it "should not be possible to set a end date with year 0000" do
-    tc = TimelineChart.make(:start_date => (Time.now - 2200.years), :end_date => (DateTime.parse '0000/01/01'))
-    tc.save
-    tc.should_not be_valid
+  it "should return a center_year when center_date is set" do
+    tc = TimelineChart.make(:center_date => (DateTime.parse '1000/01/01'))
+    tc.center_year.should == 1000
   end
   
+  it "should infer the center_year when its not set" do
+    tc = TimelineChart.make!(:center_date => nil)
+    ev1 = tc.events.first
+    ev1.start_date = Date.civil(1900)
+    ev1.end_date = Date.civil(1910)
+    ev1.save
+    ev2 = tc.events.second
+    ev2.start_date = Date.civil(1964)
+    ev2.end_date = Date.civil(2000)
+    ev2.save
+    
+    tc.center_year.should == 1950
+  end
+  
+  it "should return the current year for a brand new chart" do
+    tc = TimelineChart.make(:empty)
+    tc.center_year.should == Time.now.year
+  end
+
   it "should never return non 'private' charts in the 'top  charts' list" do
     tc = TimelineChart.make(:private => false);
     tc.save
@@ -79,7 +85,7 @@ describe TimelineChart do
     tc.should_not be_forbidden(tc.user)
   end
 
-  it "should allow an admin to view someone else chart" do
+  it "should allow an admin to view someone else's chart" do
     tc = TimelineChart.make(:private => true)
     user = User.make(:id => 999, :admin => true)
     tc.should_not be_forbidden(user)

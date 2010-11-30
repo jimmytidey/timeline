@@ -1,7 +1,7 @@
 <div id="top_chart_summary_<%= top_chart.id %>" class='top_chart_summary'>
     <p class='timeline_summary'> 
     <%= top_chart.title %> 
-    (<%= top_chart.start_date.year %> to <%= top_chart.end_date.year %>)<br/>
+    (<%= top_chart.start_year %> to <%= top_chart.end_year %>)<br/>
     &nbsp &nbsp &nbsp created by <%= top_chart.user.name %> on <%= top_chart.created_at.strftime('%B %Y') %>
    	</p > 
     <%= link_to 'View', top_chart.id.to_s , :class => "timeline_link"  %>

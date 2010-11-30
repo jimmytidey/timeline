@@ -171,6 +171,7 @@ function initialiseTimeline(editMode, zoom) {
   initialiseTheme(stTheme);
   if(!editMode) {
     limitScollingOfTimeline(stTheme);
+    //tl.getBand(0).setCenterVisibleDate(savedPosition);
   }
 
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
