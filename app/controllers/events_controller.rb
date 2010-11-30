@@ -33,7 +33,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @timeline_chart = @event.timeline_chart
     params[:event]['start_date'] = Date.parse('1/1/' + params[:event]['start_date'])
-    params[:event]['end_date'] = Date.parse('1/1/' + params[:event]['end_date'])
+    params[:event]['end_date'] = Date.parse('1/1/' + params[:event]['end_date']) 
     if @event.update_attributes(params[:event])
       render 'edit_succeeded'
     else

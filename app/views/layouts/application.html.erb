@@ -26,10 +26,13 @@
   </head>
   <body>
  
-    <div id="container">
-      <div id="user_nav">
+    <div id="container" class='' >
+	
+	<a href='/'><img src='/images/title.png' id='title_image' ></a>
+      
+	<div id="user_nav">
           <% if current_user %>
-            <%= button_to 'Log out', current_user, :method=>:delete %>
+            <%= link_to 'Log out', current_user, :method=>:delete, :id=>:logout %>
           <% else %>
             <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",'timeline', users_url)).html_safe %>
           <% end %>
@@ -44,5 +47,6 @@
       <%= content_tag :h1, yield(:title) if show_title? %> 
       <%= yield %>
     </div>
+
   </body>
 </html>

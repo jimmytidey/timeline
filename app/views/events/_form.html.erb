@@ -28,9 +28,11 @@
     name="event[end_date]" size="50" type="text"
     value="<%= @event.end_date.year if @event.end_date%>" />
   </div>
-
-  <%=  f.input :color, :collection => %w{red orange yellow green blue violet}, :prompt => "Colour", :label => "Colour" %>
-  <%= f.hidden_field :timeline_chart_id, :value => @timeline_chart.id %>
+	
+	<div id='color_selector'>
+ 	 <%=  f.input :color, :collection => %w{red orange yellow green blue violet}, :prompt => "Colour", :label => "Colour" %>
+	  <%= f.hidden_field :timeline_chart_id, :value => @timeline_chart.id %>
+	</div>
 
   <% if type == 'new' %>
     <%= f.submit :value => 'Add »' %>
