@@ -224,7 +224,7 @@ function initialiseEditFunctions() {
 	initialiseLables();
 	initialiseEdit();
 	initialiseDestroy();
-	initalialiseBubblePopper();
+	initialiseBubblePopper();
  	initialiseEditTitle(); 
 }
 
@@ -295,7 +295,7 @@ function initialiseDestroy() {
   });
 }
 
-function initalialiseBubblePopper() {
+function initialiseBubblePopper() {
   Timeline.OriginalEventPainter.prototype._showBubble = function(x, y, evt) {
     //stop the bubble from appearing!
   };
@@ -303,7 +303,6 @@ function initalialiseBubblePopper() {
 
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
-	alert(id);	
 	left = $(id).css("left");	
 	id = "#label"+ id.substr(5);
 	
