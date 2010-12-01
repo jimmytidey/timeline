@@ -1,5 +1,3 @@
-<h1>Timeliner</h1>
-<p id="strap">Build and share timelines of historical events<p> 
 
 <div id='content_container'>
 
@@ -16,7 +14,7 @@
 
 		<%= render :partial => "chart_summary", :collection => @user_charts %>
 
-		<%= button_to 'Add a new timeline', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 	
+		<%= button_to 'Add a new timeline »', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 	
 	<% else %> 
 		<p>Sign in to add your timeline</p> 
 	<% end %>

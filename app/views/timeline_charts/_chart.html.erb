@@ -10,12 +10,12 @@ var events = {
           'start': '<%= event.start_date.iso8601 %>',
           'end'  : '<%= event.end_date.iso8601 %>',
         <% end %>
-        'title': '<%= escape_javascript event.title %>',
+        'title': '<span id="title_id_<%= event.id %>" class="label_title"><%= escape_javascript event.title %></span>',
         'description': '',
         'color' : '<%= event.color %>',
         'textColor' : 'black',
         'eventID' : <%= event.id %>,
-        'classname'  : "<%= event.id.to_s %> <%= event.color %>"
+        'classname'  : "<%= event.id.to_s %> <%= event.color %> band_<%=event.band %>"
         }<% if i != all_events.length - 1 -%>, <% end -%>
     <% end %>
     ]

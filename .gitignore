@@ -6,6 +6,7 @@ coverage
 capybara-201*
 .bundle
 db/*.sqlite3
+db/*.sqlite3-journal
 log/*.log
 tmp/**/*
 .DS_Store

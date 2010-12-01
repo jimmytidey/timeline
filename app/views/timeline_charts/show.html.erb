@@ -1,21 +1,30 @@
-<% title "Timeline Chart", false %>
+<% title @timeline_chart.title, false %>
 
-<div id="timeline_summary_info">
-  <h1 id="title"> <%= @timeline_chart.title %> </h1>
-  <strong>Created by:</strong> <%= @timeline_chart.user %>
-</div>
-
-<div id="my-timeline" style="height: 150px; border: 1px solid #aaa;"></div>
-	<div id="inline_script">
-	  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'false' } %>
+<div id='content_container'>
+	
+	<h1><%= @timeline_chart.title.to_s %></h1>
+	
+	<a href='/' id='home_link'>Home </a>   
+	
+	<div id="my-timeline" style="height: 150px; border: 1px solid #aaa;"></div>
+		<div id="inline_script">
+		  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'false' } %>
 	</div>
 
-<noscript>
-  This page uses Javascript to show you a Timeline. Please enable Javascript in your browser to see the full page. Thank you.
-</noscript>
+	<noscript>
+	  This page uses Javascript to show you a Timeline. Please enable Javascript in your browser to see the full page. Thank you.
+	</noscript>
 
-<% if current_user && current_user.id == @timeline_chart.user.id then %>
-  <p>
-  <%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %>
-  </p>
-<% end %>
+	<div id="view_info">  
+	  <strong>Created by:</strong> <%= @timeline_chart.user %>
+	 <%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %>
+	</div>
+
+	<div id='facebook_share'>
+		<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fexample.com%2Fpage%2Fto%2Flike&amp;layout=box_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=lucida+grande&amp;colorscheme=dark&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:65px;" allowTransparency="true"></iframe>
+	</div>	
+
+	<% if current_user && current_user.id == @timeline_chart.user.id then %>
+	
+	<% end %>
+</div>	

@@ -114,24 +114,38 @@ function request_form_to_edit_event_from_server(theEvent) {
   $.get("/events/" + theEvent + "/edit");
 }
 
-function submit_event_to_server(begin, end, chart) {
+function submit_event_to_server(begin, end, band, chart) {
+
   savePosition();
   $.post("/events", { 'event':
     {
       'title' : 'click to rename',
       'start_date': begin.toString(),
       'end_date': end.toString(),
+      'band': band.toString(),
       'timeline_chart_id' : chart}
     });
 }
 
 function update_dates_for_event_on_the_server(theEvent, startYear, endYear) {
   savePosition();
-  $.put("/events/" + theEvent,
+	$.put("/events/" + theEvent,
     { 'event':
       {
-        'start_date': startYear.toString(), 
-        'end_date': endYear.toString()
+        'start_year': startYear.toString(), 
+        'end_year': endYear.toString(),
+      }
+    }
+  );
+}
+
+// I can't make this work - I'm not sure why..
+function update_title_for_event_on_the_server(theEvent, title) {
+  savePosition();
+	$.put("/events/" + theEvent,
+    { 'event':
+      {
+        'title': title
       }
     }
   );
@@ -205,12 +219,13 @@ function limitScollingOfTimeline(stTheme, startYear, endYear) {
 // If this function is called, then the timeline is drawn in "edit" mode. If not
 // then it is drawn in view mode.
 function initialiseEditFunctions() {
-  initialiseDragAndDrop();
-  initialiseResize();
-  initialiseLables();
-  initialiseEdit();
-  initialiseDestroy();
-  initalialiseBubblePopper();
+	initialiseDragAndDrop();
+	initialiseResize();
+	initialiseLables();
+	initialiseEdit();
+	initialiseDestroy();
+	initalialiseBubblePopper();
+ 	initialiseEditTitle(); 
 }
 
 
@@ -223,16 +238,15 @@ function initialiseDragAndDrop() {
       addDuration('new_duration', 'click to give me a name','');
     },
     //revert: true, // This causes problems
-    containment: '#my-timeline',		
-    grid: [1,18]		
+    containment: '#my-timeline' 	
   });
   
   $('.timeline-event-tape').draggable(
   {	
-    stop: function(event, ui) { eventSave($(this)); },
-    drag: function(event, ui) { recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
-    containment: 'parent', 
-    grid: [1, 20],
+   	start: function(event, ui) {$(this).removeClass('band_1 band_2 band_3 band_4 band_5 band_6 band_7 band_8');$('.timeline-event-tape').removeClass('band_1 band_2 band_3 band_4 band_5 band_6 band_7 band_8'); }, 
+    stop: function(event, ui) {eventSave($(this)); },
+    drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
+    containment: 'parent'
 	});
 }
 
@@ -240,8 +254,8 @@ function initialiseLables()
 {
 	$('.timeline-event-label').each(function() 	{
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
-    $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
-    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
+    	$(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
+    	recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
 	});	
 }
 
@@ -264,6 +278,14 @@ function initialiseEdit() {
   });
 }
 
+function initialiseEditTitle() { 
+	$('.label_title').click(
+		function(event, ui) {	
+			editTitle($(this).attr('id'));
+		} 							 
+	);
+}
+
 function initialiseDestroy() { 
   // making the bin trash the event 
   $('.bin').click(function() {
@@ -281,9 +303,12 @@ function initalialiseBubblePopper() {
 
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
-	left 	= $("#"+id).css('left');	
+	alert(id);	
+	left = $(id).css("left");	
 	id = "#label"+ id.substr(5);
+	
 	$(id).css('left', parseInt(left)+"px");
+
 }
 
 // Pass this function the a tape or label and it will return the
@@ -292,21 +317,60 @@ function getDataBaseId(child) {
   return  $(child).attr('class').match(/\d+/);
 }
 
+
+function editTitle(id)
+{
+	text = $('#'+id).html();
+	$('#'+id).html("<input id='active_text' value='"+text+"'>");
+	$('#active_text').focus();
+	$('#active_text').blur(	
+	function () 
+	{
+		replacement_text = $('#'+id+' input').val();
+		$('#'+id+' input').replaceWith(replacement_text); 		
+		event_id= id.substr(9);
+		update_title_for_event_on_the_server(event_id, replacement_text); 
+	});
+}
+
 function recalculateEventDate(id) 
 {
-  // TODO: This is sometimes 'off by one'
 	// covert tape element ID to ID for the relevant lable  
 	left 	= $("#"+id).css('left');
-	width 	= $("#"+id).css('width');	
+	width 	= $("#"+id).css('width');
+	
+	left = parseInt(left);
+	width = parseInt(width);
 	
 	//caluclate and remove offset from begining of timeline
 	offset= parseInt(tl.getBand(0)._bandInfo.ether._band._viewOffset);	
-	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+offset);
-	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(width)+offset+parseInt(left));
+	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
+	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
 		 
 	id = "label"+ id.substr(5);
 	
-	$('#'+id+" .info").replaceWith(' <span class="info">('+begin.getFullYear()+' - '+ end.getFullYear()+')</span>');	
+	//this to prevent a problem with rounding that dates to be 1px out sometimes
+	if (parseInt(begin.getMonth()) > 5)
+	{
+		rounded_begin = parseInt(begin.getFullYear());
+		rounded_begin ++; 
+	}
+	else 
+	{
+		rounded_begin= begin.getFullYear();
+	}
+	
+	if (parseInt(end.getMonth()) > 5)
+	{
+		rounded_end = parseInt(end.getFullYear());
+		rounded_end++; 
+	}
+	else 
+	{
+		rounded_end= end.getFullYear();
+	}	
+	
+	$('#'+id+" .info").replaceWith(' <span class="info">('+rounded_begin+' - '+ rounded_end+')</span>');	
 }
 
 function eventSave(id) {
@@ -322,18 +386,19 @@ function addDuration(element_id, title, content, chart)
 	//get where the duration has been dropped in pixels 
 	left 	= $("#"+element_id).css('left');
 	width 	= $("#"+element_id).css('width');
-	layer	= $("#"+element_id).css('top'); 	
-
-	//convert to a date
-	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-20);
-	layer 	= parseInt(layer)/18;
-	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
+	band	= $("#"+element_id).css('top');
 	
+	//convert to a date (minus 20 is for some CSS problems) 
+	
+	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-20);
+	band 	= parseInt((parseInt(band)-80)/20);
+	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
+			
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
-  submit_event_to_server(begin, end, chart);
+  	submit_event_to_server(begin, end, band, chart);
 	$("#new_duration").css('left', '20px')
-	$("#new_duration").css('top', '60px')	
+	$("#new_duration").css('top', '70px')	
 };
 
 function autoAdd() {
