@@ -33,9 +33,9 @@ describe TimelineChart do
     tc.center_year.should == Time.now.year
   end
 
-  it "should never return non 'private' charts in the 'top  charts' list" do
-    tc = TimelineChart.make(:private => false);
-    tc.save
+  it "should return non 'private' charts in the 'top  charts' list" do
+    tc = TimelineChart.make(:private => false, :hits => 999);
+    tc.save!
     @top = TimelineChart.top_charts(100)
     @top.all.should be_include(tc)
   end

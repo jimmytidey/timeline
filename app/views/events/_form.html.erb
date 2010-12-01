@@ -3,7 +3,7 @@
   <%= f.error_messages %>
   
   <div class="input string required event_title" >
-    <label class="string required"
+    <label class="string required">
       Event
     </label>
     <input class="string required"
@@ -16,7 +16,7 @@
       Start date
     </label>
     <input class="string required event_start_date"
-    name="event[start_date]" size="50" type="text"
+    name="event[start_year]" size="50" type="text"
     value="<%= @event.start_date.year if @event.start_date %>" />
   </div>
 
@@ -25,7 +25,7 @@
       End date
     </label>
     <input class="string required event_end_date"
-    name="event[end_date]" size="50" type="text"
+    name="event[end_year]" size="50" type="text"
     value="<%= @event.end_date.year if @event.end_date%>" />
   </div>
 

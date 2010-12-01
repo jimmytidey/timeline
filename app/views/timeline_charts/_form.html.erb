@@ -9,7 +9,7 @@
     </label>
     <input class="string required"  id="timeline_chart_center_year"
     name="timeline_chart[center_year]" size="10" type="text" 
-    value="<% @timeline_chart.center_date.year if @timeline_chart.center_date %>" />
+    value="<%= @timeline_chart.center_date.year if @timeline_chart.center_date %>" />
   </div>
   
   <div id='timeline_chart_zoom_wrapper'>
@@ -22,4 +22,4 @@
 	</div>
   	
    <%= f.button :submit, 'Save' %>
-<% end %>
+ <% end %>

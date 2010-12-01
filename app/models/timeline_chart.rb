@@ -10,14 +10,25 @@ class TimelineChart < ActiveRecord::Base
   belongs_to :user
   has_many :events, :dependent => :destroy
 
-  attr_accessible :user_id, :title, :zoom, :private, :hits, :center_date
+  attr_accessible :user_id, :title, :zoom, :private, :hits, :center_date, :center_year
 
   validates_presence_of :title
   validates_presence_of :user_id
   validates_presence_of :hits
   validates_presence_of :zoom
   validates_numericality_of :user_id
-  
+
+  def update_attributes(attributes)
+    yr = attributes.delete('center_year')
+    unless yr.match /\d+\ *?(bc|b\.c\.)?/i
+      errors.add(:base, "Not a valid year to center the timeline on")
+      return false
+    else
+      self.center_date = Date.parse('1/1/' + yr)
+      return super(attributes)
+    end
+  end
+    
   def center_year
     if self.events.length < 1
       return Time.now.year
@@ -41,7 +52,7 @@ class TimelineChart < ActiveRecord::Base
     begin
       self.events.order("start_date ASC").first.start_date
     rescue NoMethodError
-      nil
+      Time.now - 1000.years
     end
   end
 
@@ -49,7 +60,7 @@ class TimelineChart < ActiveRecord::Base
     begin
       self.events.order("end_date DESC").first.end_date
     rescue NoMethodError
-      nil
+      Time.now + 20.years
     end
   end
 

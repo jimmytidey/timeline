@@ -110,6 +110,7 @@ jQuery.extend({
 });
 
 function request_form_to_edit_event_from_server(theEvent) {
+  savePosition();
   $.get("/events/" + theEvent + "/edit");
 }
 
@@ -154,10 +155,14 @@ function deleteTimeline(id) {
  **********************************/
 
 var tl;
-var savedPosition;
+
+if(savedPosition === undefined){
+  var savedPosition;
+}
+
 var eventSource = new Timeline.DefaultEventSource();
 
-function initialiseTimeline(editMode, zoom) {	
+function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {	
   var stTheme = Timeline.ClassicTheme.create(),
     bandInfos = [
     Timeline.createBandInfo({
@@ -170,16 +175,18 @@ function initialiseTimeline(editMode, zoom) {
 
   initialiseTheme(stTheme);
   if(!editMode) {
-    limitScollingOfTimeline(stTheme);
-    //tl.getBand(0).setCenterVisibleDate(savedPosition);
+    limitScollingOfTimeline(stTheme, startYear, endYear);
   }
 
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
 
+  //Center Timeline
+  tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
+
   if (editMode) {
     initialiseEditFunctions();
-    if (restorePosition()) {
+    if (savedPosition) {
       restorePosition();
     }
   }
@@ -190,9 +197,9 @@ function initialiseTheme(stTheme) {
 }
 
 //Stop timeline scrolling for ever in View mode
-function limitScollingOfTimeline(stTheme) {
-  stTheme.timeline_start = Date.parse(tc_start_year,0,0,0,0,0,0);
-  stTheme.timeline_stop  = Date.parse(tc_end_year,0,0,0,0,0,0);
+function limitScollingOfTimeline(stTheme, startYear, endYear) {
+  stTheme.timeline_start = new Date(startYear,1,1);
+  stTheme.timeline_stop  = new Date(endYear,1,1);
 }
 
 // If this function is called, then the timeline is drawn in "edit" mode. If not
