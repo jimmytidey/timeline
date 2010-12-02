@@ -342,6 +342,10 @@ a {
 	margin-top:9px!important;
 }
 
+.label_title {
+	cursor:text;
+}
+
 .band_1 {
 	top:2px!important;
 }

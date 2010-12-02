@@ -127,29 +127,21 @@ function submit_event_to_server(begin, end, band, chart) {
     });
 }
 
-function update_dates_for_event_on_the_server(theEvent, startYear, endYear) {
+function update_dates_for_event_on_the_server(theEvent, startYear, endYear, band, title) {
   savePosition();
 	$.put("/events/" + theEvent,
     { 'event':
       {
         'start_year': startYear.toString(), 
         'end_year': endYear.toString(),
+		'band': band.toString(),
+		'title': title.toString()
       }
     }
   );
 }
 
-// I can't make this work - I'm not sure why..
-function update_title_for_event_on_the_server(theEvent, title) {
-  savePosition();
-	$.put("/events/" + theEvent,
-    { 'event':
-      {
-        'title': title
-      }
-    }
-  );
-}
+
 
 function send_delete_request_to_server(theEvent) {
   savePosition();
@@ -238,15 +230,17 @@ function initialiseDragAndDrop() {
       addDuration('new_duration', 'click to give me a name','');
     },
     //revert: true, // This causes problems
-    containment: '#my-timeline' 	
+    containment: '#my-timeline',
+	grid: [1, 6]		
   });
   
   $('.timeline-event-tape').draggable(
   {	
    	start: function(event, ui) {$(this).removeClass('band_1 band_2 band_3 band_4 band_5 band_6 band_7 band_8');$('.timeline-event-tape').removeClass('band_1 band_2 band_3 band_4 band_5 band_6 band_7 band_8'); }, 
     stop: function(event, ui) {eventSave($(this)); },
-    drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
-    containment: 'parent'
+    drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this)); },
+    containment: 'parent',
+	grid: [1, 25]
 	});
 }
 
@@ -304,10 +298,11 @@ function initialiseBubblePopper() {
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
 	left = $(id).css("left");	
-	id = "#label"+ id.substr(5);
+	$(id).next('.timeline-event-label').css('left', left);
 	
-	$(id).css('left', parseInt(left)+"px");
-
+	//don't know why this doesn't work 
+	top = $(id).css("top");	
+	$(id).next('.timeline-event-label').css('margin-top', top);	
 }
 
 // Pass this function the a tape or label and it will return the
@@ -317,18 +312,17 @@ function getDataBaseId(child) {
 }
 
 
-function editTitle(id)
+function editTitle(edit_id)
 {
-	text = $('#'+id).html();
-	$('#'+id).html("<input id='active_text' value='"+text+"'>");
+	text = $('#'+edit_id).html();
+	$('#'+edit_id).html("<input id='active_text' value='"+text+"'>");
 	$('#active_text').focus();
 	$('#active_text').blur(	
 	function () 
 	{
-		replacement_text = $('#'+id+' input').val();
-		$('#'+id+' input').replaceWith(replacement_text); 		
-		event_id= id.substr(9);
-		update_title_for_event_on_the_server(event_id, replacement_text); 
+		replacement_text = $('#active_text').val();
+		$('#active_text').replaceWith(replacement_text); 	
+		eventSave($('#'+edit_id).parent().prev()); 
 	});
 }
 
@@ -373,11 +367,19 @@ function recalculateEventDate(id)
 }
 
 function eventSave(id) {
-  dbId = getDataBaseId(id);
-  info = id.next().children('.info');
-  start = info.html().match(/\d+/);
-  end = info.html().match(/ \d+/);
-  update_dates_for_event_on_the_server(dbId, start, end); 
+	dbId = getDataBaseId(id);
+ 
+	 // get the band, making sure that  
+	top  = parseInt($(id).css('top')); 
+	top  = Math.round((top)/25)+1; 
+	if (top == 0) {top=1;}
+
+	title = $(id).next('.timeline-event-label').children('.label_title').html();
+
+	info = id.next().children('.info');
+	start = info.html().match(/\d+/);
+	end = info.html().match(/ \d+/);
+	update_dates_for_event_on_the_server(dbId, start, end, top, title); 
 };
 
 function addDuration(element_id, title, content, chart) 
