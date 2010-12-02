@@ -7,7 +7,7 @@ Feature: Create Timelines
   Scenario: A user can create a new timeline and add an event
     Given I am an authenticated user
     And I press "Add a new timeline"
-    Then I should see "Edit Timeline Chart"
+    Then I should see "Now add some events to your timeline."
     When I fill in "Title" with "The last 50 years in computing"
     And I fill in "Centre timeline on year" with "1970" within "#edit_timeline_chart"
 		And I press "Save"

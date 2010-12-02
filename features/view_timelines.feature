@@ -9,5 +9,5 @@ Feature: View timelines
     When I go to the home page
     Then I should see "Already built"
     And I should see "Your Timelines"
-    When I follow "View" within "#top_timelines"
+    When I follow "view timeline" within "#top_chart_summary_1"
 		Then I should see "Created by:"

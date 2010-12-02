@@ -11,8 +11,8 @@ Feature: Authentication
 
   Scenario: User can log-out
     Given I am an authenticated user
-    Then I should see the button "Log out"
-    When I press "Log out"
+    Then I should see "Log out"
+    When I follow "Log out"
     Then I should see "Signed out successfully"
     And I should be on the home page
 

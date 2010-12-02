@@ -56,3 +56,9 @@ if User.first.blank? then
   User.make!(2)
   TimelineChart.make!(:hidden, :user_id => User.first.id)
 end
+# Make the first timeline top, so we can click it from the homepage
+tc = TimelineChart.find(1)
+tc.title = "Tommy's Tom Timeline"
+tc.hits = 9999999
+tc.save
+
