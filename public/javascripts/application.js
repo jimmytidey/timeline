@@ -115,7 +115,6 @@ function request_form_to_edit_event_from_server(theEvent) {
 }
 
 function submit_event_to_server(begin, end, band, chart) {
-
   savePosition();
   $.post("/events", { 'event':
     {
@@ -141,15 +140,12 @@ function update_dates_for_event_on_the_server(theEvent, startYear, endYear, band
   );
 }
 
-
-
 function send_delete_request_to_server(theEvent) {
   savePosition();
   $.delete_it("/events/" + theEvent);
 }
 
 function deleteTimeline(id) {
-  savePosition();
   $.delete_it("/timeline_charts/" + id);
 }
 
@@ -223,6 +219,13 @@ function initialiseEditFunctions() {
 
 //Make the durations draggable
 function initialiseDragAndDrop() {	
+  var band_s = '';
+
+   // band_s = 'band_1 band_2 band_3 band_4 ...'
+  for(var i=1;i<=10;i++) {
+    band_s += 'band_' + i + ' '
+  }
+
   $('#new_duration').draggable(
   {	
     stop: function(event, ui) 
@@ -231,25 +234,28 @@ function initialiseDragAndDrop() {
     },
     //revert: true, // This causes problems
     containment: '#my-timeline',
-	grid: [1, 6]		
+	  grid: [1, 6]		
   });
   
   $('.timeline-event-tape').draggable(
   {	
-   	start: function(event, ui) {$(this).removeClass('band_1 band_2 band_3 band_4 band_5 band_6 band_7 band_8');$('.timeline-event-tape').removeClass('band_1 band_2 band_3 band_4 band_5 band_6 band_7 band_8'); }, 
+   	start: function(event, ui) {
+      $(this).removeClass(band_s);
+      $('.timeline-event-tape').removeClass(band_s);
+    }, 
     stop: function(event, ui) {eventSave($(this)); },
     drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this)); },
     containment: 'parent',
-	grid: [1, 25]
-	});
+	  grid: [1, 25]
+  });
 }
 
 function initialiseLables() 
 {
 	$('.timeline-event-label').each(function() 	{
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
-    	$(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
-    	recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
+    $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
+    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
 	});	
 }
 
@@ -367,19 +373,20 @@ function recalculateEventDate(id)
 }
 
 function eventSave(id) {
+  var ttop, dbId;
 	dbId = getDataBaseId(id);
  
 	 // get the band, making sure that  
-	top  = parseInt($(id).css('top')); 
-	top  = Math.round((top)/25)+1; 
-	if (top == 0) {top=1;}
+	ttop  = parseInt($(id).css('top')); 
+	ttop  = Math.round((ttop)/25)+1; 
+	if (ttop == 0) {ttop=1;}
 
 	title = $(id).next('.timeline-event-label').children('.label_title').html();
 
 	info = id.next().children('.info');
 	start = info.html().match(/\d+/);
 	end = info.html().match(/ \d+/);
-	update_dates_for_event_on_the_server(dbId, start, end, top, title); 
+	update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
 };
 
 function addDuration(element_id, title, content, chart) 
@@ -420,9 +427,7 @@ function parseAutoAdd(dates) {
 	dateObject = eval(dates); 
 	$.each(dateObject, function(key, value) { 
 		$('#auto_add_result').append('<p>'+value.title+' Begins: '+value.start+' Ends: '+value.end+'</p> ');
-		
 	});
-	
 }
 
 // Bringing up a modal 
