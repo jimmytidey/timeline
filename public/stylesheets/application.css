@@ -115,7 +115,12 @@ a {
 /* Index Page */ 
 
 #top_timelines h3 {
+	border-bottom:1px solid black;
+	font-size:20px;
 	margin-bottom:10px;
+	padding-bottom:1px;
+	padding-left:0;
+	width:400px;
 }
 
 #top_timelines { 
@@ -134,7 +139,12 @@ a {
 }
 
 #user_timelines h3 {
+	border-bottom:1px solid black;
+	font-size:20px;
 	margin-bottom:10px;
+	padding-bottom:1px;
+	padding-left:0;
+	width:400px;
 }
 
 .timeline_link {
@@ -194,6 +204,7 @@ a {
 	display:block;
 	text-decoration:none;
 	padding:3px;
+	padding-left:10px;
 }
 
 .user_chart_summary {
@@ -202,6 +213,7 @@ a {
 	text-decoration:none;
 	padding:3px;	
 	margin-bottom:26px;
+	padding-left:10px;
 }
 
 
@@ -234,7 +246,7 @@ a {
 	border:medium none;
 	font-size:20px;
 	margin-top:20px;
-	margin-left:230px;
+	margin-left:180px;
 	font-weight:bold;
 	cursor:pointer;
 }
@@ -256,8 +268,8 @@ a {
 #facebook_share {
 	overflow:hidden;
 	position:absolute;
-	right:20px;
-	top:540px;
+	right:0px;
+	top:440px;
 	width:47px;
 }
 
@@ -265,15 +277,27 @@ a {
 	top:40px;
 }
 
-#view_page h1 {
-	position:absolute;
-	top:100px;
+.view_page h1 {
 	display:block;
+	font-size:40px;
+	left:293px;
+	position:absolute;
+	top:-77px;
+	z-index:1000;
 }
 
 #view_page #home_link {
 	top:40px;
 }	
+
+.view_page #my-timeline {
+	top:20px;
+}	
+
+.view_page #view_info {
+	top:440px;
+}
+
 
 
 
@@ -300,6 +324,10 @@ a {
 	margin-top:-10px;
 	font-size:12px;
 	margin-left:1px;
+}
+
+.timeline-event-label p {
+	display:inline;
 }
 
 .ui-resizable {
@@ -419,14 +447,23 @@ a {
 	float:left;
 }
 
-#edit_timeline_chart input, #edit_timeline_chart select {
-	margin-top:3px;
-}	
+#timeline_chart_center_year {
+	width:57px;
+}
 
-#timeline_chart_zoom select{
+#timeline_chart_center_year_wrapper{
+	width:80px!important;
+}
+
+#timeline_chart_zoom {
+	margin-top:-3px;
 	height:10px;
 }
 
+#timeline_chart_zoom_wrapper {
+	width:80px!important;
+}
+	
 #timeline_chart_zoom_wrapper label{
 	display:block;
 	position:relative; 

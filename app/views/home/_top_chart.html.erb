@@ -4,6 +4,6 @@
    
 	  <p class='top_chart_dates'>(<%= top_chart.start_date.year %> - <%= top_chart.end_date.year %>)</p>
 
-	<p class='top_chart_user'><%= top_chart.user.name %> on <%= top_chart.created_at.strftime('%B %Y') %></p> 
+	<p class='top_chart_user'><%= top_chart.user.name %>, <%= top_chart.created_at.strftime('%B %Y') %></p> 
   </a>
 </div>
