@@ -30,7 +30,7 @@
   </div>
 	
 	<div id='color_selector'>
- 	 <%=  f.input :color, :collection => %w{red orange yellow green blue violet}, :prompt => "Colour", :label => "Colour" %>
+ 	 <%=  f.input :color, :collection => %w{red green blue violet}, :prompt => "Colour", :label => "Colour" %>
 	  <%= f.hidden_field :timeline_chart_id, :value => @timeline_chart.id %>
 	</div>
 

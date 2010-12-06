@@ -234,7 +234,7 @@ function initialiseDragAndDrop() {
     },
     //revert: true, // This causes problems
     containment: '#my-timeline',
-	  grid: [1, 6]		
+    grid: [1, 5]		
   });
   
   $('.timeline-event-tape').draggable(
@@ -245,6 +245,7 @@ function initialiseDragAndDrop() {
     }, 
     stop: function(event, ui) {eventSave($(this)); },
     drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this)); },
+    //drag: function(event, ui) {moveLabel($(this)); recalculateEventDate($(this).attr('id'));},
     containment: 'parent',
 	  grid: [1, 25]
   });
@@ -279,9 +280,9 @@ function initialiseEdit() {
 }
 
 function initialiseEditTitle() { 
-	$('.label_title').click(
+	$('.timeline-event-label p').click(
 		function(event, ui) {	
-			editTitle($(this).attr('id'));
+			editTitle($(this).parent().attr('id'));
 		} 							 
 	);
 }
@@ -303,32 +304,32 @@ function initialiseBubblePopper() {
 
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
+
+	top = $(id).css("top");	
+	$(id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
+	
 	left = $(id).css("left");	
 	$(id).next('.timeline-event-label').css('left', left);
-	
-	//don't know why this doesn't work 
-	top = $(id).css("top");	
-	$(id).next('.timeline-event-label').css('margin-top', top);	
 }
 
 // Pass this function the a tape or label and it will return the
 // id of the event in the database
 function getDataBaseId(child) {
-  return  $(child).attr('class').match(/\d+/);
+ 	return  $(child).attr('class').match(/\d+/);
 }
 
 
 function editTitle(edit_id)
 {
-	text = $('#'+edit_id).html();
-	$('#'+edit_id).html("<input id='active_text' value='"+text+"'>");
-	$('#active_text').focus();
-	$('#active_text').blur(	
+	text = $('#'+edit_id+' p').html();
+	$('#'+edit_id+' p').replaceWith("<input class='active_text' value='"+text+"'>");
+	$('.active_text').focus();
+	$('.active_text').blur(	
 	function () 
 	{
-		replacement_text = $('#active_text').val();
-		$('#active_text').replaceWith(replacement_text); 	
-		eventSave($('#'+edit_id).parent().prev()); 
+		replacement_text = $('.active_text').val();
+		$('.active_text').replaceWith("<p>"+replacement_text+'</p>'); 	
+		eventSave($('#'+edit_id).prev()); 
 	});
 }
 
@@ -381,7 +382,7 @@ function eventSave(id) {
 	ttop  = Math.round((ttop)/25)+1; 
 	if (ttop == 0) {ttop=1;}
 
-	title = $(id).next('.timeline-event-label').children('.label_title').html();
+	title = $(id).next('.timeline-event-label').children('p').html();
 
 	info = id.next().children('.info');
 	start = info.html().match(/\d+/);

@@ -16,7 +16,6 @@ class TimelineChartsController < ApplicationController
   end
   
   def update
-    params['timeline_chart'].delete('center_year') if params['timeline_chart']['center_year'] == ''
     @timeline_chart = TimelineChart.find(params[:id])
     if @timeline_chart.update_attributes(params[:timeline_chart])
       render 'edit_succeeded'

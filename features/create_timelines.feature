@@ -9,7 +9,7 @@ Feature: Create Timelines
     And I press "Add a new timeline"
     Then I should see "Now add some events to your timeline."
     When I fill in "Title" with "The last 50 years in computing"
-    And I fill in "Centre timeline on year" with "1970" within "#edit_timeline_chart"
+    And I fill in "Centre year" with "1970" within "#edit_timeline_chart"
 		And I press "Save"
 		And I fill in "event[title]" with "GNU Project" within "#new_event"
     And I fill in "event[start_year]" with "1984" within "#new_event"
