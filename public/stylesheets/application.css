@@ -343,6 +343,7 @@ a {
 
 .timeline-event-label p {
 	display:inline;
+	cursor:text;
 }
 
 .ui-resizable {
@@ -380,6 +381,7 @@ a {
 
 .timeline-event-label {
 	background-image:none!important;
+	
 }
 
 .timeline-event-label {
