@@ -14,7 +14,7 @@
 
 		<%= button_to 'Add a new timeline »', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 	
 	<% else %> 
-		<p>Sign in to add your timeline</p>  <%= (RPXNow.popup_code("#{link_to 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %>
+		<p id='sign_in'>Sign in to add your timeline. <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %></p> 
 	<% end %>
 	
 	</div> 

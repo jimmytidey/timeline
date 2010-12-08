@@ -32,10 +32,9 @@ body, html  {
 
 #container {
 	background-color:white;
-	background-image:url("/images/bkg_container.png");
 	background-position:right top;
 	background-repeat:no-repeat;
-	border:1px solid black;
+	border:1px solid #89a5ae;
 	height:700px;
 	left:50%;
 	margin:10px 10px 10px -500px;
@@ -64,7 +63,7 @@ a {
 	bottom:0;
 	margin-left:20px;
 	position:absolute;
-	top:95px;
+	top:88px;
 	width:960px;
 }
 
@@ -86,9 +85,17 @@ a {
 	width:20px;
 }
 
-#user_nav input{ 
-	background:none; 
-	border:none;
+#sign_in input{ 
+	font-family:“Helvetica Neue”,Arial,Helvetica,sans-serif;
+	font-size:12px;
+	text-decoration:underline;
+}
+
+#sign_in a {
+	margin-top:0;
+	position:relative;
+	text-decoration:none !important;
+	top:-3px;
 }
 
 #logout {
@@ -115,7 +122,12 @@ a {
 	top:-53px;
 }
 
-
+#flash {
+	left:628px;
+	position:absolute;
+	top:81px;
+	z-index:200;
+}
 
 /* Index Page */ 
 
@@ -129,17 +141,17 @@ a {
 }
 
 #top_timelines { 
-	border-right:1px solid black;
 	height:400px;
 	position:absolute;
 	top:30px;
 	width:460px;
+	left:20px;
 }
 
 
 #user_timelines {
 	position:absolute; 
-	left:500px;
+	left:540px;
 	top:30px;
 }
 
