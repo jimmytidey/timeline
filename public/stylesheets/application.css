@@ -99,27 +99,25 @@ a {
 }
 
 #logout {
-	font-size:22px;
-	font-weight:bold;
 	height:43px;
 	position:absolute;
-	right:0;
 	text-decoration:underline;
 	text-transform:capitalize;
-	top:-15px;
+	top:1px;
+	width:100px;
 }
 
 #home_link {
 	background-color:white;
 	border:medium none;
+	bottom:53px;
 	color:black;
 	font-size:22px;
 	font-weight:bold;
 	height:20px;
+	left:483px;
 	position:absolute;
-	right:20px;
 	text-transform:capitalize;
-	top:-53px;
 }
 
 #flash {
