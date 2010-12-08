@@ -361,7 +361,8 @@ a {
 	border-right: 1px solid black;
 	overflow: visible!important;
 	background-color:transparent!important;
-	background-image:url(/images/bkg_tape_blue.png); 
+	background-image:url(/images/bkg_tape_blue.png);
+	cursor: move;
 	
 }
 
