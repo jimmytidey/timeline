@@ -31,17 +31,17 @@ body, html  {
 }
 
 #container {
-  left:50%; 
-  margin:10px;
-  margin-left:-500px;
-  position:absolute;
-  width:1000px;
-  height:700px;
-  top:0px;
-  background-repeat: repeat-x;
-  border:1px solid black; 
-  background-color:white;
-
+	background-color:white;
+	background-image:url("/images/bkg_container.png");
+	background-position:right top;
+	background-repeat:no-repeat;
+	border:1px solid black;
+	height:700px;
+	left:50%;
+	margin:10px 10px 10px -500px;
+	position:absolute;
+	top:0;
+	width:1000px;
 }
 
 a {
@@ -81,9 +81,14 @@ a {
 
 #user_nav {
 	position:absolute;
-	right:20px;
-	top:30px;
-	width:200px;
+	right:42px;
+	top:16px;
+	width:20px;
+}
+
+#user_nav input{ 
+	background:none; 
+	border:none;
 }
 
 #logout {
