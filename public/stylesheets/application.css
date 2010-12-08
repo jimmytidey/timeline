@@ -362,7 +362,7 @@ a {
 	overflow: visible!important;
 	background-color:transparent!important;
 	background-image:url(/images/bkg_tape_blue.png);
-	cursor: move;
+	cursor: move!important;
 	
 }
 
