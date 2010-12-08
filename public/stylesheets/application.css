@@ -413,15 +413,15 @@ a {
 }
 
 .band_6 {
-	top:100px!important; 
-}
-
-.band_7 {
 	top:120px!important; 
 }
 
-.band_8 {
+.band_7 {
 	top:140px!important; 
+}
+
+.band_8 {
+	top:160px!important; 
 }
 
 .band_9 {
@@ -429,7 +429,7 @@ a {
 }
 
 .band_10 {
-	top:180px!important; 
+	top:200px!important; 
 }
 
 .pencil {
