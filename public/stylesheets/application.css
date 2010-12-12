@@ -134,7 +134,7 @@ a {
 	margin-bottom:10px;
 	padding-bottom:1px;
 	padding-left:0;
-	width:400px;
+	width:413px;
 }
 
 #top_timelines { 
@@ -175,9 +175,8 @@ a {
 }
 
 .top_chart_dates {
-	float:left;
-	margin-left:6px;
-	margin-top:7px;
+    font-size: 10px;
+    font-weight: normal;
 }
 
 .top_chart_user {
@@ -218,7 +217,6 @@ a {
 	display:block;
 	text-decoration:none;
 	padding:3px;
-	padding-left:10px;
 }
 
 .user_chart_summary {
@@ -292,12 +290,12 @@ a {
 }
 
 .view_page h1 {
-	display:block;
-	font-size:40px;
-	left:293px;
-	position:absolute;
-	top:-77px;
-	z-index:1000;
+ display: block;
+    font-size: 23px;
+    left: 293px;
+    position: absolute;
+    top: -53px;
+    z-index: 1000;
 }
 
 #view_page #home_link {

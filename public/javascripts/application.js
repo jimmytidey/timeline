@@ -37,22 +37,15 @@ Function.prototype.method = function (name, func) {
  **********************************/
 // Called by the function below
 function getMoreData(data) {
-  var query = [{'id': data.id, '/time/event/start_date': null, '/time/event/end_date': null}],
-      query_envelope = {'query' : query},
-      service_url = 'http://api.freebase.com/api/service/mqlread',
-      start_date,
-      end_date;
-
-  $.getJSON(service_url + '?callback=?', {query:JSON.stringify(query_envelope)}, function(response) {
-      
-       if (response.code === "/api/status/ok" && response.result ) {
-          start_date = response.result[0]["/time/event/start_date"];
-          end_date = response.result[0]["/time/event/end_date"];
-          start_date = start_date.substring(0,4);
-          end_date = end_date.substring(0,4);
-          $('#new_event_form .event_start_date').val(start_date);
-          $('#new_event_form .event_end_date').val(end_date);
-        }
+	
+  query = data.id;
+	
+  $.getJSON('http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', function(result) {
+	    	start = result.start.substr(0,4);
+	    	end = result.end.substr(0,4);
+	    	$('.event_start_date').val(start);
+	    	$('.event_end_date').val(end);
+	    	
   });
 }
 
@@ -61,10 +54,9 @@ $(document).ready(function() {
     $('#auto_add_submit').click(function() {autoAdd(); });
     
     $('#new_event_form .event_title input').suggest({
-      "type": ["/time/event"],
-      "type_strict": "any",
-      all_types:true
-    }).bind("fb-select", function(e, data) {
+	 "type": ["/people/person", "/time/event"],
+ 	 "type_strict": "any"
+	}).bind("fb-select", function(e, data) {
         getMoreData(data);
     });
 });
@@ -177,7 +169,8 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 
   initialiseTheme(stTheme);
   if(!editMode) {
-    limitScollingOfTimeline(stTheme, startYear, endYear);
+    limitScollingOfTimeline(stTheme, startYear-20, endYear+20					);
+    initialiseBubblePopper();
   }
 
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
@@ -290,7 +283,7 @@ function initialiseEditTitle() {
 function initialiseDestroy() { 
   // making the bin trash the event 
   $('.bin').click(function() {
-      if (confirm("Are you sure?")){
+      if (confirm("Do you really want to delete this event?")){
         send_delete_request_to_server(getDataBaseId($(this).parent()));
       }
   });

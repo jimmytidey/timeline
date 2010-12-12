@@ -1,9 +1,12 @@
-<div id="top_chart_summary_<%= top_chart.id %>" class='top_chart_summary'>
-  <a href='/<%=  top_chart.id.to_s   %>' class='top_chart_link' title='view timeline' >
-	<p class='top_chart_title'><%= top_chart.title %></p>
-   
-	  <p class='top_chart_dates'>(<%= top_chart.start_date.year %> - <%= top_chart.end_date.year %>)</p>
 
+
+<div id="top_chart_summary_<%= top_chart.id %>" class='top_chart_summary'>
+  <a href='<%=  top_chart.id.to_s   %>/<%=  CGI::escape(top_chart.title)   %>' class='top_chart_link' title='view timeline' >
+	<p class='top_chart_title'>
+		<%= top_chart.title %>
+	  	<span class='top_chart_dates'>(<%= top_chart.start_date.year %> - <%= top_chart.end_date.year %>)</span>
+	</p>
+	
 	<p class='top_chart_user'><%= top_chart.user.name %>, <%= top_chart.created_at.strftime('%B %Y') %></p> 
   </a>
 </div>

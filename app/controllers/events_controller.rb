@@ -2,9 +2,10 @@ class EventsController < ApplicationController
 
   def create
     @timeline_chart = TimelineChart.find(params[:event][:timeline_chart_id])
+    
     @event = Event.new()
-
-    if @event.update_attributes(params[:event])
+	
+    if @event.update_attributes(params[:event])	
       render 'create_succeeded'
     else
       render 'create_failed'

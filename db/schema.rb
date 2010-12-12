@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101129210241) do
+ActiveRecord::Schema.define(:version => 20101211173401) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -20,27 +20,27 @@ ActiveRecord::Schema.define(:version => 20101129210241) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "color"
-    t.integer  "band"
+    t.integer  "band",              :default => 1
   end
 
   create_table "timeline_charts", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "zoom"
-    t.boolean  "private"
-    t.integer  "hits"
-    t.datetime "center_date"
+    t.integer   "user_id"
+    t.string    "title"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.integer   "zoom"
+    t.boolean   "private"
+    t.integer   "hits"
+    t.timestamp "center_date"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name",       :null => false
-    t.string   "identifier", :null => false
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "admin"
+    t.string    "name",       :null => false
+    t.string    "identifier", :null => false
+    t.string    "email"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.boolean   "admin"
   end
 
   add_index "users", ["identifier"], :name => "index_users_on_identifier", :unique => true
