@@ -14,7 +14,7 @@ Timeline::Application.routes.draw do
   match '*__history__.html' => Proc.new { [200,{"Content-Type" => "text/html"},'<html><body>history</body></html>'] }
 
   match '/:id/:name' => "timeline_charts#show", :as => 'view_chart'
-  match '/:id' => "timeline_charts#show", 
+  match '/:id' => "timeline_charts#show"
 
   root :to => "home#index"
 
