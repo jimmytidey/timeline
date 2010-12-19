@@ -39,12 +39,18 @@ Function.prototype.method = function (name, func) {
 function getMoreData(data) {
 	
   query = data.id;
-	
+
   $.getJSON('http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', function(result) {
+	    	
+	  
 	    	start = result.start.substr(0,4);
 	    	end = result.end.substr(0,4);
+	  		description= result.description; 
+	  		
 	    	$('.event_start_date').val(start);
 	    	$('.event_end_date').val(end);
+	    	$('#event_description').val(description);
+	    
 	    	
   });
 }
@@ -169,8 +175,9 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 
   initialiseTheme(stTheme);
   if(!editMode) {
-    limitScollingOfTimeline(stTheme, startYear-20, endYear+20					);
-    initialiseBubblePopper();
+    limitScollingOfTimeline(stTheme, startYear-20, endYear+20);
+  	
+   $(document).ready(function() {initialiseViewLables();}); 
   }
 
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
@@ -183,6 +190,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
     initialiseEditFunctions();
     if (savedPosition) {
       restorePosition();
+      
     }
   }
 }
@@ -205,8 +213,9 @@ function initialiseEditFunctions() {
 	initialiseLables();
 	initialiseEdit();
 	initialiseDestroy();
-	initialiseBubblePopper();
+	preventBubblePopper();
  	initialiseEditTitle(); 
+ 	initialiseDescriptionHint()
 }
 
 
@@ -247,10 +256,20 @@ function initialiseDragAndDrop() {
 function initialiseLables() 
 {
 	$('.timeline-event-label').each(function() 	{
-		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
+	$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
     $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
+   
     recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
+		
 	});	
+}
+
+function initialiseViewLables()
+{
+	$('.timeline-event-label').each(function() 	{
+	$(this).append('<span class="info"></span>');
+    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
+	});
 }
 
 function initialiseResize() {
@@ -289,7 +308,7 @@ function initialiseDestroy() {
   });
 }
 
-function initialiseBubblePopper() {
+function preventBubblePopper() {
   Timeline.OriginalEventPainter.prototype._showBubble = function(x, y, evt) {
     //stop the bubble from appearing!
   };
@@ -336,7 +355,7 @@ function recalculateEventDate(id)
 	width = parseInt(width);
 	
 	//caluclate and remove offset from begining of timeline
-	offset= parseInt(tl.getBand(0)._bandInfo.ether._band._viewOffset);	
+	offset = parseInt(tl.getBand(0)._bandInfo.ether._band._viewOffset);	
 	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
 		 
@@ -390,17 +409,21 @@ function addDuration(element_id, title, content, chart)
 	width 	= $("#"+element_id).css('width');
 	band	= $("#"+element_id).css('top');
 	
+	
 	//convert to a date (minus 20 is for some CSS problems) 
 	
 	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-20);
-	band 	= parseInt((parseInt(band)-80)/20);
+	alert(band); 
+	band 	= parseInt((parseInt(band)-50)/20);
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
-			
+	
+	alert(band);
+	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
   	submit_event_to_server(begin, end, band, chart);
-	$("#new_duration").css('left', '20px')
-	$("#new_duration").css('top', '70px')	
+	$("#new_duration").css('left', '0px')
+	$("#new_duration").css('top', '20px')	
 };
 
 function autoAdd() {
@@ -423,6 +446,33 @@ function parseAutoAdd(dates) {
 		$('#auto_add_result').append('<p>'+value.title+' Begins: '+value.start+' Ends: '+value.end+'</p> ');
 	});
 }
+
+// on edit page, put the greyed out description word in 
+function initialiseDescriptionHint() {
+	if ($('#timeline_chart_description').val() == '' || $('#timeline_chart_description').val() == 'description') 
+		{
+			$('#timeline_chart_description').val('description') ;
+			$('#timeline_chart_description').css('color', '#ccc'); 
+		}
+		
+	$('#timeline_chart_description').click( function() {
+		if ($('#timeline_chart_description').val() == 'description') 
+		{
+			$('#timeline_chart_description').val('') ;
+			$('#timeline_chart_description').css('color', '#000');
+		}	
+		
+	});
+
+	$('#timeline_chart_description').blur( function() {
+		if ($('#timeline_chart_description').val() == '') 
+		{
+			$('#timeline_chart_description').val('description') ;
+			$('#timeline_chart_description').css('color', '#ccc');		
+		}	
+	});	
+}
+
 
 // Bringing up a modal 
 var modalWindow = {

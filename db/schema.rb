@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101211173401) do
+ActiveRecord::Schema.define(:version => 20101219204251) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20101211173401) do
     t.datetime "updated_at"
     t.string   "color"
     t.integer  "band",              :default => 1
+    t.string   "description"
   end
 
   create_table "timeline_charts", :force => true do |t|
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20101211173401) do
     t.boolean   "private"
     t.integer   "hits"
     t.timestamp "center_date"
+    t.string    "description"
   end
 
   create_table "users", :force => true do |t|

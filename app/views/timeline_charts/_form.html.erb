@@ -21,5 +21,8 @@
 		<%= f.check_box :private   %>
 	</div>
   	
+  	<div id='description_accordian'> 
+  		<%= text_area(:timeline_chart, :description) %>
+  	</div> 
    <%= f.button :submit, 'Save' %>
  <% end %>

@@ -33,10 +33,15 @@
  	 <%=  f.input :color, :collection => %w{red green blue violet}, :prompt => "Colour", :label => "Colour" %>
 	  <%= f.hidden_field :timeline_chart_id, :value => @timeline_chart.id %>
 	</div>
+	
+
+	
 
   <% if type == 'new' %>
+  <input type='hidden' name='event[description]' id='event_description' /> 
     <%= f.submit :value => 'Add »' %>
   <% else %>
+  	<textarea name='event[description]' id='event_description_text' ><%= @event.description %></textarea>  
     <%= f.submit :value => 'Save »' %>
   <% end %>
 

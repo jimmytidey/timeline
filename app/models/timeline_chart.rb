@@ -10,7 +10,7 @@ class TimelineChart < ActiveRecord::Base
   belongs_to :user
   has_many :events, :dependent => :destroy
 
-  attr_accessible :user_id, :title, :zoom, :private, :hits, :center_date, :center_year
+  attr_accessible :user_id, :title, :zoom, :private, :hits, :center_date, :center_year, :description
 
   validates_presence_of :title
   validates_presence_of :user_id

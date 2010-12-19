@@ -126,6 +126,11 @@ a {
 	top:81px;
 }
 
+#show_description {
+	position:absolute; 
+	top:10px;
+}
+
 /* Index Page */ 
 
 #top_timelines h3 {
@@ -285,9 +290,7 @@ a {
 	width:47px;
 }
 
-#view_page #my-timeline {
-	top:40px;
-}
+
 
 .view_page h1 {
  display: block;
@@ -303,7 +306,7 @@ a {
 }	
 
 .view_page #my-timeline {
-	top:20px;
+	top:50px;
 }	
 
 .view_page #view_info {
@@ -317,9 +320,9 @@ a {
 
 #my-timeline {
     position: absolute; 
-    top:100px;
+    top:70px;
     width:960px;  
-    height:400px!important;
+    height:350px!important;
     z-index:0;
 }
 
@@ -363,6 +366,8 @@ a {
 	cursor: crosshair!important;
 	
 }
+
+
 
 #my-timeline .red {
 	background-image:url(/images/bkg_tape_red.png);
@@ -453,7 +458,7 @@ a {
 
 #edit_timeline_chart {
    position:absolute;
-   top:20px;
+   top:440px;
    width:800px;
 }
 
@@ -486,15 +491,23 @@ a {
 }	
 
 #timeline_chart_private_div {
-	margin-left:17px;
-	margin-top:-3px;
-	width:68px !important;
+	left: 656px;
+    position: absolute;
+    top: 24px;
+}
+
+#timeline_chart_description{
+ height: 34px;
+    left: 324px;
+    position: absolute;
+    top: 0;
+    width: 300px;
 }
 
 #timeline_chart_submit {
-	margin-left:-70px;
-	margin-top:18px!important;
-	width:60px;
+  	left: 670px;
+    position: absolute;
+    top: 0;
 }
 
 #new_event_form {
@@ -558,7 +571,7 @@ a {
 }	
 
 #new_duration {
-	top:70px;
+	top:30px;
 	position:absolute;
 	width:200px;
 	height:10px!important;
@@ -707,6 +720,11 @@ abbr {
 
 .modal-window #new_event_start_date {
 	margin-left:0px;
+}
+
+#event_description_text {
+	width:390px; 
+	height:200px;
 }
 
 .close-window
