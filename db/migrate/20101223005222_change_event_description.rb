@@ -1,9 +1,9 @@
 class ChangeEventDescription < ActiveRecord::Migration
   def self.up
-  	change_column :events, :description, :text, :limit => 1000
+  	change_column :events, :description, :text
   end
 
   def self.down
-    change_column :events, :description, :string, :limit => 255
+    change_column :events, :description, :string 
   end
 end
