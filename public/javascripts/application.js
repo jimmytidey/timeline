@@ -187,12 +187,17 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
   tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 
   if (editMode) {
-    initialiseEditFunctions();
-    if (savedPosition) {
-      restorePosition();
-      
-    }
-  }
+    	initialiseEditFunctions();
+    	showDescription();
+    	if (savedPosition) {
+      		restorePosition();		
+    	}
+	}
+	
+   else {
+		preventBubblePopper();
+		showDescription();
+   }  
 }
 
 function initialiseTheme(stTheme) {
@@ -312,6 +317,38 @@ function preventBubblePopper() {
   Timeline.OriginalEventPainter.prototype._showBubble = function(x, y, evt) {
     //stop the bubble from appearing!
   };
+}
+
+function showDescription() {
+	$(document).ready(function() {
+		$(".timeline-event-tape").each(function() {	
+			tape_class_list = $(this).attr('class');
+			tape_class = tape_class_list.split(' ');
+			event_id = tape_class[0].split('-'); 
+
+			tape_description = $("#description_"+event_id[1]).html();
+			if (tape_description != '') 
+			{
+				$(this).append("<div class='description_container'><div class='tape_description'>"+tape_description+"</div></div>" ); 
+			}
+			
+			if (tape_description.length > 144) { 
+				$('.description_container', this).append('<img src="http://upload.wikimedia.org/wikipedia/en/4/41/Icon-DownArrow.GIF" class="show_me_more" /> ')	
+				$(this).mouseenter( function() {
+					$('.description_container', this).css('height','220px'); 
+					$('.tape_description', this).css('height','220px'); 
+					$('.show_me_more', this).css('display', 'none'); 					
+				});
+				
+				$(this).mouseleave( function() {
+					$('.description_container', this).css('height','37px'); 
+					$('.tape_description', this).css('height','30px'); 
+					$('.show_me_more', this).css('display', 'inline'); 					
+				});				
+			}
+			
+		});
+	});	
 }
 
 // when user drags the tape it needs to make the lable move with it 

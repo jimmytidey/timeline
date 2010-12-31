@@ -46,3 +46,15 @@ initialiseTimeline(<%= edit_mode %>,
     
   <% end %>       
 </noscript>
+
+    <% if all_events %>
+
+    <% all_events.each_with_index do |event, i| %>
+ 
+          <div id='description_<%= event.id %>' class='description'><%= event.description %></div>
+  
+        <% if i != all_events.length - 1 -%> <% end -%>
+    <% end %>
+    
+  <% end %>   
+

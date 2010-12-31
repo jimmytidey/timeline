@@ -77,6 +77,34 @@ a {
 	width:960px;
 }
 
+.description {
+	display:none; 
+}
+
+.tape_description {
+	position:absolute; 
+	width:380px;
+	height:30px;
+	overflow:hidden;
+}
+
+.description_container{
+	position:absolute; 
+	top:30px;
+	width:400px;
+	background-color:white; 
+	border:1px solid black; 
+	height:37px;
+	cursor:default;
+	padding:0px 10px;
+}
+
+.show_me_more {
+	position:absolute; 
+	top:26px; 
+	left:200px;
+
+}
 
 #user_nav {
 	position:absolute;
