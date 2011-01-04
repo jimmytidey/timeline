@@ -67,6 +67,12 @@ a {
 	width:960px;
 }
 
+#intro {
+	margin-left:20px;
+	margin-top:20px;
+
+}
+
 #view_page { 
 	background-color:white;
 	border-top:1px solid black;
@@ -86,22 +92,13 @@ a {
 	width:380px;
 	height:30px;
 	overflow:hidden;
+	top:22px;
 }
 
-.description_container{
-	position:absolute; 
-	top:30px;
-	width:400px;
-	background-color:white; 
-	border:1px solid black; 
-	height:37px;
-	cursor:default;
-	padding:0px 10px;
-}
 
 .show_me_more {
 	position:absolute; 
-	top:26px; 
+	top:48px; 
 	left:200px;
 
 }
@@ -173,7 +170,7 @@ a {
 #top_timelines { 
 	height:400px;
 	position:absolute;
-	top:30px;
+	top:90px;
 	width:460px;
 	left:20px;
 }
@@ -182,7 +179,7 @@ a {
 #user_timelines {
 	position:absolute; 
 	left:540px;
-	top:30px;
+	top:90px;
 }
 
 #user_timelines h3 {
@@ -363,10 +360,11 @@ a {
 .info {font-size:9px;}
 
 .timeline-event-label {
-	width:auto!important;
-	margin-top:-10px;
+	margin-top:7px;
 	font-size:12px;
-	margin-left:1px;
+	margin-left:1px;	
+	padding:2px;
+	width:300px;
 }
 
 .timeline-event-label p {
@@ -409,14 +407,7 @@ a {
 	background-image:url(/images/bkg_tape_violet.png);
 }
 
-.timeline-event-label {
-	background-image:none!important;
-	
-}
 
-.timeline-event-label {
-	margin-top:9px!important;
-}
 
 .label_title {
 	cursor:text;
@@ -544,6 +535,12 @@ a {
 	right:0px;
 	top:22px;
 	width:372px;
+}
+
+#loading_gif {
+	position:relative; 
+	left:-330px; 
+	top:-20px;
 }
 
 #event_submit {

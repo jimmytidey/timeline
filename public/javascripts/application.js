@@ -40,17 +40,18 @@ function getMoreData(data) {
 	
   query = data.id;
 
+	$('#new_event_form').append("<img src='/images/loading.gif' id='loading_gif' />"); 	
   $.getJSON('http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', function(result) {
 	    	
 	  
 	    	start = result.start.substr(0,4);
 	    	end = result.end.substr(0,4);
-	  		description= result.description; 
+	  		description= unescape(unescape(result.description)); 
 	  		
 	    	$('.event_start_date').val(start);
 	    	$('.event_end_date').val(end);
 	    	$('#event_description').val(description);
-	    
+	    	$('#loading_gif').remove();
 	    	
   });
 }
@@ -182,12 +183,14 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
+  tl._bands._onScrollListeners = initialiseEditFunctions();
 
+	
   //Center Timeline
   tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 
   if (editMode) {
-    	initialiseEditFunctions();
+    	
     	showDescription();
     	if (savedPosition) {
       		restorePosition();		
@@ -321,7 +324,7 @@ function preventBubblePopper() {
 
 function showDescription() {
 	$(document).ready(function() {
-		$(".timeline-event-tape").each(function() {	
+		$(".timeline-event-label").each(function() {	
 			tape_class_list = $(this).attr('class');
 			tape_class = tape_class_list.split(' ');
 			event_id = tape_class[0].split('-'); 
@@ -329,21 +332,48 @@ function showDescription() {
 			tape_description = $("#description_"+event_id[1]).html();
 			if (tape_description != '') 
 			{
-				$(this).append("<div class='description_container'><div class='tape_description'>"+tape_description+"</div></div>" ); 
+				$(this).append("<div class='tape_description'>"+tape_description+"</div>" ); 
+				$(this).css({
+					'background-color': 'white', 
+					'border' : '1px solid black',
+					'width':'400px',
+					'height':'55px',
+					'margin-top':'16px'		
+				});
 			}
 			
 			if (tape_description.length > 144) { 
-				$('.description_container', this).append('<img src="http://upload.wikimedia.org/wikipedia/en/4/41/Icon-DownArrow.GIF" class="show_me_more" /> ')	
-				$(this).mouseenter( function() {
-					$('.description_container', this).css('height','220px'); 
-					$('.tape_description', this).css('height','220px'); 
-					$('.show_me_more', this).css('display', 'none'); 					
+				$(this).append('<img src="http://upload.wikimedia.org/wikipedia/en/4/41/Icon-DownArrow.GIF" class="show_me_more" /> ')	
+				$('.show_me_more', this).mouseenter( function() {
+					
+					
+					
+					$(this).parent().css({
+					'height':'260px',
+					'z-index':'1000'
+					}); 
+					
+					$(this).prev().css('height','260px'); 
+					$(this).css('display', 'none'); 
+					
+					top = parseInt($(this).parent().css('top'));
+					
+					if ((top + 270)> 350) {
+						offset = top-30; 
+						$(this).parent().css('margin-top', '-'+offset+'px'); 
+						
+					}
+					
 				});
 				
 				$(this).mouseleave( function() {
-					$('.description_container', this).css('height','37px'); 
+					$(this).css({
+					'height':'55px',
+					'z-index':'1'
+					}); 
 					$('.tape_description', this).css('height','30px'); 
-					$('.show_me_more', this).css('display', 'inline'); 					
+					$('.show_me_more', this).css('display', 'inline'); 	
+					$(this).css('margin-top', '16px'); 
 				});				
 			}
 			
@@ -449,12 +479,11 @@ function addDuration(element_id, title, content, chart)
 	
 	//convert to a date (minus 20 is for some CSS problems) 
 	
-	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-20);
-	alert(band); 
-	band 	= parseInt((parseInt(band)-50)/20);
+	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left));
+	 
+	band 	= parseInt((parseInt(band)-40)/25);
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	
-	alert(band);
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
