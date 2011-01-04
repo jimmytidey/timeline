@@ -365,6 +365,7 @@ a {
 	margin-left:1px;	
 	padding:2px;
 	width:300px;
+	width:auto;
 }
 
 .timeline-event-label p {
@@ -395,15 +396,15 @@ a {
 
 
 
-#my-timeline .red {
+.red.timeline-event-tape {
 	background-image:url(/images/bkg_tape_red.png);
 }
 
-#my-timeline .green {
+.green.timeline-event-tape {
 	background-image:url(/images/bkg_tape_green.png);
 }
 
-#my-timeline .violet {
+.violet.timeline-event-tape {
 	background-image:url(/images/bkg_tape_violet.png);
 }
 

@@ -267,9 +267,15 @@ function initialiseDragAndDrop() {
 function initialiseLables() 
 {
 	$('.timeline-event-label').each(function() 	{
+	
+	// this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
+   	wrong_width = parseInt($(this).css('width'));
+   	rigth_width = wrong_width +100; 
+   	$(this).css('width', rigth_width+'px')
+	
 	$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
     $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
-   
+
     recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
 		
 	});	
@@ -339,10 +345,11 @@ function showDescription() {
 				$(this).css({
 					'background-color': 'white', 
 					'border' : '1px solid black',
-					'width':'400px',
 					'height':'55px',
+					'width': '400px',
 					'margin-top':'16px'		
 				});
+				
 			}
 			
 			if (tape_description.length > 144) { 
