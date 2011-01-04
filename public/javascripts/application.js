@@ -190,7 +190,10 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
   tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 
   if (editMode) {
-    	
+		if ($(".pencil").length == 0) {
+			initialiseEditFunctions();
+		}
+		
     	showDescription();
     	if (savedPosition) {
       		restorePosition();		
