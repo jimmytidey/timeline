@@ -11,7 +11,7 @@ var events = {
           'end'  : '<%= event.end_date.iso8601 %>',
         <% end %>
         'title': '<p id="" class="title_id_<%= event.id %>"><%= escape_javascript event.title %></p>',
-        'description': '<%= event.description %>',
+        'description': '<%= escape_javascript event.description %>',
         'color' : '<%= event.color %>',
         'textColor' : 'black',
         'eventID' : <%= event.id %>,
