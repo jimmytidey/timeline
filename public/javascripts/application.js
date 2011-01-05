@@ -190,7 +190,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 
   if (editMode) {
   		
-  		 tl._bands._onScrollListeners = initialiseEditFunctions();
+  		 //tl._bands._onScrollListeners = initialiseEditFunctions();
   		
 		if ($(".pencil").length == 0) {
 			initialiseEditFunctions();
@@ -290,7 +290,7 @@ function initialiseViewLables()
 	
 	//have to make space for the lables 
 	wrong_width = parseInt($(this).css('width'));
-   	rigth_width = wrong_width +100; 
+   	rigth_width = wrong_width +100;
    	$(this).css('width', rigth_width+'px')
    	
 	$(this).append('<span class="info"></span>');
