@@ -190,7 +190,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 
   if (editMode) {
   		
-  		 //tl._bands._onScrollListeners = initialiseEditFunctions();
+  		 tl._bands._onScrollListeners = initialiseEditFunctions();
   		
 		if ($(".pencil").length == 0) {
 			initialiseEditFunctions();

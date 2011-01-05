@@ -7,8 +7,8 @@ var events = {
     <% all_events.each_with_index do |event, i| %>
       {
         <% if event.start_date and event.end_date %>
-          'start': '<%= event.start_date.iso8601 %>',
-          'end'  : '<%= event.end_date.iso8601 %>',
+          'start': '<%= event.start_date %>',
+          'end'  : '<%= event.end_date %>',
         <% end %>
         'title': '<p id="" class="title_id_<%= event.id %>"><%= escape_javascript event.title %></p>',
         'description': '<%= escape_javascript event.description %>',
