@@ -6,9 +6,22 @@ var events = {
     'events': [
     <% all_events.each_with_index do |event, i| %>
       {
-        <% if event.start_date and event.end_date %>
-          'start': '<%= event.start_date.iso8601 %>',
-          'end'  : '<%= event.end_date.iso8601 %>',
+        <% 	if event.start_date and event.end_date 
+        	# this is horrible 
+           	if event.start_date.iso8601.to_s.length < 20 
+           		my_start = '0'+event.start_date.iso8601
+           	else 		
+	           my_start = event.start_date.iso8601
+    		end 
+    		
+            if event.end_date.iso8601.to_s.length < 20 
+           		my_end = '0'+event.end_date.iso8601
+           	else 		
+	           my_end = event.end_date.iso8601
+    		end 		
+    	%>
+          'start': '<%= my_start.to_s %>',
+          'end'  : '<%= my_end.to_s %>',
         <% end %>
         'title': '<p id="" class="title_id_<%= event.id %>"><%= escape_javascript event.title %></p>',
         'description': '<%= escape_javascript event.description %>',
