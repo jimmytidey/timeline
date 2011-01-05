@@ -183,15 +183,18 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 
   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
   eventSource.loadJSON(events, '');
-  tl._bands._onScrollListeners = initialiseEditFunctions();
-
+ 
 	
   //Center Timeline
   tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 
   if (editMode) {
+  		
+  		 tl._bands._onScrollListeners = initialiseEditFunctions();
+  		
 		if ($(".pencil").length == 0) {
 			initialiseEditFunctions();
+			
 		}
 		
     	showDescription();
@@ -284,6 +287,12 @@ function initialiseLables()
 function initialiseViewLables()
 {
 	$('.timeline-event-label').each(function() 	{
+	
+	//have to make space for the lables 
+	wrong_width = parseInt($(this).css('width'));
+   	rigth_width = wrong_width +100; 
+   	$(this).css('width', rigth_width+'px')
+   	
 	$(this).append('<span class="info"></span>');
     recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
 	});
