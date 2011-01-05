@@ -46,7 +46,7 @@ function getMoreData(data) {
 	  
 	    	start = result.start.substr(0,4);
 	    	end = result.end.substr(0,4);
-	  		description= unescape(unescape(result.description)); 
+	  		description= unescape(result.description); 
 	  		
 	    	$('.event_start_date').val(start);
 	    	$('.event_end_date').val(end);

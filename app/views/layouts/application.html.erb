@@ -9,8 +9,8 @@
       <%= javascript_include_tag 'jquery/jquery.min' %>
       <%= javascript_include_tag 'jquery/jquery-ui.min' %>
       <%# simile timeline from MIT servers: <script src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js" type="text/javascript"></script> %>
-      <script src="/javascripts/timeline/timeline_ajax/simile-ajax-api.js?bundle=false" type="text/javascript"></script>
-      <script src="/javascripts/timeline/timeline_js/timeline-api.js?bundle=false" type="text/javascript"></script>
+      <script src="/javascripts/timeline/timeline_ajax/simile-ajax-api.js?bundle=true" type="text/javascript"></script>
+      <script src="/javascripts/timeline/timeline_js/timeline-api.js?bundle=true" type="text/javascript"></script>
     <% else %>
       <%= javascript_include_tag 'jquery/jquery' %>
       <%= javascript_include_tag 'jquery/jquery-ui' %>
@@ -50,8 +50,7 @@
       <%= yield %>
       
       
-       <p style='position:absolute; width:320px; left:50%; margin-left:-136px; bottom:-20px;'>Hi Josh - Here's my "Get Satisfaction" proof of ownership </p>
-   
+     
     </div>
 <script type="text/javascript" charset="utf-8">
   var is_ssl = ("https:" == document.location.protocol);
