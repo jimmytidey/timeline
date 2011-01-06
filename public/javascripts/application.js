@@ -57,9 +57,7 @@ function getMoreData(data) {
 }
 
 $(document).ready(function() {
-    //adds the click function to the auto add button 
-    $('#auto_add_submit').click(function() {autoAdd(); });
-    
+
     $('#new_event_form .event_title input').suggest({
 	 "type": ["/people/person", "/time/event"],
  	 "type_strict": "any"
@@ -189,15 +187,13 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
   tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 
   if (editMode) {
-  		
-  		 tl._bands._onScrollListeners = initialiseEditFunctions();
-  		
+  	
+ 		preventBubblePopper();
+ 		
 		if ($(".pencil").length == 0) {
 			initialiseEditFunctions();
-			
 		}
-		
-    	showDescription();
+		 	
     	if (savedPosition) {
       		restorePosition();		
     	}
@@ -342,60 +338,38 @@ function preventBubblePopper() {
 
 function showDescription() {
 	$(document).ready(function() {
-		$(".timeline-event-label").each(function() {	
+		$(".timeline-event-label").each(function() {
+
 			tape_class_list = $(this).attr('class');
 			tape_class = tape_class_list.split(' ');
 			event_id = tape_class[0].split('-'); 
-
+	
 			tape_description = $("#description_"+event_id[1]).html();
-			if (tape_description != '') 
-			{
-				$(this).append("<div class='tape_description'>"+tape_description+"</div>" ); 
-				$(this).css({
-					'background-color': 'white', 
-					'border' : '1px solid black',
-					'height':'55px',
-					'width': '400px',
-					'margin-top':'16px'		
-				});
-				
-			}
-			
-			if (tape_description.length > 144) { 
+	
+			if (tape_description.length > 1) { 
 				$(this).append('<img src="http://upload.wikimedia.org/wikipedia/en/4/41/Icon-DownArrow.GIF" class="show_me_more" /> ')	
+				
 				$('.show_me_more', this).mouseenter( function() {
 					
+					tape_class_list = $(this).parent().attr('class');
+					tape_class = tape_class_list.split(' ');
+					event_id = tape_class[0].split('-'); 
 					
+					tape_description = $("#description_"+event_id[1]).html();
 					
-					$(this).parent().css({
-					'height':'260px',
-					'z-index':'1000'
-					}); 
-					
-					$(this).prev().css('height','260px'); 
-					$(this).css('display', 'none'); 
-					
-					top = parseInt($(this).parent().css('top'));
-					
-					if ((top + 270)> 350) {
-						offset = top-30; 
-						$(this).parent().css('margin-top', '-'+offset+'px'); 
-						
-					}
-					
+					$('#tape_description').html('<img src="/images/bin.png" alt="close" id="description_close" ><br/>'+tape_description); 
+					$('#tape_description').css({
+						'display': 'block', 	
+					});
 				});
 				
-				$(this).mouseleave( function() {
-					$(this).css({
-					'height':'55px',
-					'z-index':'1'
-					}); 
-					$('.tape_description', this).css('height','30px'); 
-					$('.show_me_more', this).css('display', 'inline'); 	
-					$(this).css('margin-top', '16px'); 
-				});				
+				$('#tape_description').click( function() {
+					$('#tape_description').css({
+						'display': 'none', 	
+					});
+				});
 			}
-			
+	
 		});
 	});	
 }

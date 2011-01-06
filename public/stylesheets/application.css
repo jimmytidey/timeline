@@ -87,19 +87,20 @@ a {
 	display:none; 
 }
 
-.tape_description {
-	position:absolute; 
-	width:380px;
-	height:30px;
-	overflow:hidden;
-	top:22px;
+#tape_description {
+    background: none repeat scroll 0 0 white;
+    height: 300px;
+    left: 20px;
+    overflow: hidden;
+    position: absolute;
+    top: 58px;
+    width: 300px;
+    display:none;
 }
 
 
-.show_me_more {
-	position:absolute; 
-	top:48px; 
-	left:200px;
+.description_close {
+	float:right;
 
 }
 
@@ -154,6 +155,11 @@ a {
 #show_description {
 	position:absolute; 
 	top:10px;
+}
+
+.show_me_more {
+  margin-top:2px;
+  margin-left:2px;
 }
 
 /* Index Page */ 
