@@ -2,7 +2,7 @@
 /*********** simile timeline functions **/
 var events = {
   <% if all_events %>
-    'dateTimeFormat': 'iso8601',
+  
     'events': [
     <% all_events.each_with_index do |event, i| %>
       {
@@ -19,9 +19,28 @@ var events = {
            	else 		
 	           my_end = event.end_date.iso8601
     		end 		
+    		
+    		first_character = my_start.to_s[0..0]
+    		
+    		if (first_character == '-') 
+    			my_start_trunc = my_start.split("-")[1] + ' BC'
+    			
+    		else	
+    			my_start_trunc = my_start.split("-")[0]	
+    		end
+    		
+    		first_character = my_end.to_s[0..1]
+    		if (first_character == '-') 
+    			my_end_trunc = my_end.split("-")[1] + ' BC'
+    		else	
+    			my_end_trunc = my_end.split("-")[0]	
+			end
+    	
     	%>
-          'start': '<%= my_start.to_s %>',
-          'end'  : '<%= my_end.to_s %>',
+    	
+    	
+          'start': '<%= my_start_trunc.to_s %>',
+          'end'  : '<%= my_end_trunc.to_s %>',
         <% end %>
         'title': '<p id="" class="title_id_<%= event.id %>"><%= escape_javascript event.title %></p>',
         'description': '<%= escape_javascript event.description %>',
@@ -35,11 +54,7 @@ var events = {
   <% end %>       
 };
 
-initialiseTimeline(<%= edit_mode %>, 
-                   <%= @timeline_chart.zoom %>, 
-                   <%= @timeline_chart.start_year %>, 
-                   <%= @timeline_chart.end_year %>, 
-                   <%= @timeline_chart.center_year %>);
+initialiseTimeline(<%= edit_mode %>, <%= @timeline_chart.zoom %>, <%= @timeline_chart.start_year %>,<%= @timeline_chart.end_year %>,<%= @timeline_chart.center_year %>);
 </script>
 
 <noscript>

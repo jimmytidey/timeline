@@ -1,3 +1,5 @@
+//OLD VERSION 
+
 /*globals $ Timeline jQuery document*/
 /*********** Doug Crockford's functions ***
  *
@@ -41,17 +43,17 @@ function getMoreData(data) {
   query = data.id;
 
 	$('#new_event_form').append("<img src='/images/loading.gif' id='loading_gif' />"); 	
-  $.getJSON('http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', function(result) {
-	    	
+
+	$.getJSON('http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', function(result) {	
 	  
-	    	start = result.start.substr(0,4);
-	    	end = result.end.substr(0,4);
-	  		description= unescape(result.description); 
-	  		
-	    	$('.event_start_date').val(start);
-	    	$('.event_end_date').val(end);
-	    	$('#event_description').val(description);
-	    	$('#loading_gif').remove();
+	start = result.start.substr(0,4);
+	end = result.end.substr(0,4);
+	description= unescape(result.description); 
+	
+	$('.event_start_date').val(start);
+	$('.event_end_date').val(end);
+	$('#event_description').val(description);
+	$('#loading_gif').remove();
 	    	
   });
 }
@@ -125,10 +127,11 @@ function submit_event_to_server(begin, end, band, chart) {
 
 function update_dates_for_event_on_the_server(theEvent, startYear, endYear, band, title) {
   savePosition();
+  
 	$.put("/events/" + theEvent,
     { 'event':
       {
-        'start_year': startYear.toString(), 
+        'start_year':'-20', 
         'end_year': endYear.toString(),
 		'band': band.toString(),
 		'title': title.toString()
@@ -159,51 +162,67 @@ if(savedPosition === undefined){
   var savedPosition;
 }
 
-var eventSource = new Timeline.DefaultEventSource();
+var stTheme = Timeline.ClassicTheme.create();
+
+
+var eventSource = new Timeline.DefaultEventSource(0);
+	
+
 
 function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {	
-  var stTheme = Timeline.ClassicTheme.create(),
-    bandInfos = [
-    Timeline.createBandInfo({
-      width: "100%", 
-      intervalUnit: zoom, 
-      intervalPixels: 100,
-      eventSource: eventSource,
-      theme: stTheme
-    })];
-
-  initialiseTheme(stTheme);
-  if(!editMode) {
-    limitScollingOfTimeline(stTheme, startYear-20, endYear+20);
-  	
-   $(document).ready(function() {initialiseViewLables();}); 
-  }
-
-  tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
-  eventSource.loadJSON(events, '');
- 
+  
+  	bandInfos = [
+	Timeline.createBandInfo({
+	  width: "100%", 
+	  intervalUnit: zoom, 
+	  intervalPixels: 100,
+	  eventSource: eventSource,
+	  theme: stTheme
+	})];
 	
-  //Center Timeline
-  tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 
-  if (editMode) {
-  	
- 		preventBubblePopper();
- 		
-		if ($(".pencil").length == 0) {
-			initialiseEditFunctions();
-		}
-		 	
-    	if (savedPosition) {
-      		restorePosition();		
-    	}
-	}
+	initialiseTheme(stTheme);
 	
-   else {
-		preventBubblePopper();
+
+	//make the timeline
+	tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+	eventSource.loadJSON(events, '');
+ 	
+  	//Center Timeline
+	tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
+	
+	//stop the thing it pops up when you roll over somethign 
+	preventBubblePopper();	
+	
+	
+	
+	if (editMode) { 
+  		
+  		initialiseEditFunctions();
+  		
+  		tl.getBand(0).addOnScrollListener(function(band){ 
+			if ($(".pencil").length == 0) {
+				initialiseEditFunctions();
+				
+			}
+		});
+		
+		
+		if (savedPosition) {
+				restorePosition();	
+		}  		
+	}	
+		
+		
+	else {
 		showDescription();
-   }  
+		$(document).ready(function() {initialiseViewLables();}); 
+	}
+
 }
+
+
+  
 
 function initialiseTheme(stTheme) {
   stTheme.event.tape.height = 20;
@@ -213,6 +232,7 @@ function initialiseTheme(stTheme) {
 function limitScollingOfTimeline(stTheme, startYear, endYear) {
   stTheme.timeline_start = new Date(startYear,1,1);
   stTheme.timeline_stop  = new Date(endYear,1,1);
+  
 }
 
 // If this function is called, then the timeline is drawn in "edit" mode. If not
@@ -346,27 +366,32 @@ function showDescription() {
 	
 			tape_description = $("#description_"+event_id[1]).html();
 	
-			if (tape_description.length > 1) { 
+			if (tape_description.length > 1 && $(".show_me_more").length == 0) {
 				$(this).append('<img src="http://upload.wikimedia.org/wikipedia/en/4/41/Icon-DownArrow.GIF" class="show_me_more" /> ')	
 				
-				$('.show_me_more', this).mouseenter( function() {
+				$(this).mouseenter(function() {
 					
-					tape_class_list = $(this).parent().attr('class');
+					tape_class_list = $(this).attr('class');
+					
 					tape_class = tape_class_list.split(' ');
-					event_id = tape_class[0].split('-'); 
-					
+					event_id = tape_class[0].split('-'); 					
+									
 					tape_description = $("#description_"+event_id[1]).html();
 					
-					$('#tape_description').html('<img src="/images/bin.png" alt="close" id="description_close" ><br/>'+tape_description); 
+					tape_description = (tape_description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
+
+					$('#tape_description').html(tape_description);
+					
 					$('#tape_description').css({
-						'display': 'block', 	
+						'display': 'block',
 					});
 				});
 				
-				$('#tape_description').click( function() {
+				$(this).mouseleave( function() {
 					$('#tape_description').css({
 						'display': 'none', 	
 					});
+			
 				});
 			}
 	
@@ -418,7 +443,8 @@ function recalculateEventDate(id)
 	offset = parseInt(tl.getBand(0)._bandInfo.ether._band._viewOffset);	
 	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
-		 
+
+	
 	id = "label"+ id.substr(5);
 	
 	//this to prevent a problem with rounding that dates to be 1px out sometimes
@@ -442,7 +468,7 @@ function recalculateEventDate(id)
 		rounded_end= end.getFullYear();
 	}	
 	
-	$('#'+id+" .info").replaceWith(' <span class="info">('+rounded_begin+' - '+ rounded_end+')</span>');	
+	$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date">'+rounded_begin+'</span> - <span class="end_date">'+ rounded_end+'</span>)</span>');	
 }
 
 function eventSave(id) {
@@ -457,8 +483,13 @@ function eventSave(id) {
 	title = $(id).next('.timeline-event-label').children('p').html();
 
 	info = id.next().children('.info');
-	start = info.html().match(/\d+/);
-	end = info.html().match(/ \d+/);
+		
+	begin = info.children('.begin_date').html()
+	
+	end = info.children('.end_date').html()
+	
+	alert(begin);
+	alert(end);
 	update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
 };
 
