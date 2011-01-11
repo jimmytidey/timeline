@@ -131,7 +131,7 @@ function update_dates_for_event_on_the_server(theEvent, startYear, endYear, band
 	$.put("/events/" + theEvent,
     { 'event':
       {
-        'start_year':'-20', 
+        'start_year':startYear.toString(),
         'end_year': endYear.toString(),
 		'band': band.toString(),
 		'title': title.toString()
@@ -182,8 +182,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 	
 
 	initialiseTheme(stTheme);
-	
-
+		
 	//make the timeline
 	tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
 	eventSource.loadJSON(events, '');
@@ -195,16 +194,23 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 	preventBubblePopper();	
 	
 	
-	
+	// what to do speifically for edit mode
 	if (editMode) { 
   		
   		initialiseEditFunctions();
   		
+  		
   		tl.getBand(0).addOnScrollListener(function(band){ 
+			
+			//this readds all the javascript when the timeline repaints everything 
 			if ($(".pencil").length == 0) {
-				initialiseEditFunctions();
-				
+				alert('thing attached');
+				initialiseEditFunctions();		
 			}
+			
+			//stops the user scrolling past zero
+			scroll_date = tl._bands[0].getMinVisibleDate(); 
+			if (scroll_date.getFullYear() < 1) {alert("dates before 0 bc don't work ");}
 		});
 		
 		
@@ -213,10 +219,19 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 		}  		
 	}	
 		
-		
-	else {
+	// what to do in show mode 	
+	if (!editMode) {
+	
+		alert('show mode');
 		showDescription();
+		
 		$(document).ready(function() {initialiseViewLables();}); 
+	  	
+	  	tl.getBand(0).addOnScrollListener(function(band){ 
+			//stops the user scrolling past zero
+			scroll_date = tl._bands[0].getMinVisibleDate(); 
+			if (scroll_date.getFullYear() < 1) {alert("dates before 0 bc don't work ");}
+		});
 	}
 
 }
@@ -275,7 +290,7 @@ function initialiseDragAndDrop() {
       $(this).removeClass(band_s);
       $('.timeline-event-tape').removeClass(band_s);
     }, 
-    stop: function(event, ui) {eventSave($(this)); },
+    stop: function(event, ui) {eventSave($(this));},
     drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this)); },
     //drag: function(event, ui) {moveLabel($(this)); recalculateEventDate($(this).attr('id'));},
     containment: 'parent',
@@ -295,7 +310,7 @@ function initialiseLables()
 	$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
     $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 
-    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
+    recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
 		
 	});	
 }
@@ -444,8 +459,7 @@ function recalculateEventDate(id)
 	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
 
-	
-	id = "label"+ id.substr(5);
+	if (id != null) {var id = "label"+ id.substr(5);}
 	
 	//this to prevent a problem with rounding that dates to be 1px out sometimes
 	if (parseInt(begin.getMonth()) > 5)
@@ -484,11 +498,11 @@ function eventSave(id) {
 
 	info = id.next().children('.info');
 		
-	begin = info.children('.begin_date').html()
+	start = info.children('.begin_date').html()
 	
-	end = info.children('.end_date').html()
+	end = 	info.children('.end_date').html()
 	
-	alert(begin);
+	alert("start: "+start);
 	alert(end);
 	update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
 };
@@ -503,11 +517,15 @@ function addDuration(element_id, title, content, chart)
 	
 	//convert to a date (minus 20 is for some CSS problems) 
 	
+	band 	= parseInt((parseInt(band)-40)/25);
+	
 	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left));
 	 
-	band 	= parseInt((parseInt(band)-40)/25);
+	
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	
+	alert("begin: "+begin);
+	alert("end:"+end);
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
