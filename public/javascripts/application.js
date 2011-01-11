@@ -222,7 +222,6 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 	// what to do in show mode 	
 	if (!editMode) {
 	
-		alert('show mode');
 		showDescription();
 		
 		$(document).ready(function() {initialiseViewLables();}); 
@@ -502,8 +501,6 @@ function eventSave(id) {
 	
 	end = 	info.children('.end_date').html()
 	
-	alert("start: "+start);
-	alert(end);
 	update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
 };
 
@@ -520,12 +517,8 @@ function addDuration(element_id, title, content, chart)
 	band 	= parseInt((parseInt(band)-40)/25);
 	
 	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left));
-	 
-	
+	 	
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
-	
-	alert("begin: "+begin);
-	alert("end:"+end);
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
