@@ -380,7 +380,7 @@ function showDescription() {
 	
 			tape_description = $("#description_"+event_id[1]).html();
 	
-			if (tape_description.length > 1 && $(".show_me_more").length == 0) {
+			if (tape_description.length > 1) {
 				$(this).append('<img src="http://upload.wikimedia.org/wikipedia/en/4/41/Icon-DownArrow.GIF" class="show_me_more" /> ')	
 				
 				$(this).mouseenter(function() {
