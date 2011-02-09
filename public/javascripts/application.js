@@ -46,8 +46,11 @@ function getMoreData(data) {
 
 	$.getJSON('http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', function(result) {	
 	  
-	start = result.start.substr(0,4);
-	end = result.end.substr(0,4);
+	start_length = parseInt(result.start.length)-4;
+	end_length = parseInt(result.end.length)-4;
+	start = result.start.substr(start_length,4);
+	end = result.end.substr(end_length ,4);
+	
 	description= unescape(result.description); 
 	
 	$('.event_start_date').val(start);
@@ -221,7 +224,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 		
 	// what to do in show mode 	
 	if (!editMode) {
-	
+		
 		showDescription();
 		
 		$(document).ready(function() {initialiseViewLables();}); 
@@ -232,6 +235,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 			if (scroll_date.getFullYear() < 1) {alert("dates before 0 bc don't work ");}
 		});
 	}
+	initialiseEventMarkers();
 
 }
 
@@ -261,6 +265,7 @@ function initialiseEditFunctions() {
  	initialiseEditTitle(); 
  	initialiseDescriptionHint()
 }
+
 
 
 //Make the durations draggable
@@ -381,9 +386,9 @@ function showDescription() {
 			tape_description = $("#description_"+event_id[1]).html();
 	
 			if (tape_description.length > 1) {
-				$(this).append('<img src="http://upload.wikimedia.org/wikipedia/en/4/41/Icon-DownArrow.GIF" class="show_me_more" /> ')	
+				$(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ')	
 				
-				$(this).mouseenter(function() {
+				$(this).click(function() {
 					
 					tape_class_list = $(this).attr('class');
 					
@@ -394,24 +399,37 @@ function showDescription() {
 					
 					tape_description = (tape_description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
 
-					$('#tape_description').html(tape_description);
+					$('#tape_description div').html(tape_description);
 					
 					$('#tape_description').css({
 						'display': 'block',
 					});
-				});
-				
-				$(this).mouseleave( function() {
-					$('#tape_description').css({
-						'display': 'none', 	
-					});
-			
-				});
+				});	
 			}
 	
 		});
+		
+		$('#close_tape_description').click( function() {
+			$('#tape_description').css({
+					'display': 'none', 	
+			});	
+		});
 	});	
 }
+
+function initialiseEventMarkers() {
+	$('.timeline-event-tape').each( function() {
+		if (parseInt($(this).css('width'))<10)
+		{
+			$(this).css({
+				"background-image":"none",
+				"border":"none"
+			}); 
+			$(this).html("<img src='/images/event_marker.png' />"); 
+		}
+	}); 
+}
+
 
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {

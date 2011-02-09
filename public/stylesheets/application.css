@@ -22,22 +22,25 @@ ol,ul {
 /* Global CSS */ 
 
 body, html  {
-  background-color: #d3cbc2;
-  background-image:url(/images/bkg.png);
-  font-family: “Helvetica Neue”, Arial, Helvetica, sans-serif; 
+  background-color:#F4F3EE;
+  font-family: "Adobe Garamond Pro",Garamond,"Apple Garamond","ITC Garamond Narrow",Baskerville,"Baskerville old face","Hoefler Text","Times New Roman",serif 
   font-size: 12px;
   color: black;
   height:730px;
+}
+
+h1, h2, h3, p {
+  font-family: "Adobe Garamond Pro",Garamond,"Apple Garamond","ITC Garamond Narrow",Baskerville,"Baskerville old face","Hoefler Text","Times New Roman",serif 
+
 }
 
 #container {
 	background-color:white;
 	background-position:right top;
 	background-repeat:no-repeat;
-	border:1px solid #89a5ae;
 	height:700px;
 	left:50%;
-	margin:10px 10px 10px -500px;
+	margin:0px 10px 10px -500px;
 	position:absolute;
 	top:0;
 	width:1000px;
@@ -57,9 +60,20 @@ a {
 	top:20px;
 }
 
+#title_text {
+    border-top: 1px solid;
+    font-size: 55px;
+    left: 20px;
+    margin: 0;
+    padding: 7px 0 0 20px;
+    position: absolute;
+    text-decoration: none;
+    top: 21px;
+    width: 940px;
+}
+
 #content_container { 
-	background-color:white;
-	border-top:1px solid black;
+	border-top:2px solid black;
 	bottom:0;
 	margin-left:20px;
 	position:absolute;
@@ -74,7 +88,6 @@ a {
 }
 
 #view_page { 
-	background-color:white;
 	border-top:1px solid black;
 	bottom:0;
 	margin-left:20px;
@@ -91,14 +104,25 @@ a {
     background: none repeat scroll 0 0 white;
     height: 300px;
     left: 20px;
-    overflow: hidden;
     position: absolute;
     top: 58px;
     width: 300px;
     display:none;
     padding:3px;
+    border:1px solid black;
 }
 
+#tape_description div {
+	height: 285px;
+	overflow-y:scroll;
+	margin-top:10px;
+}	
+
+#close_tape_description {
+	position:absolute; 
+	right:5px;
+	top:0px;
+}
 
 .description_close {
 	float:right;
@@ -106,10 +130,10 @@ a {
 }
 
 #user_nav {
-	position:absolute;
-	right:42px;
-	top:16px;
-	width:20px;
+    position: absolute;
+    right: 65px;
+    top: 22px;
+    width: 20px;
 }
 
 #sign_in input{ 
@@ -356,6 +380,7 @@ a {
     width:960px;  
     height:350px!important;
     z-index:0;
+    border:1px solid black;
 }
 
 .pencil {
@@ -363,6 +388,9 @@ a {
 }
 
 /* TIMELINE */ 
+
+
+.timeline-band-0 .timeline-ether-bg{background-color:#F4F3EE!important;}
 
 .info {font-size:9px;}
 
@@ -552,7 +580,8 @@ a {
 }
 
 #event_submit {
-	margin-top:15px;
+ 	position: absolute;
+    top: 18px;
 }
 
 #new_event div{

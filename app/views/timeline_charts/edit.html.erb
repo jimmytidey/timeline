@@ -11,7 +11,7 @@
     data-id='<%= @timeline_chart.id %>'><span>Drag onto the timeline to add</span></div> 
     
     
-	<div id="my-timeline" style="height: 150px; border: 1px solid #aaa;"></div>
+	<div id="my-timeline" style="height: 150px;"></div>
   <div id="inline_script">
 	  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
   </div>
