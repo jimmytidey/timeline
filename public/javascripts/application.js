@@ -204,7 +204,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 			
 			//this readds all the javascript when the timeline repaints everything 
 			if ($(".pencil").length == 0) {
-				alert('thing attached');
+				
 				initialiseEditFunctions();		
 			}
 			
