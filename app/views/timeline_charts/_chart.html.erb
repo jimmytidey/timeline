@@ -81,7 +81,8 @@ initialiseTimeline(<%= edit_mode %>, <%= @timeline_chart.zoom %>, <%= start_year
           <p>start: <%= event.start_date.iso8601 %></p>
           <p>end: <%= event.end_date.iso8601 %></p>
         <% end %>
-
+		
+		<%= escape_javascript event.description %>
   
         <% if i != all_events.length - 1 -%>, <% end -%>
     <% end %>
