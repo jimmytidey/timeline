@@ -382,7 +382,9 @@ function showDescription() {
 			tape_class_list = $(this).attr('class');
 			tape_class = tape_class_list.split(' ');
 			event_id = tape_class[0].split('-'); 
-	
+			
+			var tape_description; 
+			
 			tape_description = $("#description_"+event_id[1]).html();
 	
 			if (tape_description.length > 1) {
