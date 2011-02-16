@@ -434,7 +434,7 @@ function initialiseEventMarkers() {
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
 
-	alert(id); 
+	var top;  
 	
 	top = $('#'+id).css("top");	
 	
