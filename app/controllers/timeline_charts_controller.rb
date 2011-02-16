@@ -10,6 +10,18 @@ class TimelineChartsController < ApplicationController
     @timeline_chart.increment_hits(current_user)
   end
   
+  def iframe
+  	  	
+    @timeline_chart = TimelineChart.find(params[:id])
+    if @timeline_chart.forbidden?(current_user)
+      flash[:error] = "That timeline chart is private."
+      render :file => 'public/401.html', :status => 401
+    end
+    render :layout => 'iframe'
+    @timeline_chart.increment_hits(current_user)
+  end
+  
+  
   def edit
     @timeline_chart = TimelineChart.find(params[:id])
     @event = Event.new

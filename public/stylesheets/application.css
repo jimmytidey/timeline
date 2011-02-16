@@ -34,6 +34,11 @@ h1, h2, h3, p {
 
 }
 
+h1 {
+    font-size: 24px;
+    font-weight: normal
+}
+
 #container {
 	background-color:white;
 	background-position:right top;
@@ -82,8 +87,8 @@ a {
 }
 
 #intro {
-	margin-left:20px;
-	margin-top:20px;
+    margin-top: 20px;
+    text-align: center;
 
 }
 
@@ -154,14 +159,14 @@ a {
 	position:absolute;
 	text-decoration:underline;
 	text-transform:capitalize;
-	top:1px;
+	top:8px;
 	width:100px;
 }
 
 #home_link {
 	background-color:white;
 	border:medium none;
-	bottom:53px;
+	bottom:15px;
 	color:black;
 	font-size:22px;
 	font-weight:bold;
@@ -201,16 +206,16 @@ a {
 #top_timelines { 
 	height:400px;
 	position:absolute;
-	top:90px;
+	top:120px;
 	width:460px;
-	left:20px;
+	left:0px;
 }
 
 
 #user_timelines {
 	position:absolute; 
-	left:540px;
-	top:90px;
+	left:520px;
+	top:120px;
 }
 
 #user_timelines h3 {
@@ -377,7 +382,7 @@ a {
 #my-timeline {
     position: absolute; 
     top:70px;
-    width:960px;  
+    width:940px;  
     height:350px!important;
     z-index:0;
     border:1px solid black;
@@ -681,15 +686,14 @@ abbr {
 
 
 .flash_notice {
-	color:black;
-	font-size:20px;
-	font-weight:bold;
-	left:320px;
-	position:absolute;
-	text-align:left;
-	text-transform:uppercase;
-	top:36px;
-	width:600px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    right: 30px;
+    text-align: left;
+    text-transform: uppercase;
+    top: 58px;
 }
 
 .flash_error {
@@ -753,6 +757,12 @@ abbr {
 .timeline_chart input.string {  
   width:140px;
 }  
+
+#embed_code {
+    top: 440px;
+    left: 260px;
+    position: absolute;
+}
 
 /* MODAL WINDOW CSS */ 
 

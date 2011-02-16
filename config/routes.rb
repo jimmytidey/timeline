@@ -15,7 +15,8 @@ Timeline::Application.routes.draw do
 
   match '/:id/:name' => "timeline_charts#show", :as => 'view_chart'
   match '/:id' => "timeline_charts#show"
-
+  match '/:id/:name/iframe' => "timeline_charts#iframe"
+  
   root :to => "home#index"
 
 end

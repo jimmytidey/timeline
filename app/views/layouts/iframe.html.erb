@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Timeline" %></title>
+    <meta name="google-site-verification" content="p_Ul0IlSvQ2-eWxxU-kORj1VD4fEgkh2-xiXehRL_Fg" />
+     <meta name="description" content="Make and share timelines. Automatically add Wikipedia dates, drag and drop events... super simple timelines." />
+    <%= stylesheet_link_tag "application" %>
+    <% if Rails.env.production? then %>
+      <%= javascript_include_tag 'jquery/jquery.min' %>
+      <%= javascript_include_tag 'jquery/jquery-ui.min' %>
+      <%# simile timeline from MIT servers: <script src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js" type="text/javascript"></script> %>
+      <script src="/javascripts/timeline/timeline_ajax/simile-ajax-api.js?bundle=true" type="text/javascript"></script>
+      <script src="/javascripts/timeline/timeline_js/timeline-api.js?bundle=true" type="text/javascript"></script>
+    <% else %>
+      <%= javascript_include_tag 'jquery/jquery' %>
+      <%= javascript_include_tag 'jquery/jquery-ui' %>
+      <script src="/javascripts/timeline/src/ajax/api/simile-ajax-api.js?bundle=false" type="text/javascript"></script>
+      <script src="/javascripts/timeline/src/webapp/api/timeline-api.js?bundle=false" type="text/javascript"></script>
+    <% end %>
+    <%# Freebase suggest %> 
+    <link type="text/css" rel="stylesheet" href="http://freebaselibs.com/static/suggest/1.2.1/suggest.min.css" />
+    <link type="text/css" rel="stylesheet" href="/javascripts/jquery.css" />
+    <script type="text/javascript" src="http://freebaselibs.com/static/suggest/1.2.1/suggest.min.js"></script>
+    <%= javascript_include_tag 'rails' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tag %>
+    <%= yield(:head) %>
+    <style> 
+    	#my-timeline {width:100%}
+    	#content_container {padding:0px; margin:10px; top:56px;}
+    	.view_page #view_info {
+			left: -75px;
+			margin-left: 50%;
+			top: 420px;
+			width: 150px;		
+		}
+		
+		html, body {height:550px; background-color:white; width:100%}
+		.view_page h1 {left:10px; font-size:20px;}
+
+    </style> 
+    
+    <script type="text/javascript">
+    	$(document).ready(function() {
+			var window_width; 
+			window_width = parseInt(document.body.clientWidth)-20;
+			$('#content_container').css('width', window_width);;  
+    	}); 
+    
+    </script>
+    
+  </head>
+  <body>
+
+      <div id="ajax_flash_error" class="flash_error" style="display:none"></div>
+      <div id="ajax_flash_notice" class="flash_notice" style="display:none"></div>
+      <div id= "timeline_chart_errors" style="display:none"></div>
+      <div id= "event_errors" style="display:none"></div>
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, :id => "flash_#{name}", :class => "flash_#{name}" %>
+      <% end %>
+      <%= content_tag :h1, yield(:title) if show_title? %> 
+      <%= yield %>
+      
+   	  </div>
+	
+
+	<script type="text/javascript">
+	
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-20329261-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	
+	</script>
+	
+  </body>
+</html>

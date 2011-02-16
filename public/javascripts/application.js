@@ -224,7 +224,7 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 		
 	// what to do in show mode 	
 	if (!editMode) {
-		
+		initEmbedCode();
 		showDescription();
 		
 		$(document).ready(function() {initialiseViewLables();}); 
@@ -238,9 +238,6 @@ function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {
 	initialiseEventMarkers();
 
 }
-
-
-  
 
 function initialiseTheme(stTheme) {
   stTheme.event.tape.height = 20;
@@ -595,6 +592,18 @@ function initialiseDescriptionHint() {
 			$('#timeline_chart_description').css('color', '#ccc');		
 		}	
 	});	
+}
+
+function initEmbedCode() {
+	$(document).ready(function() {
+		$('#embed_code_generate').click(function() {
+			var url = location.href;
+			var iframe_width = parseInt($('#embed_code_width').val()); 
+			var html = '<iframe src="'+url+'iframe" scrolling="no" frameborder="0" width="'+iframe_width+'" height="550"></iframe>';
+		
+			$('#embed_code_output').html("<textarea style='width:450px; margin-top:10px; '>"+html+"</textarea>"); 
+		}); 
+	});
 }
 
 
