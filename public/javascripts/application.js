@@ -436,8 +436,12 @@ function moveLabel(id) {
 
 	top = $(id).css("top");	
 	
-	if (!$.browser.msie) {
+	if ($.browser.msie) {
     	$(id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
+	}
+	
+	else {
+		alert('IE!') ; 
 	}
 	
 	left = $(id).css("left");	
