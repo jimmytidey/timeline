@@ -434,9 +434,10 @@ function initialiseEventMarkers() {
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
 
+	
 	top = $('#'+id).css("top");	
 	
- 
+	alert(id +" "+top); 
 	
     $('#'+id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
 
