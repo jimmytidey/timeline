@@ -63,22 +63,22 @@ a {
 #title_text {
     border-top: 1px solid;
     font-size: 55px;
-    left: 20px;
+    left: 40px;
     margin: 0;
-    padding: 7px 0 0 20px;
+    padding: 7px 0 0 0;
     position: absolute;
     text-decoration: none;
     top: 21px;
-    width: 940px;
+    width: 930px;
 }
 
 #content_container { 
-	border-top:2px solid black;
-	bottom:0;
-	margin-left:20px;
-	position:absolute;
-	top:88px;
-	width:960px;
+    border-top: 2px solid black;
+    bottom: 0;
+    margin-left: 40px;
+    position: absolute;
+    top: 88px;
+    width: 930px;
 }
 
 #intro {

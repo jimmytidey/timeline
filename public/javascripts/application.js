@@ -435,7 +435,10 @@ function initialiseEventMarkers() {
 function moveLabel(id) {
 
 	top = $(id).css("top");	
-	$(id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
+	
+	if (!$.browser.msie) {
+    	$(id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
+	}
 	
 	left = $(id).css("left");	
 	$(id).next('.timeline-event-label').css('left', left);
