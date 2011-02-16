@@ -295,7 +295,7 @@ function initialiseDragAndDrop() {
       $('.timeline-event-tape').removeClass(band_s);
     }, 
     stop: function(event, ui) {eventSave($(this));},
-    drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this)); },
+    drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')	); },
     //drag: function(event, ui) {moveLabel($(this)); recalculateEventDate($(this).attr('id'));},
     containment: 'parent',
 	  grid: [1, 25]
@@ -434,18 +434,14 @@ function initialiseEventMarkers() {
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
 
-	top = $(id).css("top");	
+	top = $('#'+id).css("top");	
 	
-	if ($.browser.msie) {
-    	$(id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
-	}
+ 
 	
-	else {
-		alert('IE!') ; 
-	}
-	
-	left = $(id).css("left");	
-	$(id).next('.timeline-event-label').css('left', left);
+    $('#'+id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
+
+	left = $('#'+id).css("left");	
+	$('#'+id).next('.timeline-event-label').css('left', left);
 }
 
 // Pass this function the a tape or label and it will return the
