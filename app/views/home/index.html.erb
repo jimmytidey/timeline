@@ -19,7 +19,7 @@
 
 		<%= button_to 'Add a new timeline »', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 	
 	<% else %> 
-		<p id='sign_in'>Sign in to add your timeline. <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %></p> 
+		<p id='sign_in'>Sign in with your Facebook, Yahoo or Google account to begin making your own timeline.<br/> <br/> <center> <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %></center></p> 
 	<% end %>
 	
 	</div> 
