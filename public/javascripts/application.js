@@ -172,13 +172,14 @@ var eventSource = new Timeline.DefaultEventSource(0);
 	
 
 
-function initialiseTimeline(editMode, zoom, startYear, endYear, centerYear) {	
-  
+function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, centerYear) {	
+  	
+  	
   	bandInfos = [
 	Timeline.createBandInfo({
 	  width: "100%", 
 	  intervalUnit: zoom, 
-	  intervalPixels: 100,
+	  intervalPixels: intervalPixels,
 	  eventSource: eventSource,
 	  theme: stTheme
 	})];
@@ -270,7 +271,7 @@ function initialiseDragAndDrop() {
   var band_s = '';
 
    // band_s = 'band_1 band_2 band_3 band_4 ...'
-  for(var i=1;i<=10;i++) {
+  for(var i=1;i<=12;i++) {
     band_s += 'band_' + i + ' '
   }
 
@@ -295,7 +296,7 @@ function initialiseDragAndDrop() {
     drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
     //drag: function(event, ui) {moveLabel($(this)); recalculateEventDate($(this).attr('id'));},
     containment: 'parent',
-	  grid: [1, 25]
+	  grid: [1, 30]
   });
 }
 
@@ -421,10 +422,11 @@ function initialiseEventMarkers() {
 		if (parseInt($(this).css('width'))<10)
 		{
 			$(this).css({
-				"background-image":"none",
+				"background-color":"none",
+				"width":"0px",
 				"border":"none"
 			}); 
-			$(this).html("<img src='/images/event_marker.png' />"); 
+			$(this).html("<img src='/images/event_marker.png' class='event_marker' />"); 
 		}
 	}); 
 }
@@ -510,9 +512,11 @@ function eventSave(id) {
  
 	 // get the band, making sure that  
 	ttop  = parseInt($(id).css('top')); 
-	ttop  = Math.round((ttop)/25)+1; 
+	ttop  = Math.round((ttop)/30)+1; 
 	if (ttop == 0) {ttop=1;}
-
+	
+	alert(ttop);
+		
 	title = $(id).next('.timeline-event-label').children('p').html();
 
 	info = id.next().children('.info');
@@ -534,7 +538,7 @@ function addDuration(element_id, title, content, chart)
 	
 	//convert to a date (minus 20 is for some CSS problems) 
 	
-	band 	= parseInt((parseInt(band)-40)/25);
+	band 	= parseInt((parseInt(band)-40)/30);
 	
 	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left));
 	 	

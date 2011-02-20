@@ -7,14 +7,14 @@
 	
   	<%= render :partial => 'events/form', :locals => { :type => 'new'} %>
 	
-  <div id='new_duration' 
-    data-id='<%= @timeline_chart.id %>'><span>Drag onto the timeline to add</span></div> 
+  <div id='new_duration' data-id='<%= @timeline_chart.id %>'><span>Drag onto the timeline to add</span></div> 
     
     
 	<div id="my-timeline" style="height: 150px;"></div>
-  <div id="inline_script">
-	  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
-  </div>
+
+	<div id="inline_script">
+		<%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
+	</div>
 
 	<a href='/' id='home_link'>Home </a>   	
 	

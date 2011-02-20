@@ -68,7 +68,7 @@ var events = {
 	end 
 %>
 
-initialiseTimeline(<%= edit_mode %>, <%= @timeline_chart.zoom %>, <%= start_year_mod %>,<%= @timeline_chart.end_year %>,<%= @timeline_chart.center_year %>);
+initialiseTimeline(<%= edit_mode %>, <%=@timeline_chart.interval_pixels %>, <%= @timeline_chart.zoom %>, <%= start_year_mod %>,<%= @timeline_chart.end_year %>,<%= @timeline_chart.center_year %>);
 </script>
 
 <noscript>

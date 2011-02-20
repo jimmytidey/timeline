@@ -373,8 +373,10 @@ a {
 .view_page #view_info {
 	top:440px;
 }
+.view_page .timeline-event-tape {
+	cursor: auto!important;
 
-
+}
 
 
 /*  EDIT PAGE */ 
@@ -400,12 +402,10 @@ a {
 .info {font-size:9px;}
 
 .timeline-event-label {
-	margin-top:7px;
-	font-size:12px;
-	margin-left:1px;	
-	padding:2px;
-	width:300px;
-	width:auto;
+    font-size: 12px;
+    margin-left: -1px;
+    margin-top: 10px;
+    padding: 2px;
 }
 
 .timeline-event-label p {
@@ -424,28 +424,27 @@ a {
 
 .timeline-event-tape {
 	height:10px!important;
-	border-top: 1px solid black;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
+	border: 1px solid black;
 	overflow: visible!important;
-	background-color:transparent!important;
-	background-image:url(/images/bkg_tape_blue.png);
 	cursor: crosshair!important;
-	
+	background-color:  #bbe5eb!important ; 
+}
+
+.event_marker {
+	margin-left:-1px; 
 }
 
 
-
-.red.timeline-event-tape {
-	background-image:url(/images/bkg_tape_red.png);
+.cream.timeline-event-tape {
+	background-color: #fbf4e3!important;
 }
 
-.green.timeline-event-tape {
-	background-image:url(/images/bkg_tape_green.png);
+.yellow.timeline-event-tape {
+	background-color:#f5f187!important;
 }
 
-.violet.timeline-event-tape {
-	background-image:url(/images/bkg_tape_violet.png);
+.magenta.timeline-event-tape {
+	background-color:#d9b0c5!important;
 }
 
 
@@ -459,39 +458,47 @@ a {
 }
 
 .band_2 {
-	top:25px!important; 
+	top:30px!important; 
 }
 
 .band_3 {
-	top:50px!important; 
+	top:60px!important; 
 }
 
 .band_4 {
-	top:75px!important; 
+	top:90px!important; 
 }
 
 .band_5 {
-	top:100px!important; 
+	top:120px!important; 
 }
 
 .band_6 {
-	top:125px!important; 
-}
-
-.band_7 {
 	top:150px!important; 
 }
 
+.band_7 {
+	top:180px!important; 
+}
+
 .band_8 {
-	top:175px!important; 
+	top:210px!important; 
 }
 
 .band_9 {
-	top:200px!important; 
+	top:240px!important; 
 }
 
 .band_10 {
-	top:225px!important; 
+	top:270px!important; 
+}
+
+.band_11 {
+	top:300px!important; 
+}
+
+.band_12 {
+	top:330px!important; 
 }
 
 .pencil {
@@ -535,13 +542,10 @@ a {
 	width:80px!important;
 }
 
-#timeline_chart_zoom {
-	margin-top:-3px;
-	height:10px;
-}
 
 #timeline_chart_zoom_wrapper {
-	width:80px!important;
+	position:absolute; 
+	left:250px;
 }
 	
 #timeline_chart_zoom_wrapper label{
@@ -550,22 +554,36 @@ a {
 	top:-2px;
 }	
 
-#timeline_chart_private_div {
-	left: 656px;
+
+
+
+#timeline_chart_interval_pixels_wrapper {
+	position:absolute; 
+	left:350px
+}
+
+#timeline_chart_interval_pixels_wrapper select{
+    left: -4px;
     position: absolute;
-    top: 24px;
+    top: 22px;
+}
+
+#timeline_chart_private_div {
+    left: 438px;
+    position: absolute;
+    top: 23px;
 }
 
 #timeline_chart_description{
- height: 34px;
-    left: 324px;
+    height: 54px;
+    left: 0;
     position: absolute;
-    top: 0;
-    width: 300px;
+    top: 50px;
+    width: 500px;
 }
 
 #timeline_chart_submit {
-  	left: 670px;
+  	left: 460px;
     position: absolute;
     top: 0;
 }
@@ -649,14 +667,10 @@ a {
 	position:absolute;
 	width:200px;
 	height:10px!important;
-	border-top: 1px solid black;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-bottom: none;
-	background-color:transparent!important; 
+	border: 1px solid black;
 	overflow: visible!important;
-	background-image:url(/images/bkg_tape_blue.png);
 	z-index:4;
+	background-color:  #bbe5eb!important; 
 }	
 
 #new_duration span {

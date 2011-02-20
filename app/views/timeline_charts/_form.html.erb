@@ -12,9 +12,13 @@
     value="<%= @timeline_chart.center_date.year if @timeline_chart.center_date %>" />
   </div>
   
-  <div id='timeline_chart_zoom_wrapper'>
-    <%= f.input :zoom, :as => :select, :collection => TimelineChart::PERIOD, :prompt => ""%>
-  </div>
+	<div id='timeline_chart_zoom_wrapper'>
+		<%= f.input :zoom, :as => :select, :collection => TimelineChart::PERIOD, :prompt => "", :label => "Labels" %>
+	</div>
+  
+	<div id='timeline_chart_interval_pixels_wrapper'>
+		<%= f.input :interval_pixels , :as => :select, :collection => TimelineChart::INTERVAL, :prompt => "", :label => "Zoom"%>
+	</div>  
 	
 	<div id='timeline_chart_private_div'>
 		<%= f.label :private   %>
