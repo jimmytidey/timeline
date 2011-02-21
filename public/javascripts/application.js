@@ -177,7 +177,7 @@ function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, 
   	
   	bandInfos = [
 	Timeline.createBandInfo({
-	  width: "100%", 
+	  width: "100%",
 	  intervalUnit: zoom, 
 	  intervalPixels: intervalPixels,
 	  eventSource: eventSource,
@@ -514,8 +514,7 @@ function eventSave(id) {
 	ttop  = parseInt($(id).css('top')); 
 	ttop  = Math.round((ttop)/30)+1; 
 	if (ttop == 0) {ttop=1;}
-	
-	alert(ttop);
+
 		
 	title = $(id).next('.timeline-event-label').children('p').html();
 
