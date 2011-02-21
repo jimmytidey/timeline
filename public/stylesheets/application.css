@@ -223,7 +223,8 @@ a {
 #user_timelines {
 	margin-top: 50px;
 	margin-left: 57px;
-	float:left; 
+	float:left;
+	width:460px;
 }
 
 #user_timelines h3 {
