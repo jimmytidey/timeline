@@ -1,4 +1,5 @@
 
+<% if top_chart.title != 'Untitled' %> 
 
 <div id="top_chart_summary_<%= top_chart.id %>" class='top_chart_summary'>
   <a href='<%=  top_chart.id.to_s   %>/<%=  CGI::escape(top_chart.title)   %>' class='top_chart_link' title='view timeline' >
@@ -10,3 +11,5 @@
 	<p class='top_chart_user'><%= top_chart.user.name %>, <%= top_chart.created_at.strftime('%B %Y') %></p> 
   </a>
 </div>
+
+<% end %> 

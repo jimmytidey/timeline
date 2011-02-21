@@ -26,7 +26,7 @@
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>
-  <body>
+  <body >
  
     <div id="container" class='' >
 	
@@ -49,9 +49,12 @@
       <%= content_tag :h1, yield(:title) if show_title? %> 
       <%= yield %>
       
-      
+    <div id='footer'><a href='mailto:hi@jimmytidey.co.uk' >Contact</a>&nbsp; |&nbsp; <a href='/'>Home </a></div>   
      
     </div>
+	
+	
+
 <script type="text/javascript" charset="utf-8">
   var is_ssl = ("https:" == document.location.protocol);
   var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";

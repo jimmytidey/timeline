@@ -1,7 +1,7 @@
 
+<h1 id='timeline_title'><%= @timeline_chart.title.to_s %></h1>
+
 <div id='content_container'>
-	
-	<a href='/' id='home_link'>Home </a>   
 	
 	<div id="edit_timeline_chart"> <%= render 'form' %> </div>
 	
@@ -14,9 +14,7 @@
 
 	<div id="inline_script">
 		<%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
-	</div>
-
-	<a href='/' id='home_link'>Home </a>   	
+	</div>   	
 	
   <%= render :partial => 'auto_add' %>
 	

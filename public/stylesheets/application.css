@@ -26,7 +26,6 @@ body, html  {
   font-family: "Adobe Garamond Pro",Garamond,"Apple Garamond","ITC Garamond Narrow",Baskerville,"Baskerville old face","Hoefler Text","Times New Roman",serif 
   font-size: 12px;
   color: black;
-  height:730px;
 }
 
 h1, h2, h3, p {
@@ -81,8 +80,7 @@ a {
     border-top: 2px solid black;
     bottom: 0;
     margin-left: 40px;
-    position: absolute;
-    top: 88px;
+    margin-top: 88px;
     width: 930px;
 }
 
@@ -105,20 +103,31 @@ a {
 	display:none; 
 }
 
+
+#footer {
+	position:absolute; 
+	bottom:10px;
+	padding-top:5px;
+	width:930px;
+	text-align:center;
+	margin-left:40px;
+	border-top:1px solid black; 
+}
+
 #tape_description {
     background: none repeat scroll 0 0 white;
-    height: 300px;
-    left: 20px;
+    border: 1px solid black;
+    display: none;
+    height: 338px;
+    left: 43px;
+    padding: 3px;
     position: absolute;
-    top: 58px;
+    top: 173px;
     width: 300px;
-    display:none;
-    padding:3px;
-    border:1px solid black;
 }
 
 #tape_description div {
-	height: 285px;
+	height: 330px;
 	overflow-y:scroll;
 	margin-top:10px;
 }	
@@ -184,7 +193,7 @@ a {
 
 #show_description {
 	position:absolute; 
-	top:10px;
+	top:115px;
 }
 
 .show_me_more {
@@ -205,17 +214,16 @@ a {
 
 #top_timelines { 
 	height:400px;
-	position:absolute;
-	top:120px;
+	margin-top:50px;
 	width:460px;
-	left:0px;
+	float:left;
 }
 
 
 #user_timelines {
-	position:absolute; 
-	left:520px;
-	top:120px;
+	margin-top: 50px;
+	margin-left: 57px;
+	float:left; 
 }
 
 #user_timelines h3 {
@@ -346,33 +354,24 @@ a {
 #facebook_share {
 	overflow:hidden;
 	position:absolute;
-	right:0px;
-	top:440px;
+	right:30px;
+	top:540px;
 	width:47px;
 }
 
 
 
-.view_page h1 {
-    display: block;
-    font-size: 20px;
-    left: 243px;
+#timeline_title  {
+	 display: block;
+    font-size: 24px;
+    left: 283px;
     position: absolute;
-    top: -37px;
+    top: 51px;
     z-index: 1000;
 }
 
-#view_page #home_link {
-	top:40px;
-}	
 
-.view_page #my-timeline {
-	top:50px;
-}	
 
-.view_page #view_info {
-	top:440px;
-}
 .view_page .timeline-event-tape {
 	cursor: auto!important;
 
@@ -383,8 +382,8 @@ a {
 
 #my-timeline {
     position: absolute; 
-    top:70px;
-    width:940px;  
+    top:170px;
+    width:930px;  
     height:350px!important;
     z-index:0;
     border:1px solid black;
@@ -525,7 +524,7 @@ a {
 
 #edit_timeline_chart {
    position:absolute;
-   top:440px;
+   top:540px;
    width:800px;
 }
 
@@ -589,11 +588,11 @@ a {
 }
 
 #new_event_form {
-	display:inline;
-	position:absolute;
-	right:0px;
-	top:22px;
-	width:372px;
+    display: inline;
+    position: absolute;
+    right: 32px;
+    top: 118px;
+    width: 372px;
 }
 
 #loading_gif {
@@ -663,7 +662,7 @@ a {
 }	
 
 #new_duration {
-	top:30px;
+	top:140px;
 	position:absolute;
 	width:200px;
 	height:10px!important;
@@ -773,7 +772,7 @@ abbr {
 }  
 
 #embed_code {
-    top: 440px;
+    top: 540px;
     left: 260px;
     position: absolute;
 }
