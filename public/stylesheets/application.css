@@ -601,6 +601,10 @@ a {
 }
 
 
+.modal-window .event_start_date, .modal-window .event_end_date{
+	color:black;
+}
+
 #loading_gif {
 	position:relative; 
 	left:-330px; 
