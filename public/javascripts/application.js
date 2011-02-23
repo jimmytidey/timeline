@@ -262,6 +262,7 @@ function initialiseEditFunctions() {
 	preventBubblePopper();
  	initialiseEditTitle(); 
  	initialiseDescriptionHint()
+ 	removeDateHint();
 }
 
 
@@ -569,6 +570,17 @@ function parseAutoAdd(dates) {
 	$.each(dateObject, function(key, value) { 
 		$('#auto_add_result').append('<p>'+value.title+' Begins: '+value.start+' Ends: '+value.end+'</p> ');
 	});
+}
+
+function removeDateHint() {
+	$('.event_start_date, .event_end_date').focus(function() {
+		if ($(this).val()== "1939" || $(this).val()== "1945") {
+			
+			$(this).css('color','black');
+			$(this).val('');
+			$(this).removeClass('.auto_remove');
+		}
+	}); 
 }
 
 // on edit page, put the greyed out description word in 

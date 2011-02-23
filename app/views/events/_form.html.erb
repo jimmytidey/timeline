@@ -13,20 +13,20 @@
   
   <div class="input string required" >
     <label class="string required">
-      Start date
+      Start year
     </label>
-    <input class="string required event_start_date"
+    <input class="string required event_start_date auto_remove"
     name="event[start_year]" size="50" type="text"
-    value="<%= @event.start_date.year if @event.start_date %>" />
+    value="1939" />
   </div>
 
   <div class="input string required">
     <label class="string required">
-      End date
+      End year
     </label>
-    <input class="string required event_end_date"
+    <input class="string required event_end_date auto_remove"
     name="event[end_year]" size="50" type="text"
-    value="<%= @event.end_date.year if @event.end_date%>" />
+    value="1945" />
   </div>
 	
 	<div id='color_selector'>
@@ -39,7 +39,7 @@
 
   <% if type == 'new' %>
   <input type='hidden' name='event[description]' id='event_description' /> 
-    <%= f.submit :value => 'Add »' %>
+    <%= f.submit :value => 'Add date »' %>
   <% else %>
   	<textarea name='event[description]' id='event_description_text' ><%= @event.description %></textarea>  
     <%= f.submit :value => 'Save »' %>

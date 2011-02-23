@@ -1,6 +1,6 @@
 class AddZoomAsInt < ActiveRecord::Migration
   def self.up	
-  	add_column :timeline_charts, :interval_pixels, :integer	, :default => 90
+  	add_column :timeline_charts, :interval_pixels, :integer, :default => 90
   end
 
   def self.down

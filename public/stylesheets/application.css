@@ -596,6 +596,11 @@ a {
     width: 372px;
 }
 
+.event_start_date, .event_end_date{
+	color:#ccc;
+}
+
+
 #loading_gif {
 	position:relative; 
 	left:-330px; 
@@ -613,6 +618,16 @@ a {
   margin-left: 20px;  
   margin-bottom: 10px;  
 }	
+
+
+#new_event_form {
+    display: inline;
+    position: absolute;
+    right: 60px;
+    top: 118px;
+    width: 372px;
+}    
+    
 
 #new_event_form .event_title input.string {
 	width:140px;
