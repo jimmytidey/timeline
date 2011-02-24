@@ -234,6 +234,8 @@ function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, 
 			//stops the user scrolling past zero
 			scroll_date = tl._bands[0].getMinVisibleDate(); 
 			if (scroll_date.getFullYear() < 1) {alert("dates before 0 bc don't work ");}
+			initialiseEventMarkers();
+			
 		});
 	}
 	initialiseEventMarkers();
@@ -504,7 +506,14 @@ function recalculateEventDate(id)
 		rounded_end= end.getFullYear();
 	}	
 	
-	$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date">'+rounded_begin+'</span> - <span class="end_date">'+ rounded_end+'</span>)</span>');	
+	if (rounded_begin != rounded_end) {
+		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date">'+rounded_begin+'</span> - <span class="end_date">'+ rounded_end+'</span>)</span>');	
+	} 
+	
+	else {
+		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date">'+rounded_begin+'</span>)</span>');	
+	
+	}
 }
 
 function eventSave(id) {
@@ -573,9 +582,8 @@ function parseAutoAdd(dates) {
 }
 
 function removeDateHint() {
-	$('.event_start_date, .event_end_date').focus(function() {
-		if ($(this).val()== "1939" || $(this).val()== "1945") {
-			
+	$('.event_start_date').click(function() {
+		if ($(this).hasClass('.auto_remove')) {
 			$(this).css('color','black');
 			$(this).val('');
 			$(this).removeClass('.auto_remove');
