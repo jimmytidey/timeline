@@ -27,8 +27,13 @@
     <%= yield(:head) %>
   </head>
   <body >
- 
-    <div id="container" class='' >
+ 	<%	 
+ 			class_type = params[:controller]  
+ 		
+ 	%>
+ 	
+
+    <div id="container" class='<%=class_type %>' >
 	
 	<a href='/' id='title_text'>Timeliner</a>
       

@@ -5,10 +5,13 @@
  	<p>Drag and drop dates, automatically import event dates from Wikipeda, embed timelines in your blog.</p>
 	
 	</div>
-  <div id="top_timelines">
-    <h3>Already built</h3>
+	<div id="top_timelines">
+	<h3>Already built</h3>
 		<%= render :partial => "top_chart", :collection => @top_charts %>
-  </div>
+	</div>
+	
+	
+
 	
 	<div id="user_timelines">	
 		<h3>Your Timelines</h3>
@@ -22,6 +25,13 @@
 		<p id='sign_in'>Sign in with your Facebook, Yahoo or Google account to begin making your own timeline.<br/> <br/> <center> <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %></center></p> 
 	<% end %>
 	
+		
+	
+	
 	</div> 
 
+	<br class='clearfix' />	
+
 </div>
+
+
