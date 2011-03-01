@@ -703,6 +703,7 @@ a {
 	border: 1px solid black;
 	overflow: visible!important;
 	z-index:4;
+	cursor:crosshair;
 	background-color:  #bbe5eb!important; 
 }	
 

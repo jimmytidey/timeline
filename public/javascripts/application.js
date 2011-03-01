@@ -44,21 +44,26 @@ function getMoreData(data) {
 
 	$('#new_event_form').append("<img src='/images/loading.gif' id='loading_gif' />"); 	
 
-	$.getJSON('http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', function(result) {	
-	  
-	start_length = parseInt(result.start.length)-4;
-	end_length = parseInt(result.end.length)-4;
-	start = result.start.substr(start_length,4);
-	end = result.end.substr(end_length ,4);
-	
-	description= unescape(result.description); 
-	
-	$('.event_start_date').val(start);
-	$('.event_end_date').val(end);
-	$('#event_description').val(description);
-	$('#loading_gif').remove();
-	    	
-  });
+	$.ajax({
+		url: 'http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', 
+		success: function(result) {		  
+			start_length = parseInt(result.start.length)-4;
+			end_length = parseInt(result.end.length)-4;
+			start = result.start.substr(start_length,4);
+			end = result.end.substr(end_length ,4);
+			
+			description= unescape(result.description); 
+			
+			$('.event_start_date').val(start);
+			$('.event_end_date').val(end);
+			$('#event_description').val(description);
+			$('#loading_gif').remove(); },	
+		
+		error: function(result) {
+  			$('#new_event_form').remove('#loading_gif');
+  			alert("couldn't find dates");
+  		}
+ 	 });
 }
 
 $(document).ready(function() {
@@ -545,19 +550,19 @@ function addDuration(element_id, title, content, chart)
 	band	= $("#"+element_id).css('top');
 	
 	
-	//convert to a date (minus 20 is for some CSS problems) 
+	//convert to a date (css ofsets in the location of the original duration affect this) 
 	
-	band 	= parseInt((parseInt(band)-40)/30);
+	band 	= parseInt((parseInt(band)-136)/30);
 	
-	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left));
+	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-40);
 	 	
 	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
   	submit_event_to_server(begin, end, band, chart);
-	$("#new_duration").css('left', '0px')
-	$("#new_duration").css('top', '20px')	
+	$("#new_duration").css('left', '40px')
+	$("#new_duration").css('top', '136px')	
 };
 
 function autoAdd() {

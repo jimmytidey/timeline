@@ -4,7 +4,7 @@
   
   <div class="input string required event_title" >
     <label class="string required">
-      Event
+      Event name
     </label>
     <input class="string required"
     name="event[title]" size="50" type="text"
@@ -13,7 +13,7 @@
   
   <div class="input string required" >
     <label class="string required">
-      Start date
+      Start Year
     </label>
     <input class="string required event_start_date"
     name="event[start_year]" size="50" type="text"
@@ -29,7 +29,7 @@
 
   <div class="input string required">
     <label class="string required">
-      End date
+      End Year
     </label>
     <input class="string required event_end_date"
     name="event[end_year]" size="50" type="text"
@@ -54,7 +54,7 @@
 
   <% if type == 'new' %>
   <input type='hidden' name='event[description]' id='event_description' /> 
-    <%= f.submit :value => 'Add »' %>
+    <%= f.submit :value => 'Add event »' %>
   <% else %>
   	<textarea name='event[description]' id='event_description_text' ><%= @event.description %></textarea>  
     <%= f.submit :value => 'Save »' %>
