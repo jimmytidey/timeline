@@ -269,7 +269,6 @@ function initialiseEditFunctions() {
 	preventBubblePopper();
  	initialiseEditTitle(); 
  	initialiseDescriptionHint()
- 	removeDateHint();
 }
 
 
@@ -586,15 +585,6 @@ function parseAutoAdd(dates) {
 	});
 }
 
-function removeDateHint() {
-	$('.event_start_date').click(function() {
-		if ($(this).hasClass('.auto_remove')) {
-			$(this).css('color','black');
-			$(this).val('');
-			$(this).removeClass('.auto_remove');
-		}
-	}); 
-}
 
 // on edit page, put the greyed out description word in 
 function initialiseDescriptionHint() {

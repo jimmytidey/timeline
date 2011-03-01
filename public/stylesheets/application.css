@@ -99,9 +99,18 @@ a {
 }
 
 #intro {
-    margin-top: 20px;
-    text-align: center;
+ 	float: left;
+    margin-left: 69px;
+    margin-top: 69px;
+    text-align: justify;
+    width: 344px;
+}
 
+#front_page_example {
+    float: right;
+    margin-right: 50px;
+    margin-top: 30px;
+    width: 400px;
 }
 
 #view_page { 
@@ -217,6 +226,14 @@ a {
 
 /* Index Page */ 
 
+#top_timelines { 
+	height:400px;
+	margin-top:50px;
+	width:460px;
+	float:left;
+	clear:both;
+}
+
 #top_timelines h3 {
 	border-bottom:1px solid black;
 	font-size:20px;
@@ -225,14 +242,6 @@ a {
 	padding-left:0;
 	width:413px;
 }
-
-#top_timelines { 
-	height:400px;
-	margin-top:50px;
-	width:460px;
-	float:left;
-}
-
 
 #user_timelines {
 	margin-top: 50px;
@@ -610,9 +619,6 @@ a {
     width: 372px;
 }
 
-.event_start_date, .event_end_date{
-	color:#ccc;
-}
 
 
 .modal-window .event_start_date, .modal-window .event_end_date{

@@ -15,31 +15,28 @@
     <label class="string required">
       Start Year
     </label>
-    <input class="string required event_start_date"
-    name="event[start_year]" size="50" type="text"
-   <%  if @event.start_date  
-    		start_date = @event.start_date.year
-    	else 
-    		start_date = "1939"
-    	end 
-    %> 	
+    <input class="string required event_start_date auto_remove"
+    name="event[start_year]" size="50" type="text"    
+    
+    <% 	if (@event.start_date) 
+    		start_date = @event.start_date.year 
+    	end
+    %>
     
     value="<%= start_date %>" />
   </div>
 
-  <div class="input string required">
+  <div class="input string required auto_remove">
     <label class="string required">
       End Year
     </label>
     <input class="string required event_end_date"
     name="event[end_year]" size="50" type="text"
     
-    <%  if @event.end_date  
-    		end_date = @event.end_date.year
-    	else 
-    		end_date = "1945"
-    	end 
-    %> 	
+    <% 	if (@event.end_date) 
+    		end_date = @event.end_date.year 
+    	end
+    %>
     
     value="<%= end_date %>" />
   </div>
