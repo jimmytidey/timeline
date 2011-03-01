@@ -60,7 +60,7 @@ function getMoreData(data) {
 			$('#loading_gif').remove(); },	
 		
 		error: function(result) {
-  			$('#new_event_form').remove('#loading_gif');
+  			$('#new_event_form #loading_gif').remove();
   			alert("couldn't find dates");
   		}
  	 });
