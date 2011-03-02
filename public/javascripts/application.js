@@ -428,6 +428,7 @@ function initialiseEventMarkers() {
 	$('.timeline-event-tape').each( function() {
 		if (parseInt($(this).css('width'))<10)
 		{
+			alert('test');
 			$(this).css({
 				"background-color":"none",
 				"width":"0px",
