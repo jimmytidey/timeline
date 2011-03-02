@@ -449,8 +449,7 @@ a {
 	height:10px!important;
 	border: 1px solid black;
 	overflow: visible!important;
-	cursor: crosshair!important;
-	background-color:  #bbe5eb!important ; 
+	cursor: crosshair!important; 
 }
 
 .event_marker {

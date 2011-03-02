@@ -428,10 +428,9 @@ function initialiseEventMarkers() {
 	$('.timeline-event-tape').each( function() {
 		if (parseInt($(this).css('width'))<10)
 		{
-			alert('test');
 			$(this).css({
-				"background-color":"none",
-				"width":"0px",
+				"background-color":"transparent",
+				"width":"10px",
 				"border":"none"
 			}); 
 			$(this).html("<img src='/images/event_marker.png' class='event_marker' />"); 
