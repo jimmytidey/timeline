@@ -430,11 +430,10 @@ function initialiseEventMarkers() {
 		{
 			$(this).css({
 				"background-color":"transparent",
-				"width":"0px",
 				"border":"none",
 				"overflow": "visible"
 			}); 
-			$(this).html("<img src='/images/event_marker.png' class='event_marker' />"); 
+			$(this).append("<img src='/images/event_marker.png' class='event_marker' />"); 
 		}
 	}); 
 }
