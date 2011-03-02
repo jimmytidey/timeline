@@ -267,8 +267,8 @@ function initialiseEditFunctions() {
 	initialiseEdit();
 	initialiseDestroy();
 	preventBubblePopper();
- 	initialiseEditTitle(); 
- 	initialiseDescriptionHint()
+ 	initialiseEditTitle();
+ 	initLeaveTest();
 }
 
 
@@ -585,33 +585,6 @@ function parseAutoAdd(dates) {
 	});
 }
 
-
-// on edit page, put the greyed out description word in 
-function initialiseDescriptionHint() {
-	if ($('#timeline_chart_description').val() == '' || $('#timeline_chart_description').val() == 'description') 
-		{
-			$('#timeline_chart_description').val('description') ;
-			$('#timeline_chart_description').css('color', '#ccc'); 
-		}
-		
-	$('#timeline_chart_description').click( function() {
-		if ($('#timeline_chart_description').val() == 'description') 
-		{
-			$('#timeline_chart_description').val('') ;
-			$('#timeline_chart_description').css('color', '#000');
-		}	
-		
-	});
-
-	$('#timeline_chart_description').blur( function() {
-		if ($('#timeline_chart_description').val() == '') 
-		{
-			$('#timeline_chart_description').val('description') ;
-			$('#timeline_chart_description').css('color', '#ccc');		
-		}	
-	});	
-}
-
 function initEmbedCode() {
 	$(document).ready(function() {
 		$('#embed_code_generate').click(function() {
@@ -624,6 +597,25 @@ function initEmbedCode() {
 	});
 }
 
+function initLeaveTest() {
+	
+	window.onbeforeunload = bunload;
+	
+	function bunload(){
+		var title = $('#timeline_chart_title').val(); 
+		var description = $('#timeline_chart_description').val();
+		
+		if (title == 'Untitled') {
+			dontleave="Why not give your timeline a proper title before you leave? Press cancel to stay on this page";
+			return dontleave;
+		}	
+		
+		if (description == '') {
+			dontleave="Giving your timeline a description will help other users find it. Press cancel to stay on this page";
+			return dontleave;
+		}			
+	}
+}	
 
 // Bringing up a modal 
 var modalWindow = {

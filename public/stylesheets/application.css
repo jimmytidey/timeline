@@ -601,8 +601,14 @@ a {
     height: 54px;
     left: 0;
     position: absolute;
-    top: 50px;
+    top: 63px;
     width: 500px;
+}
+
+#description_accordian label {
+  	left: 0px;
+    position: absolute;
+    top: 40px;
 }
 
 #timeline_chart_submit {
@@ -618,7 +624,6 @@ a {
     top: 118px;
     width: 372px;
 }
-
 
 
 .modal-window .event_start_date, .modal-window .event_end_date{
@@ -751,16 +756,14 @@ abbr {
 }
 
 .flash_error {
-	color:black;
-	font-size:20px;
-	font-weight:bold;
-	left:320px;
-	position:absolute;
-	text-align:left;
-	text-transform:uppercase;
-	top:36px;
-	width:600px;
-	color:red;
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    right: 30px;
+    text-align: right;
+    text-transform: uppercase;
+    top: 52px;
 }
 
 .fieldWithErrors {
@@ -769,14 +772,12 @@ abbr {
 }
 
 .error_messages {
-  width: 400px;
-  border: 2px solid #CF0000;
-  padding: 0px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-  font-size: 12px;
-  visibility:hidden;
+    position: absolute;
+    right: 14px;
+    text-align: right;
+    top: 7px;
+    visibility: hidden;
+    width: 505px;
 }
 
 .error_messages h2 {

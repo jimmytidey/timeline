@@ -3,7 +3,7 @@ class TimelineChart < ActiveRecord::Base
   @@per_page = 14
   PERIOD = {:Month => 6, :Year => 7, :Decade => 8, :Century => 9}
   INTERVAL = {:Five => 220, :Four => 170, :Three => 120, :Two => 90, :One => 60}
-  TEMPLATE = { :title => 'Untitled',  
+  TEMPLATE = { :title => 'Untitled',
                :hits => 0,
                :zoom => PERIOD[:Decade],
                :private => false }
