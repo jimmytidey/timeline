@@ -11,12 +11,14 @@ Timeline::Application.routes.draw do
   get "home/new"
 
   #SIMILE Timeline requests & requires __history__.html files from various places.
-  match '*__history__.html' => Proc.new { [200,{"Content-Type" => "text/html"},'<html><body>history</body></html>'] }
 
   match '/:id/:name' => "timeline_charts#show", :as => 'view_chart'
   match '/:id' => "timeline_charts#show"
   match '/:id/:name/iframe' => "timeline_charts#iframe"
   
   root :to => "home#index"
+
+  match ':action' => 'static#:action'
+
 
 end
