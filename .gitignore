@@ -1,6 +1,7 @@
 *.swp
 *.swo
 *.swn
+local_dev_config.rb
 untracked
 coverage
 capybara-201*

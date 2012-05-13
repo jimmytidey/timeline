@@ -24,3 +24,6 @@ Timeline::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 end
 
+# Sensitive Janrain RPX now environment variables and any developer specific configuration
+# can be put in local_dev_config.rb. See local_dev_config.rb.sample.
+require 'local_dev_config.rb' if File.exists?(Rails.root.join('local_dev_config.rb'))

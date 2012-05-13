@@ -1,0 +1,3 @@
+ENV['RPX_API_KEY'] = '12345ETC'
+ENV['RPX_APP_NAME'] = 'timeline'
+
