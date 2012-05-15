@@ -216,10 +216,6 @@ function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, 
 				
 				initialiseEditFunctions();		
 			}
-			
-			//stops the user scrolling past zero
-			scroll_date = tl._bands[0].getMinVisibleDate(); 
-			if (scroll_date.getFullYear() < 1) {alert("dates before 0 bc don't work ");}
 		});
 		
 		
@@ -236,9 +232,6 @@ function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, 
 		$(document).ready(function() {initialiseViewLables();}); 
 	  	
 	  	tl.getBand(0).addOnScrollListener(function(band){ 
-			//stops the user scrolling past zero
-			scroll_date = tl._bands[0].getMinVisibleDate(); 
-			if (scroll_date.getFullYear() < 1) {alert("dates before 0 bc don't work ");}
 			initialiseEventMarkers();
 			
 		});
