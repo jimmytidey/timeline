@@ -16,9 +16,6 @@ gem 'will_paginate', '~> 3.0.pre2'
 # gem 'capistrano'
 gem 'heroku'
 
-# To use debugger
-gem 'ruby-debug'
-
 # Bundle the extra gems:
 # gem 'bj'
 # gem 'nokogiri'
@@ -44,4 +41,9 @@ group :development, :test do
   gem 'machinist', '>= 2.0.0.beta2' # Generate mock objects
   gem 'faker'
   gem 'mocha'
+  # Debugging tools
+  gem 'ruby-debug'
+  gem 'awesome_print'
+  gem 'pry'
+  gem 'pry-doc'
 end
