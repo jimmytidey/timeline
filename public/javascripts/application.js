@@ -133,14 +133,14 @@ function submit_event_to_server(begin, end, band, chart) {
     });
 }
 
-function update_dates_for_event_on_the_server(theEvent, startYear, endYear, band, title) {
+function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title) {
   savePosition();
   
 	$.put("/events/" + theEvent,
     { 'event':
       {
-        'start_year':startYear.toString(),
-        'end_year': endYear.toString(),
+        'start_date':startDate.toString(),
+        'end_date': endDate.toString(),
 		'band': band.toString(),
 		'title': title.toString()
       }
@@ -506,12 +506,11 @@ function recalculateEventDate(id)
 	}	
 	
 	if (rounded_begin != rounded_end) {
-		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date">'+rounded_begin+'</span> - <span class="end_date">'+ rounded_end+'</span>)</span>');	
+		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date" data-epoch="' + begin.getTime() + '">' + rounded_begin + '</span> <span class="end_date" data-epoch="' + end.getTime() + '">'+ rounded_end+'</span>)</span>');	
 	} 
 	
 	else {
 		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date">'+rounded_begin+'</span>)</span>');	
-	
 	}
 }
 
@@ -519,19 +518,16 @@ function eventSave(id) {
   var ttop, dbId;
 	dbId = getDataBaseId(id);
  
-	 // get the band, making sure that  
+	 // get the band
 	ttop  = parseInt($(id).css('top')); 
 	ttop  = Math.round((ttop)/30)+1; 
 	if (ttop == 0) {ttop=1;}
 
-		
 	title = $(id).next('.timeline-event-label').children('p').html();
-
 	info = id.next().children('.info');
-		
-	start = info.children('.begin_date').html()
-	
-	end = 	info.children('.end_date').html()
+
+	start = info.children('.begin_date').attr('data-epoch')
+	end = info.children('.end_date').attr('data-epoch')
 	
 	update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
 };

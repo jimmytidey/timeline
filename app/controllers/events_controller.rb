@@ -2,7 +2,6 @@ class EventsController < ApplicationController
 
   def create
     @timeline_chart = TimelineChart.find(params[:event][:timeline_chart_id])
-    
     @event = Event.new()
 	
     if @event.update_attributes(params[:event])	
@@ -25,6 +24,12 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     @timeline_chart = @event.timeline_chart
+
+    start_date = params['event']['start_date']
+    end_date = params['event']['end_date']
+    params['event']['start_date'] = Time.zone.at(start_date.to_i / 1000)
+    params['event']['end_date'] = Time.zone.at(end_date.to_i / 1000)
+
     if @event.update_attributes(params[:event])
       render 'edit_succeeded'
     else

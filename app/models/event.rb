@@ -47,13 +47,11 @@ class Event < ActiveRecord::Base
   end
 
   def check_dates
-    begin
-     # errors[:base] << "The start date can not be before the end date." if start_date > end_date 
+    if start_date && end_date
+      errors[:base] << "The start date can not be before the end date." if start_date > end_date
       if start_date.year == 0 || end_date.year == 0 then
         errors[:base] << "0 is an invalid year. See http://en.wikipedia.org/wiki/0_(year) for the explanation."
       end
-    rescue ArgumentError, NoMethodError
-      #End date is probably not set, let validations catch this.
     end
   end
 
