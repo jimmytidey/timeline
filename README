@@ -1,3 +1,7 @@
 == Welcome to Timeline
 
 Timeline is a web-application to make and share timelines.
+
+= Installation
+
+Set up local_dev_config.rb and tie it to a Janrain account.
