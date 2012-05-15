@@ -2,52 +2,11 @@
 /*********** simile timeline functions **/
 var events = {
   <% if all_events %>
-  	'dateTimeFormat': 'iso8601',
-
     'events': [
     <% all_events.each_with_index do |event, i| %>
       {
-        <% 	if event.start_date and event.end_date 
-        	# this is horrible 
-        	
-           	if event.start_date.iso8601.to_s.length < 19 
-           		my_start = '00'+event.start_date.iso8601 
-           	else 		
-	           my_start = event.start_date.iso8601
-    		end 
-    		
-            if event.end_date.iso8601.to_s.length < 20 
-           		my_end = '0'+event.end_date.iso8601
-           	else 		
-	           my_end = event.end_date.iso8601
-    		end 		
-    		
-    		first_character = my_start.to_s[0..0]
-    		
-    		if (first_character == '-') 
-    			my_start_trunc = "-"+my_start.split("-")[1] 
-    			
-    			
-    		else	
-    			my_start_trunc = my_start.split("-")[0]	
-    		end
-    		
-    		
-    			
-    		
-    		first_character = my_end.to_s[0..1]
-    		if (first_character == '-') 
-    			my_end_trunc = "-"+my_end.split("-")[1]
-    		else	
-    			my_end_trunc = my_end.split("-")[0]	
-			end
-    	
-    	%>
-    	
-    	
-          'start': '<%= my_start_trunc.to_s %>',
-          'end'  : '<%= my_end_trunc.to_s %>',
-        <% end %>
+        'start': new Date(<%= event.start_date.to_i * 1000 %>),
+        'end': new Date(<%= event.end_date.to_i * 1000 %>),
         'title': '<p id="" class="title_id_<%= event.id %>"><%= escape_javascript event.title %></p>',
         'description': '<%= escape_javascript event.description %>',
         'color' : '<%= event.color %>',
@@ -57,7 +16,7 @@ var events = {
         }<% if i != all_events.length - 1 -%>, <% end -%>
     <% end %>
     ]
-  <% end %>       
+  <% end %>
 };
 
 <%
