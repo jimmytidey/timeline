@@ -1,6 +1,5 @@
-//OLD VERSION 
-
 /*globals $ Timeline jQuery document*/
+
 /*********** Doug Crockford's functions ***
  *
  * These functions add syntactic sugar that 
@@ -84,12 +83,12 @@ $(document).ready(function() {
  *
  **********************************/
 
-function savePosition() {
+function saveCenterDate() {
   savedPosition = tl.getBand(0).getCenterVisibleDate();
 }
 
-function restorePosition() {
-  tl.getBand(0).setCenterVisibleDate(savedPosition);
+function restoreCenterDate(date) {
+  tl.getBand(0).setCenterVisibleDate(date);
 }
 
 /* Extend jQuery with functions for PUT and DELETE requests. */
@@ -117,12 +116,12 @@ jQuery.extend({
 });
 
 function request_form_to_edit_event_from_server(theEvent) {
-  savePosition();
+  saveCenterDate();
   $.get("/events/" + theEvent + "/edit");
 }
 
 function submit_event_to_server(begin, end, band, chart) {
-  savePosition();
+  saveCenterDate();
   $.post("/events", { 'event':
     {
       'title' : 'click to rename',
@@ -134,7 +133,7 @@ function submit_event_to_server(begin, end, band, chart) {
 }
 
 function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title) {
-  savePosition();
+  saveCenterDate();
   
 	$.put("/events/" + theEvent,
     { 'event':
@@ -149,7 +148,7 @@ function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band
 }
 
 function send_delete_request_to_server(theEvent) {
-  savePosition();
+  saveCenterDate();
   $.delete_it("/events/" + theEvent);
 }
 
@@ -220,7 +219,7 @@ function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, 
 		
 		
 		if (savedPosition) {
-				restorePosition();	
+				restoreCenterDate();	
 		}  		
 	}	
 		
