@@ -1,11 +1,11 @@
 class TimelineChart < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 14
-  PERIOD = {:Month => 6, :Year => 7, :Decade => 8, :Century => 9}
-  INTERVAL = {:Five => 220, :Four => 170, :Three => 120, :Two => 90, :One => 60}
+  PERIOD = [[:Month, 6], [:Year, 7], [:Decade, 8], [:Century, 9]]
+  INTERVAL = [[:One, 60], [:Two, 90], [:Three, 120], [:Four, 170], [:Five, 220]]
   TEMPLATE = { :title => 'Untitled',
                :hits => 0,
-               :zoom => PERIOD[:Decade],
+               :zoom => 8,
                :private => false }
 
   belongs_to :user
