@@ -372,32 +372,30 @@ function preventBubblePopper() {
   };
 }
 
+function findEventWithId(event_id) {
+  result = jQuery.grep(events.events, function(event, i){
+    return (event.eventID == event_id);
+  });
+  return result[0];
+}
+
 function showDescription() {
 	$(document).ready(function() {
 		$(".timeline-event-label").each(function() {
+			var tape_description; 
 
 			tape_class_list = $(this).attr('class');
 			tape_class = tape_class_list.split(' ');
-			event_id = tape_class[0].split('-'); 
-			
-			var tape_description; 
-			
-			tape_description = $("#description_"+event_id[1]).html();
-	
+			event_id = tape_class[0].split('-')[1]; 
+
+      event = findEventWithId(event_id);
+      tape_description = findEventWithId(event_id).description;
+
 			if (tape_description.length > 1) {
 				$(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ')	
 				
 				$(this).click(function() {
-					
-					tape_class_list = $(this).attr('class');
-					
-					tape_class = tape_class_list.split(' ');
-					event_id = tape_class[0].split('-'); 					
-									
-					tape_description = $("#description_"+event_id[1]).html();
-					
 					tape_description = (tape_description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
-
 					$('#tape_description div').html(tape_description);
 					
 					$('#tape_description').css({
@@ -405,7 +403,6 @@ function showDescription() {
 					});
 				});	
 			}
-	
 		});
 		
 		$('#close_tape_description').click( function() {
