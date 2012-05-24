@@ -1,7 +1,9 @@
 <%= simple_form_for @timeline_chart, :remote => true do |f| %>
   <%= f.error_messages %>
     
-  <%= f.input :title %>
+  <div id="timeline_chart_title_wrapper" > 
+    <%= f.input :title %> 
+  </div>
 
   <div class="input string required" id="timeline_chart_center_year_wrapper" >
     <label class="string required" for="timeline_chart_center_year">
@@ -26,8 +28,8 @@
 	</div>
   	
   	<div id='description_accordian'> 
-  		<%= f.label :description %>
+  		<%= f.label :description %> <br />
   		<%= text_area(:timeline_chart, :description) %>
   	</div> 
-   <%= f.button :submit, 'Save' %>
+   <%= f.button :submit, '' %>
  <% end %>

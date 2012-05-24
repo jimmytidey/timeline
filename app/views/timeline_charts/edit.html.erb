@@ -1,4 +1,5 @@
 
+
 <h1 id='timeline_title'><%= @timeline_chart.title.to_s %></h1>
 
 <div id='content_container'>
@@ -7,10 +8,13 @@
 	
   	<%= render :partial => 'events/form', :locals => { :type => 'new'} %>
 	
+  <!-- More trouble than it's worth? JT
   <div id='new_duration' data-id='<%= @timeline_chart.id %>'><span>Drag onto the timeline to add</span></div> 
-    
-    
-	<div id="my-timeline" style="height: 150px;"></div>
+   -->  
+
+    <div class='timeline_container'> 
+    	<div id="my-timeline" ></div>
+	</div>    
 
 	<div id="inline_script">
 		<%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>

@@ -51,7 +51,7 @@
 
   <% if type == 'new' %>
   <input type='hidden' name='event[description]' id='event_description' /> 
-    <%= f.submit :value => 'Add event »' %>
+    <%= f.submit :value => '' %>
   <% else %>
   	<textarea name='event[description]' id='event_description_text' ><%= @event.description %></textarea>  
     <%= f.submit :value => 'Save »' %>

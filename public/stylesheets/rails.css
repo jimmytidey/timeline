@@ -1,0 +1,83 @@
+/* Stuff that rails has done... */ 
+
+
+
+.flash_notice {
+   color: black;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: -300px;
+    position: absolute;
+    right: 50%;
+    text-align: center;
+    text-transform: uppercase;
+    top: -28px;
+    width: 600px;
+}
+
+.flash_error {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: -150px;
+    position: absolute;
+    right: 50%;
+    text-align: center;
+    text-transform: uppercase;
+    top: -28px;
+    width: 300px;
+}
+
+.fieldWithErrors {
+  display: inline;
+  background-color:red; 
+}
+
+.error_messages {
+    position: absolute;
+    right: 14px;
+    text-align: right;
+    top: 7px;
+    visibility: hidden;
+    width: 505px;
+}
+
+.error_messages h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: 12px;
+  margin: 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+.error_messages ul {
+	left:321px;
+	position:absolute;
+	top:60px;
+	visibility:visible;
+}
+
+.error_messages p {
+  margin: 8px 10px;
+}
+
+.error_messages ul {
+  margin: 0;
+}
+  
+.timeline_chart div.input {  
+  float: left;  
+}  
+
+.timeline_chart input.string {  
+  width:140px;
+}  
+
+#embed_code {
+    top: 540px;
+    left: 260px;
+    position: absolute;
+}
+
