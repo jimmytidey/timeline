@@ -1,0 +1,80 @@
+/* MODAL WINDOW CSS */ 
+
+.modal-overlay
+{
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	height:100%;
+	width:100%;
+	margin:0;
+	padding:0;
+	background:#fff;
+	opacity:.75;
+	filter: alpha(opacity=75);
+	-moz-opacity: 0.75;
+	z-index:101;
+}
+
+.modal-window
+{
+    background-color: white;
+    border: 1px solid black;
+    height: 412px;
+    left: 50%;
+    margin-left: -300px !important;
+    padding: 10px;
+    position: absolute;
+    top: 83px;
+    width: 600px;
+    z-index: 102;
+}
+
+.modal-window #new_event_start_date {
+	margin-left:0px;
+}
+
+#event_description_text {
+	width:590px; 
+	height:200px;
+}
+
+.close-window
+{
+	background:url("/images/close-button.png") no-repeat scroll right top transparent;
+	cursor:pointer;
+	height:32px;
+	opacity:0.5;
+	overflow:hidden;
+	position:absolute;
+	right:10px;
+	text-indent:-99999px;
+	top:10px;
+	width:32px;
+}
+
+.close-window:hover
+{
+	opacity:.99;
+	filter: alpha(opacity=99);
+	-moz-opacity: 0.99;
+}
+
+
+.modal-window .event_start_date, .modal-window .event_end_date{
+	color:black;
+}
+
+#loading_gif {
+	position:relative; 
+	left:-330px; 
+	top:-20px;
+}
+
+.modal-window #event_submit {
+    bottom: 18px;
+    left: 290px;
+    position: absolute;
+}

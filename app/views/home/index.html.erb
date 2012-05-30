@@ -1,41 +1,24 @@
-<div id='content_container'>
+
 	
 	<div id='intro'> 
- 	<h1>A free app for making timelines.</h1> 
- 	<br/>
- 	<p>Drag and drop dates, automatically import event dates from Wikipeda, embed timelines in your blog.</p>
-	<br/> 
-	<p>Timeliner is still testing, please <a href='mailto:hi@jimmytidey.co.uk'>let me know</a> if you have a problem.</p>
-	
+ 		<h1>Make timelines for free</h1>
+ 		<h1>Automatically import dates <br/> from Wikipedia</h1>
+ 		<h1>Share your timelines</h1>
 	</div>
 	
-	<img src='/images/front_page_example.png' id='front_page_example' /> 
 	
-	<div id="top_timelines">
-	<h3>Already built</h3>
+	<div id='gallery'>
 		<%= render :partial => "top_chart", :collection => @top_charts %>
 	</div>
 	
-	
-	<div id="user_timelines">	
-		<h3>Your Timelines</h3>
-	 
-		<% if current_user %>
 
-		<%= render :partial => "chart_summary", :collection => @user_charts %>
-
-		<%= button_to 'Add a new timeline »', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 	
-	<% else %> 
-		<p id='sign_in'>Sign in with your Facebook, Yahoo or Google account to begin making your own timeline.<br/> <br/> <center> <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %></center></p> 
-	<% end %>
-	
-		
-	
-	
-	</div> 
-
+ 	
+ 	<% if current_user %>
+ 		<p id='sign_in'> <%= button_to '', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 
+ 	</p>
+ 	<% else %>
+ 		<p id='sign_in'><%= (RPXNow.popup_code("#{submit_tag ''}",RPX_APP_NAME, users_url)).html_safe %></p> 	
+ 	<% end %>
 	<br class='clearfix' />	
-
-</div>
 
 

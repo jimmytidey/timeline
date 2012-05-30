@@ -195,6 +195,7 @@ DEPENDENCIES
   pry
   pry-doc
   rails (= 3.0.1)
+  rake (= 0.8.7)
   relevance-rcov
   rpx_now
   rspec-rails (>= 2.0.1)

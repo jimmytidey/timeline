@@ -41,28 +41,59 @@ function getMoreData(data) {
 	
   query = data.id;
 
-	$('#new_event_form').append("<img src='/images/loading.gif' id='loading_gif' />"); 	
+	$('#new_event_form').append("<img src='/images/loading.gif' class='loading_gif' />"); 	
 
 	$.ajax({
-		url: 'http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?', 
-		success: function(result) {		  
-			start_length = parseInt(result.start.length)-4;
-			end_length = parseInt(result.end.length)-4;
-			start = result.start.substr(start_length,4);
-			end = result.end.substr(end_length ,4);
+		url: 'http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?',
+		dataType: 'json',
+  		data: data, 
+		success: function(result) {
+			console.log(result);  
+
+			//this for dates separated by a "-"" 
+			start_array = result.start.split("-");
+			end_array = result.end.split("-");
 			
-			description= unescape(result.description); 
+			end = end_array[0];
+			start = start_array[0];
+
+			//this for dates separated by a ", "
+			if (start_array.length < 2) { 
+				start_array = result.start.split(", ");
+				start = start_array[1];
+			}
 			
-			$('.event_start_date').val(start);
-			$('.event_end_date').val(end);
-			$('#event_description').val(description);
-			$('#loading_gif').remove(); },	
+			if (end_array.length < 2) { 
+				end_array = result.end.split(", ");
+				end = end_array[1];
+			}
+
+			//if we only got one date, just assume it lasts a single year
+			if (!isNumber(end)) { 
+				end = start;
+			}
+			
+
+			if (isNumber(start) && isNumber(end)) { 
+				description= unescape(result.description); 
+				
+				$('.event_start_date').val(start);
+				$('.event_end_date').val(end);
+				$('#event_description').val(description);
+				$('.loading_gif').remove();
+			}
+			else { 
+  				$('#new_event_form .loading_gif').remove();
+  				alert("couldn't find dates");
+			}
+			
+ 
+		},
 		
 		error: function(result) {
-  			$('#new_event_form #loading_gif').remove();
-  			alert("couldn't find dates");
+
   		}
- 	 });
+ 	});
 }
 
 $(document).ready(function() {
@@ -643,3 +674,8 @@ function openMyModal(id)
 	modalWindow.content = "<p>Edit " + id + " here</p>";
 	modalWindow.open();
 }; 
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+

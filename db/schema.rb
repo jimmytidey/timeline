@@ -13,15 +13,15 @@
 ActiveRecord::Schema.define(:version => 20110220205746) do
 
   create_table "events", :force => true do |t|
-    t.string    "title"
-    t.timestamp "start_date"
-    t.timestamp "end_date"
-    t.integer   "timeline_chart_id"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.string    "color"
-    t.integer   "band",              :default => 1
-    t.text      "description"
+    t.string   "title"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "timeline_chart_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "color"
+    t.integer  "band",                             :default => 1
+    t.text     "description",       :limit => 255
   end
 
   create_table "timeline_charts", :force => true do |t|
@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(:version => 20110220205746) do
   end
 
   create_table "users", :force => true do |t|
-    t.string    "name",       :null => false
-    t.string    "identifier", :null => false
-    t.string    "email"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "admin"
+    t.string   "name",       :null => false
+    t.string   "identifier", :null => false
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "admin"
   end
 
   add_index "users", ["identifier"], :name => "index_users_on_identifier", :unique => true

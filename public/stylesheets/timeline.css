@@ -1,0 +1,169 @@
+#tape_description {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid black;
+    display: none;
+    height: 338px;
+    left: 43px;
+    padding: 3px;
+    position: absolute;
+    top: 173px;
+    width: 300px;
+}
+
+#tape_description div {
+	height: 330px;
+	overflow-y:scroll;
+	margin-top:10px;
+}	
+
+#close_tape_description {
+	position:absolute; 
+	right:5px;
+	top:0px;
+}
+
+.description_close {
+	float:right;
+
+}
+
+
+.pencil {
+    cursor:pointer;
+}
+
+
+
+/* TIMELINE */ 
+
+.timeline-band-0 .timeline-ether-bg{background-color:#F4F3EE!important;}
+
+.info {font-size:9px;}
+
+.timeline-event-label {
+    font-size: 12px;
+    margin-left: -1px;
+    margin-top: 10px;
+    padding: 2px;
+}
+
+.timeline-event-label p {
+	display:inline;
+	cursor:text;
+}
+
+.ui-resizable {
+	position:absolute!important; 
+}
+
+.ui-resizable-e {
+	cursor: e-resize;
+	top:2px;
+}
+
+.timeline-event-tape {
+	height:10px!important;
+	border: 1px solid black;
+	overflow: visible!important;
+	cursor: crosshair!important; 
+}
+
+.event_marker {
+	margin-left:-1px; 
+}
+
+
+.cream.timeline-event-tape {
+	background-color: #fbf4e3!important;
+}
+
+.yellow.timeline-event-tape {
+	background-color:#f5f187!important;
+}
+
+.magenta.timeline-event-tape {
+	background-color:#d9b0c5!important;
+}
+
+
+
+.label_title {
+	cursor:text;
+}
+
+.band_1 {
+	top:2px!important;
+}
+
+.band_2 {
+	top:30px!important; 
+}
+
+.band_3 {
+	top:60px!important; 
+}
+
+.band_4 {
+	top:90px!important; 
+}
+
+.band_5 {
+	top:120px!important; 
+}
+
+.band_6 {
+	top:150px!important; 
+}
+
+.band_7 {
+	top:180px!important; 
+}
+
+.band_8 {
+	top:210px!important; 
+}
+
+.band_9 {
+	top:240px!important; 
+}
+
+.band_10 {
+	top:270px!important; 
+}
+
+.band_11 {
+	top:300px!important; 
+}
+
+.band_12 {
+	top:330px!important; 
+}
+
+.pencil {
+	margin-left:5px;
+}
+
+#active_text {
+	border:1px solid black;
+}
+
+#auto_add {
+	position:absolute; 
+	top:600px;
+	left:20px;
+
+}
+
+#auto_add textarea {
+	width:540px;
+	height:200px;
+}
+
+.timeline_chart input, .timeline_chart select {  
+  margin-right:10px;
+}  
+
+.timeline-copyright {
+	display:none;
+}
+
