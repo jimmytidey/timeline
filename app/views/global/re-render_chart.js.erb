@@ -1,4 +1,4 @@
 <%# clear events from memory %>
 eventSource.clear();
 <% events = render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
-$("#inline_script").html("<%= escape_javascript events %>");
+$(".inline_script").html("<%= escape_javascript events %>");
