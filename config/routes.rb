@@ -2,7 +2,7 @@ Timeline::Application.routes.draw do
   get "users/cuke" if Rails.env.test?
 
   resources :users, :except => [:new, :edit]
-  resources :timeline_charts, :except => [:show]
+  resources :timeline_charts
   resources :events
 
   match 'admin' => 'admin#index'
@@ -13,8 +13,6 @@ Timeline::Application.routes.draw do
   #SIMILE Timeline requests & requires __history__.html files from various places.
   match '*__history__.html' => Proc.new { [200,{"Content-Type" => "text/html"},'<html><body>history</body></html>'] }
 
-  match '/:id/:name' => "timeline_charts#show", :as => 'view_chart'
-  match '/:id' => "timeline_charts#show"
   match '/:id/:name/iframe' => "timeline_charts#iframe"
   
   root :to => "home#index"
