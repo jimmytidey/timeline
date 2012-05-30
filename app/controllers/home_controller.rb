@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   protect_from_forgery :only => [:create, :update, :destroy] 
 
   def index 
-    @top_charts = TimelineChart.top_charts(3)
+    @top_charts = TimelineChart.top
     
     if current_user
       @user_charts  = current_user.timeline_charts

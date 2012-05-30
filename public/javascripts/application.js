@@ -207,7 +207,7 @@ var eventSource = new Timeline.DefaultEventSource(0);
 	
 
 
-function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, centerYear) {	
+function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container) {	
   	
   	
   	bandInfos = [
@@ -223,7 +223,7 @@ function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, 
 	initialiseTheme(stTheme);
 		
 	//make the timeline
-	tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+	tl = Timeline.create(document.getElementById(container), bandInfos);
 	eventSource.loadJSON(events, '');
  	
   	//Center Timeline
@@ -311,8 +311,6 @@ function initialiseDragAndDrop() {
     {
       addDuration('new_duration', 'click to give me a name','');
     },
-    //revert: true, // This causes problems
-    containment: '#my-timeline',
     grid: [1, 5]		
   });
   

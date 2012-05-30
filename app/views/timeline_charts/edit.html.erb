@@ -11,12 +11,8 @@
   -->  
 
   <div class='timeline_container'> 
-    <div id="my-timeline" ></div>
-  </div>    
-
-  <div class="inline_script">
     <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
-  </div>   	
+  </div>    
 
   <%= render :partial => 'auto_add' %>
 

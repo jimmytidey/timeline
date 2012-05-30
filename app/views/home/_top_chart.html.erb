@@ -1,5 +1,2 @@
 <% @timeline_chart = top_chart  %>
-<h1><%= @timeline_chart.id %></h1>
-<div class="inline_script">
-		<%= render :partial => 'timeline_charts/chart', :locals => {:all_events => top_chart.events.all, :edit_mode => 'false' } %>
-</div> 
+<%= render :partial => 'timeline_charts/chart', :locals => {:all_events => top_chart.events.all, :edit_mode => 'false' } %>

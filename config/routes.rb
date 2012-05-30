@@ -18,6 +18,4 @@ Timeline::Application.routes.draw do
   root :to => "home#index"
 
   match ':action' => 'static#:action'
-
-
 end

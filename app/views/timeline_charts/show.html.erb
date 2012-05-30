@@ -4,7 +4,6 @@
 	
 	<h1 id='timeline_title'><%= @timeline_chart.title.to_s %></h1>
 	
-	<div id="my-timeline" style="height: 150px;"></div>
 	<div class="inline_script">
 		  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'false' } %>
 	</div>

@@ -13,6 +13,7 @@ class TimelineChart < ActiveRecord::Base
 
   attr_accessible :user_id, :title, :interval_pixels, :zoom,  :private, :hits, :center_date, :center_year, :description
 	
+  scope :top, where(["private = ?", false]).order("hits DESC").limit(3)
   
   validates_presence_of :title
   validates_presence_of :user_id
@@ -66,10 +67,6 @@ class TimelineChart < ActiveRecord::Base
     rescue NoMethodError
       Time.now + 20.years
     end
-  end
-
-  def self.top_charts(num)
-    self.where(["private = ?", false]).order("hits DESC").limit(20)
   end
 
   def forbidden?(current_user)

@@ -93,7 +93,7 @@
     margin-bottom:24px;
 }
 
-#gallery #my-timeline { 
+#gallery .timeline { 
 	width:740px;
 }
 
@@ -198,7 +198,7 @@
     padding:12px;
 }
 
-#my-timeline {
+.timeline {
     width:1024px;  
     height:280px!important;
     z-index:0;
