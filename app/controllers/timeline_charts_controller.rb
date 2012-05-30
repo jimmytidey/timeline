@@ -21,7 +21,6 @@ class TimelineChartsController < ApplicationController
     @timeline_chart.increment_hits(current_user)
   end
   
-  
   def edit
     @timeline_chart = TimelineChart.find(params[:id])
     @event = Event.new
