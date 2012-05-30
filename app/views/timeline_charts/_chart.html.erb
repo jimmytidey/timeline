@@ -30,33 +30,3 @@ var events = {
 initialiseTimeline(<%= edit_mode %>, <%=@timeline_chart.interval_pixels.to_s %>, <%= @timeline_chart.zoom %>, <%= start_year_mod %>,<%= @timeline_chart.end_year %>,<%= @timeline_chart.center_year %>);
 </script>
 
-<noscript>
-    <% if all_events %>
-
-    <% all_events.each_with_index do |event, i| %>
-      <h2><%= escape_javascript event.title %></h2> 
-        
-        <% if event.start_date and event.end_date %>
-          <p>start: <%= event.start_date.iso8601 %></p>
-          <p>end: <%= event.end_date.iso8601 %></p>
-        <% end %>
-		
-		<%= escape_javascript event.description %>
-  
-        <% if i != all_events.length - 1 -%>, <% end -%>
-    <% end %>
-    
-  <% end %>       
-</noscript>
-
-    <% if all_events %>
-
-    <% all_events.each_with_index do |event, i| %>
- 
-          <div id='description_<%= event.id %>' class='description'><%= event.description %></div>
-  
-        <% if i != all_events.length - 1 -%> <% end -%>
-    <% end %>
-    
-  <% end %>   
-
