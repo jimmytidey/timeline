@@ -25,10 +25,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @timeline_chart = @event.timeline_chart
 
-    start_date = params['event']['start_date']
-    end_date = params['event']['end_date']
-    params['event']['start_date'] = Time.zone.at(start_date.to_i / 1000)
-    params['event']['end_date'] = Time.zone.at(end_date.to_i / 1000)
+    convert_epochs_to_dates
 
     if @event.update_attributes(params[:event])
       render 'edit_succeeded'
@@ -43,5 +40,18 @@ class EventsController < ApplicationController
     @timeline_chart = @event.timeline_chart
     @event.destroy
     render 'delete_succeeded'
+  end
+
+  private
+
+  # When dates are dragged and dropped the front-end needs to send dates as unix epochs,
+  # otherwise dates like 2/2/12 end up as 2nd February 2012 instead of 2nd February 0012AD.
+  def convert_epochs_to_dates
+    if params['event']['start_date']
+      params['event']['start_date'] = Time.zone.at(params['event']['start_date'].to_i / 1000)
+    end
+    if params['event']['end_date']
+      params['event']['end_date'] = Time.zone.at(params['event']['end_date'].to_i / 1000)
+    end
   end
 end
