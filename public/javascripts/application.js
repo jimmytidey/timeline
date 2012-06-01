@@ -115,11 +115,11 @@ $(document).ready(function() {
  **********************************/
 
 function saveCenterDate() {
-  savedPosition = tl.getBand(0).getCenterVisibleDate();
+  savedPosition = Timeliner.timeline().getBand(0).getCenterVisibleDate();
 }
 
 function restoreCenterDate(date) {
-  tl.getBand(0).setCenterVisibleDate(date);
+  Timeliner.timeline().getBand(0).setCenterVisibleDate(date);
 }
 
 /* Extend jQuery with functions for PUT and DELETE requests. */
@@ -194,82 +194,74 @@ function deleteTimeline(id) {
  *
  **********************************/
 
-
 if(savedPosition === undefined){
   var savedPosition;
 }
 
-// TODO: Andrew ; Remove Globals
-var stTheme = Timeline.ClassicTheme.create();
+var Timeliner = {};
+Timeliner.timelines = [];
+Timeliner.timeline = function(){
+  return this.timelines[0];
+};
+
+Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events_array) {
+  var stTheme = Timeline.ClassicTheme.create();
+  this.eventSource = new Timeline.DefaultEventSource(0);
+  bandInfos = [
+    Timeline.createBandInfo({
+    width: "100%",
+    intervalUnit: zoom, 
+    intervalPixels: intervalPixels,
+    eventSource: this.eventSource,
+    theme: stTheme
+  })];
+
+  events = events_array;
+  initialiseTheme(stTheme);
+
+  //make the timeline
+  timeline = Timeline.create(document.getElementById(container), bandInfos);
+  this.timelines.push(timeline);
+  this.eventSource.loadJSON(events_array, '');
+
+  //Center Timeline
+  timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
+
+  //stop the thing it pops up when you roll over somethign 
+  preventBubblePopper();	
+
+  // what to do speifically for edit mode
+  if (editMode) { 
+
+    initialiseEditFunctions();
+
+    timeline.getBand(0).addOnScrollListener(function(band){ 
+      //this readds all the javascript when the timeline repaints everything 
+      if ($(".pencil").length === 0) {
+        initialiseEditFunctions();
+      }
+    });
 
 
-var eventSource = new Timeline.DefaultEventSource(0);
-	
+    if (savedPosition) {
+      restoreCenterDate();
+    }
+  }	
 
+  //what to do in show mode
+  if (!editMode) {
+    initEmbedCode();
+    showDescription();
 
-function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events) {	
-  	
-  	
-  	bandInfos = [
-	Timeline.createBandInfo({
-	  width: "100%",
-	  intervalUnit: zoom, 
-	  intervalPixels: intervalPixels,
-	  eventSource: eventSource,
-	  theme: stTheme
-	})];
-	
+    $(document).ready(function() {initialiseViewLables();}); 
 
-	initialiseTheme(stTheme);
-		
-	//make the timeline
-  var tl;
-	tl = Timeline.create(document.getElementById(container), bandInfos);
-	eventSource.loadJSON(events, '');
- 	
-  	//Center Timeline
-	tl.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
-	
-	//stop the thing it pops up when you roll over somethign 
-	preventBubblePopper();	
-	
-	
-	// what to do speifically for edit mode
-	if (editMode) { 
-  		
-  		initialiseEditFunctions();
-  		
-  		
-  		tl.getBand(0).addOnScrollListener(function(band){ 
-			
-			//this readds all the javascript when the timeline repaints everything 
-			if ($(".pencil").length == 0) {
-				
-				initialiseEditFunctions();		
-			}
-		});
-		
-		
-		if (savedPosition) {
-				restoreCenterDate();	
-		}  		
-	}	
-		
-	// what to do in show mode 	
-	if (!editMode) {
-		initEmbedCode();
-		showDescription();
-		
-		$(document).ready(function() {initialiseViewLables();}); 
-	  	
-	  	tl.getBand(0).addOnScrollListener(function(band){ 
-			initialiseEventMarkers();
-			
-		});
-	}
-	initialiseEventMarkers();
+    timeline.getBand(0).addOnScrollListener(function(band){ 
+      initialiseEventMarkers();
 
-}
+    });
+  }
+  initialiseEventMarkers();
+};
 
 function initialiseTheme(stTheme) {
   stTheme.event.tape.height = 20;
@@ -323,7 +315,6 @@ function initialiseDragAndDrop() {
     }, 
     stop: function(event, ui) {eventSave($(this));},
     drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
-    //drag: function(event, ui) {moveLabel($(this)); recalculateEventDate($(this).attr('id'));},
     containment: 'parent',
 	  grid: [1, 30]
   });
@@ -342,7 +333,6 @@ function initialiseLables()
     $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 
     recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
-		
 	});	
 }
 
@@ -504,9 +494,9 @@ function recalculateEventDate(id)
 	width = parseInt(width);
 	
 	//caluclate and remove offset from begining of timeline
-	offset = parseInt(tl.getBand(0)._bandInfo.ether._band._viewOffset);	
-	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
-	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
+	offset = parseInt(Timeliner.timeline().getBand(0)._bandInfo.ether._band._viewOffset);	
+	begin 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
+	end 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
 
 	if (id != null) {var id = "label"+ id.substr(5);}
 	
@@ -570,9 +560,9 @@ function addDuration(element_id, title, content, chart)
 	
 	band 	= parseInt((parseInt(band)-136)/30);
 	
-	begin 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-40);
+	begin 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-40);
 	 	
-	end 	= tl.getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
+	end 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	
 	//get timelinechart number
 	chart 	= $("#"+element_id).attr('data-id');
