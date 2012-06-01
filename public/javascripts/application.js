@@ -206,6 +206,8 @@ Timeliner.timeline = function(){
 
 Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events_array) {
   var stTheme = Timeline.ClassicTheme.create();
+  this.container = container;
+  this.events = events_array;
   this.eventSource = new Timeline.DefaultEventSource(0);
   bandInfos = [
     Timeline.createBandInfo({
@@ -251,7 +253,7 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
   //what to do in show mode
   if (!editMode) {
     initEmbedCode();
-    showDescription();
+    showDescription(this);
 
     $(document).ready(function() {initialiseViewLables();}); 
 
@@ -392,61 +394,59 @@ function preventBubblePopper() {
   };
 }
 
-function findEventWithId(event_id) {
+function findEventWithId(events, event_id) {
   result = jQuery.grep(events.events, function(event, i){
     return (event.eventID == event_id);
   });
   return result[0];
 }
 
-function showDescription() {
-	$(document).ready(function() {
-		$(".timeline-event-label").each(function() {
-			var tape_description; 
+function showDescription(tl) {
+  $("#" + tl.container + "div.timeline-event-label").each(function() {
+    var tape_description; 
 
-			tape_class_list = $(this).attr('class');
-			tape_class = tape_class_list.split(' ');
-			event_id = tape_class[0].split('-')[1]; 
+    tape_class_list = $(this).attr('class');
+    tape_class = tape_class_list.split(' ');
+    event_id = tape_class[0].split('-')[1]; 
+    event = findEventWithId(tl.events, event_id);
+    tape_description = event.description;
 
-      event = findEventWithId(event_id);
-      tape_description = findEventWithId(event_id).description;
 
-			if (tape_description.length > 1) {
-				$(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ')	
-				
-				$(this).click(function() {
-					tape_description = (tape_description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
-					$('#tape_description div').html(tape_description);
-					
-					$('#tape_description').css({
-						'display': 'block',
-					});
-				});	
-			}
-		});
-		
-		$('#close_tape_description').click( function() {
-			$('#tape_description').css({
-					'display': 'none', 	
-			});	
-		});
-	});	
+    if (tape_description.length > 1) {
+      $(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ');
+
+      $(this).click(function() {
+        tape_description = (tape_description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
+        $('#tape_description div').html(tape_description);
+
+        $('#tape_description').css({
+          'display': 'block'
+        });
+      });
+    }
+  });
+
+  $('#close_tape_description').click( function() {
+    $('#tape_description').css({
+      'display': 'none'
+    });	
+  });
 }
 
 function initialiseEventMarkers() {
-	$('.timeline-event-tape').each( function() {
-		if (parseInt($(this).css('width'))<10)
-		{
-			$(this).css({
-				"background-color":"transparent",
-				"border":"none",
-				"overflow": "visible", 
-				"z-index" : "1000",
-				"border":"1px solid black"
-			}); 
-			$(this).html("<img src='/images/event_marker.png' class='event_marker' />"); 
-		}
-	}); 
+  $('.timeline-event-tape').each( function() {
+    if (parseInt($(this).css('width'))<10)
+      {
+        $(this).css({
+          "background-color":"transparent",
+          "border":"none",
+          "overflow": "visible", 
+          "z-index" : "1000",
+          "border":"1px solid black"
+        }); 
+        $(this).html("<img src='/images/event_marker.png' class='event_marker' />"); 
+      }
+  }); 
 }
 
 
