@@ -194,12 +194,12 @@ function deleteTimeline(id) {
  *
  **********************************/
 
-var tl;
 
 if(savedPosition === undefined){
   var savedPosition;
 }
 
+// TODO: Andrew ; Remove Globals
 var stTheme = Timeline.ClassicTheme.create();
 
 
@@ -207,7 +207,7 @@ var eventSource = new Timeline.DefaultEventSource(0);
 	
 
 
-function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container) {	
+function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events) {	
   	
   	
   	bandInfos = [
@@ -223,6 +223,7 @@ function initialiseTimeline(editMode, intervalPixels, zoom, startYear, endYear, 
 	initialiseTheme(stTheme);
 		
 	//make the timeline
+  var tl;
 	tl = Timeline.create(document.getElementById(container), bandInfos);
 	eventSource.loadJSON(events, '');
  	

@@ -29,6 +29,6 @@
       end 
     %>
 
-    initialiseTimeline(<%= edit_mode %>, <%=@timeline_chart.interval_pixels.to_s %>, <%= @timeline_chart.zoom %>, <%= start_year_mod %>,<%= @timeline_chart.end_year %>,<%= @timeline_chart.center_year %>, 'timeline_<%= @timeline_chart.id %>' );
+    initialiseTimeline(<%= edit_mode %>, <%=@timeline_chart.interval_pixels.to_s %>, <%= @timeline_chart.zoom %>, <%= start_year_mod %>,<%= @timeline_chart.end_year %>,<%= @timeline_chart.center_year %>, 'timeline_<%= @timeline_chart.id %>', events );
   </script>
 </div> 
