@@ -70,33 +70,66 @@
 }	
 
 
+#nav_login input { 
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    margin-top: 6px;
+    position: absolute;
+    right: -90px;
+    text-align: right;
+    text-decoration: underline;
+    width: 50px;
+}
+
 #intro {
 	position:absolute;
 	left:36px;
-	top:250px;
+	top:275px;
 	color:#64283c;
 	text-align:center;
 	width:200px;
 }
 
 #gallery {
-	position:absolute;
-	top:36px;
-	left:264px;
+	margin-top:36px;
+	margin-left:264px;
 }
 	
-#gallery .timeline_container { 
+.home .timeline_context { 
 	height:280px;
 	width:764px;
     background-image:url(/images/timeline_background_narrow.png);
     padding:12px;
-    margin-bottom:24px;
 }
 
 #gallery .timeline { 
-	width:740px;
+	height:244px!important;
 }
 
+#gallery .timeline { 
+	width:758px;
+
+	border: 1px solid black;
+}
+
+
+.chart_title { 
+	width:400px;
+	float:left;
+	margin-bottom:6px;
+}
+
+.chart_author {
+	width:200px;
+	float:right;
+	text-align:right;
+	font-size:14px;
+	margin-top:10px;
+	margin-right:4px;
+}
 
 #intro h1 { 
 	font-size:16px;
@@ -156,18 +189,44 @@
 
 #view_info {
 	position:absolute;
-	width:200px;
-	top:540px;
+	left:290px;
+	top:180px;
 }
 
-#facebook_share {
-	overflow:hidden;
+
+
+.view_page .timeline_context { 
 	position:absolute;
-	right:30px;
-	top:540px;
-	width:47px;
+	width:1024px;
+	top:260px;
+	background-image:url(/images/timeline_background_wide.png);
+	height:379px;
+	padding: 12px;
 }
 
+.view_page .timeline {
+    height:370px!important;
+}
+
+.view_page .chart_title { 
+    left: 290px;
+    position: absolute;
+    top: 30px;
+    left: 290px;
+}
+
+#chart_description {
+	position:absolute;
+	width:480px;
+	top:70px;
+	left: 290px;
+}
+
+#embed_code {
+    top: 200px;
+    left: 290px;
+    position: absolute;
+}
 
 
 #timeline_title  {
@@ -188,20 +247,27 @@
 
 
 /*  EDIT PAGE */ 
-
-.timeline_container { 
-	height:280px;
-	width:1024px;
-    position: absolute; 
-    top:300px;	
-    background-image:url(/images/timeline_background_wide.png);
-    padding:12px;
-}
-
 .timeline {
     width:1024px;  
     height:280px!important;
     z-index:0;
+}
+
+.edit .timeline_context { 
+	position:absolute;
+	width:1024px;
+	background-image:url(/images/timeline_background_wide.png);
+	height:379px;
+	padding: 12px;
+	top:300px;
+}
+
+.edit .timeline {
+    height:370px!important;
+}
+
+.edit .chart_title { 
+	visibility: hidden;
 }
 
 

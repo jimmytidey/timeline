@@ -46,7 +46,7 @@
         <% if current_user %>
           <%= link_to 'Log out', current_user, :method=>:delete, :id=>:logout %>
         <% else %>
-          <!--  <%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %> -->
+           <div id='nav_login'><%= (RPXNow.popup_code("#{submit_tag 'Sign in'}",RPX_APP_NAME, users_url)).html_safe %></div>
         <% end %>
       </div>  
     </div>

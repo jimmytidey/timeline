@@ -1,6 +1,6 @@
 <% title @timeline_chart.title, false %>
 
-<div id='content_container'class='view_page'>
+<div id='content_container' class='view_page'>
 	
 	<h1 id='timeline_title'><%= @timeline_chart.title.to_s %></h1>
 	
@@ -8,7 +8,7 @@
 		  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'false' } %>
 	</div>
 	
-	<div id='show_description'> 
+	<div id='chart_description'> 
 		<%= @timeline_chart.description %>
 	</div>
 	
@@ -27,10 +27,7 @@
 		&nbsp; &nbsp;Pixel width: <input type='text' value='500' id='embed_code_width' name='' /></p>
 		<div id='embed_code_output'></div> 
 	</div>
-
-	<div id='facebook_share'>		
-		<iframe src="http://www.facebook.com/plugins/like.php?href=http://timeline-maker.com/<%= @timeline_chart.id.to_s %>/<%= CGI::escape(@timeline_chart.title.to_s) %>&amp;layout=box_count&amp;show_faces=true&amp;width=450&amp;action=like&amp;font=lucida+grande&amp;colorscheme=dark&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:65px;" allowTransparency="true"></iframe>
-	</div>	
+	
 
 	<% if current_user && current_user.id == @timeline_chart.user.id then %>
 	

@@ -1,12 +1,9 @@
-<h1 class='chart_title'><%= @timeline_chart.title %></h1>
-
-
-
 <div class='timeline_context' > 
 
- 
-   
-  
+  <h1 class='chart_title'><a href='timeline_charts/<%= @timeline_chart.id %>' ><%= @timeline_chart.title %></a></h1>
+  <h1 class='chart_author'>
+    <%= User.find(@timeline_chart.user_id) %>
+  </h1>  
 
   <div class="timeline" id="timeline_<%= @timeline_chart.id %>" style="height: 150px;"></div>
   
