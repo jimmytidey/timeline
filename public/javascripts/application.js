@@ -393,35 +393,36 @@ function findEventWithId(events, event_id) {
   return result[0];
 }
 
+
+$(document).ready(function() {
+  $('#close_tape_description').click( function() {
+    $('#tape_description').css({
+      'display': 'none'
+    });	
+  });
+});
+
 function showDescription(tl) {
-  $("#" + tl.container + "div.timeline-event-label").each(function() {
-    var tape_description; 
+  $("#" + tl.container + " div.timeline-event-label").each(function() {
+    var description; 
 
     tape_class_list = $(this).attr('class');
     tape_class = tape_class_list.split(' ');
     event_id = tape_class[0].split('-')[1]; 
     event = findEventWithId(tl.events, event_id);
-    tape_description = event.description;
+    description = event.description;
 
-
-    if (tape_description.length > 1) {
+    if (description.length > 1) {
       $(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ');
-
       $(this).click(function() {
-        tape_description = (tape_description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
-        $('#tape_description div').html(tape_description);
+        description = (description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
+        $('#tape_description div').html(description);
 
         $('#tape_description').css({
           'display': 'block'
         });
       });
     }
-  });
-
-  $('#close_tape_description').click( function() {
-    $('#tape_description').css({
-      'display': 'none'
-    });	
   });
 }
 
