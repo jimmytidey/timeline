@@ -248,14 +248,11 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
     if (savedPosition) {
       restoreCenterDate();
     }
-  }	
-
-  //what to do in show mode
-  if (!editMode) {
+  }	else {
     initEmbedCode();
     showDescription(this);
 
-    $(document).ready(function() {initialiseViewLables();}); 
+    $(document).ready(function() {initialiseViewLables(container);}); 
 
     timeline.getBand(0).addOnScrollListener(function(band){ 
       initialiseEventMarkers();
@@ -322,25 +319,22 @@ function initialiseDragAndDrop() {
   });
 }
 
-function initialiseLables() 
-{
-	$('.timeline-event-label').each(function() 	{
-	
-	// this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
-   	wrong_width = parseInt($(this).css('width'));
-   	rigth_width = wrong_width +100; 
-   	$(this).css('width', rigth_width+'px')
-	
-	$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
+function initialiseLables() {
+  $('.timeline-event-label').each(function() 	{
+    // this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
+    wrong_width = parseInt($(this).css('width'));
+    rigth_width = wrong_width +100; 
+    $(this).css('width', rigth_width+'px')
+
+    $(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
     $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 
     recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
-	});	
+  });	
 }
 
-function initialiseViewLables()
-{
-	$('.timeline-event-label').each(function() 	{
+function initialiseViewLables(container) {
+  $('#' + container + ' .timeline-event-label').each(function() 	{
 	
 	//have to make space for the lables 
 	wrong_width = parseInt($(this).css('width'));
