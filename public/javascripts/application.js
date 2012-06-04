@@ -48,8 +48,6 @@ function getMoreData(data) {
 		dataType: 'json',
   		data: data, 
 		success: function(result) {
-			console.log(result);  
-
 			//this for dates separated by a "-"" 
 			start_array = result.start.split("-");
 			end_array = result.end.split("-");
