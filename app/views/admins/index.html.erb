@@ -8,15 +8,14 @@
     <tr>
       <td class="link">
         <%= link_to "Administer Users", users_url %>
+      <td class="link">
+        <%= link_to "Sort by hits", admins_url(:params => {:sort_by => 'hits'}) %>
       </td>
       <td class="link">
-        <%= link_to "Sort by hits", admin_url(:sort_by => 'hits') %>
+        <%= link_to "Sort by date created", admins_url(:params => {:sort_by => 'created'}) %>
       </td>
       <td class="link">
-        <%= link_to "Sort by date created", admin_url(:sort_by => 'created') %>
-      </td>
-      <td class="link">
-        <%= link_to "Sort by date edited", admin_url(:sort_by => 'edited') %>
+        <%= link_to "Sort by date edited", admins_url(:sort_by => 'edited') %>
       </td>
       <td>
         <%= will_paginate @charts %>
@@ -34,7 +33,7 @@
       <th>Private?</th>
       <th>Created On</th>
       <th>Edited On</th>
-      <th>Events Added</th>
+      <th>Events</th>
       <th></th>
       <th></th>
       <th></th>

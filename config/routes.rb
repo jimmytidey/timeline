@@ -9,14 +9,13 @@ Timeline::Application.routes.draw do
   resources :timeline_charts
   resources :events
 
-  match 'admin' => 'admin#index'
+  resources :admins, :only => [:index, :update]
 
-  get "home/index"
   get "home/new"
 
   match '/:id/:name/iframe' => "timeline_charts#iframe"
   
+  match 'about' => 'static#about'
+  match 'admin' => 'admins#index'
   root :to => "home#index"
-
-  match ':action' => 'static#:action'
 end

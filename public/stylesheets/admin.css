@@ -1,3 +1,7 @@
+#container.admins #logo{
+  display: none;
+}
+
 #pagination
 {
   font-family:"Lucida Sans Unicode", "Lucida Grande", 
@@ -40,11 +44,11 @@
   padding:8px;
 }
 
-td.link {
-  width: 100px;
+.tc-table .hits input {
+  width: 40px;
 }
 
-td.action {
-  width: 30px;
+td.hits {
+  width: 12%;
 }
 

@@ -33,7 +33,7 @@ class TimelineChartsController < ApplicationController
       render 'edit_failed'
     end
   end
-  
+
   def new
     create
   end
