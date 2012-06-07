@@ -1,7 +1,4 @@
-
-
 /* TEMPLATE */
- 
 #container {
 	margin:35px auto auto;
 	position:relative;
@@ -21,7 +18,7 @@
 #about { 
  	font-size: 16px;
     left: 50%;
-    margin-left: -790px;
+    margin-left: -856px;
     position: absolute;
     text-align: right;
     background-color:#64283c;
@@ -30,7 +27,14 @@
     text-align:center;
     width:50px;
     margin-top:3px;
+    text-decoration:none;
 }
+
+#about:hover {  
+	background-color: white;
+	color:#64283c;
+	border:1px solid #64283c;
+}	
 
 #login_state { 
  	font-size: 16px;
@@ -48,8 +52,6 @@
 }
 
 /* HOME PAGE */
-
-
 #sign_in, #add_timeline { 
 	position:absolute;
 	left:36px;
@@ -149,14 +151,12 @@
 	display:none; 
 }
 
-
 #footer {
     width:100%;
     height:69px;
     background:url("/images/footer_bkg.png");
     background-repeat:repeat-x;
 }
-
 
 #footer_contents {
 	position:relative;
@@ -170,8 +170,6 @@
 	margin-right:20px;
 }
 
-
-
 #logout {
 	height:43px;
 	position:absolute;
@@ -181,19 +179,12 @@
 	width:100px;
 }
 
-
-
-
-
 /* VIEW PAGE */ 
-
 #view_info {
 	position:absolute;
 	left:290px;
 	top:180px;
 }
-
-
 
 .view_page .timeline_context { 
 	position:absolute;
@@ -245,7 +236,6 @@
 
 }
 
-
 /*  EDIT PAGE */ 
 .timeline {
     width:1024px;  
@@ -267,9 +257,21 @@
 }
 
 .edit .chart_title { 
-	visibility: hidden;
+	display:none;
 }
 
+.inline_script { 
+	display: none;
+
+}
+
+.edit .loading_gif  {
+    left: -390px;
+    position: relative;
+    top: 8px;
+}
+
+/* Set up the timeline */
 
 /* controls */
 
@@ -280,49 +282,49 @@
    width:700px;
 }
 
-#edit_timeline_chart label { 
-	font-size:16px;
+#edit_timeline_chart label {
+font-size:16px;
 }
 
 #edit_timeline_chart label{
-	width:90px;
-	display: block;
-	float:left;
-}	
+width:90px;
+display: block;
+float:left;
+}
 
 #edit_timeline_chart input{
-	float:left;
-	display: block;
-}	
+float:left;
+display: block;
+}
 
 
 #timeline_chart_center_year_wrapper{
-	left:400px;
-	top:22px;
-	position:absolute;	
+left:400px;
+top:22px;
+position:absolute;
 }
 
-#timeline_chart_center_year_wrapper input { 
-	width:54px;
+#timeline_chart_center_year_wrapper input {
+width:54px;
 }
 
 
 #timeline_chart_zoom_wrapper {
-	position:absolute; 
-	left:400px;
-	top:78px;
+position:absolute;
+left:400px;
+top:78px;
 }
-	
+
 
 #timeline_chart_interval_pixels_wrapper {
-	position:absolute; 
-	left:400px;
-	top:50px;
+position:absolute;
+left:400px;
+top:50px;
 }
 
 
-#description_accordian label { 
-	clear:both;
+#description_accordian label {
+clear:both;
 }
 
 #timeline_chart_private_div {
@@ -331,16 +333,16 @@
     top: 105px;
 }
 
-#timeline_chart_private_div input { 
-	margin-top:5px;
+#timeline_chart_private_div input {
+margin-top:5px;
 }
 
-#timeline_chart_title { 
-	width:326px;
+#timeline_chart_title {
+width:326px;
 }
 
-#timeline_chart_title_wrapper input { 
-	clear:both;
+#timeline_chart_title_wrapper input {
+clear:both;
 }
 
 #description_accordian{
@@ -350,126 +352,105 @@
     width: 280px;
 }
 
-#timeline_chart_description { 
-	height:100px;
+#timeline_chart_description {
+height:100px;
 }
 
 #timeline_chart_submit {
-  	left: 400px;
+   left: 400px;
     position: absolute;
     top: 150px;
     width:105px;
     height:27px;
     background-image:url(/images/btn_save_up.png);
-  	border:none;
-  	cursor:pointer;
+   border:none;
+   cursor:pointer;
 }
 
 #timeline_chart_submit:hover {
-	background-image:url(/images/btn_save_down.png);
-}	
+background-image:url(/images/btn_save_down.png);
+}
 
+
+
+/* Add events */
 #new_event_form {
     display: inline;
     position: absolute;
-    right: 74px;
-    top: 262px;
-    width: 372px;
+    right: -7px;
+    top: 272px;
+    width: 580px;
 }
 
-
-
-#new_event div{
+#new_event_form label{
+	display: block;
 	float:left;
-  margin-right: 20px;  
-  margin-bottom: 10px; 
-  font-size:16px; 
+	font-size:16px;
+	margin-left:13px;
+	margin-right:2px;
 }	
 
-    
-
-#new_event_form .event_title input.string {
-	width:140px;
+#new_event_start_year,  #new_event_end_year{
+	float:left;
+	display: block;
+	width:40px;
 }
 
-#new_event_form input.string {  
-  display: block;
-  width:40px;
-}  
-
-#new_event_form .start_date{
-	margin-left:20px;
+#new_event_end_year{ 
+	margin-right:8px;
 }
 
-#new_event_form  #event_submit {
-	position:absolute; 
-	top:10px;
+#new_event_title { 
+	width:100px;
+	float:left;
+}
+
+#new_event_submit {
+	position:absolute;
     width:105px;
     height:27px;
+    top:-5px;
     background-image:url(/images/btn_add_up.png);
   	border:none;
   	cursor:pointer;	
 }
 
-#new_event_form  #event_submit:hover {
+#new_event_submitt:hover {
     background-image:url(/images/btn_add_down.png);
-
- }		
-
-
-#edit_event {
-	display:block;
-	width:252px;
-}
-
-
-#edit_event_form .event_title input.string {
-	width:180px;
-}
-
-#color_selector {
-	visibility:hidden;
-}
-
-#edit_event_form #color_selector {
-	visibility:visible;
-}
-
-
-
-#edit_event_form #color_selector {  
-  width:40px;
-}  
-
-#edit_event_form div{
-  margin-top: 10px;  
-  margin-bottom: 16px;  
 }	
 
-#new_duration {
-	top:140px;
+/* STATIC PAGES */ 
+
+#static_container { 
 	position:absolute;
-	width:200px;
-	height:10px!important;
-	border: 1px solid black;
-	overflow: visible!important;
-	z-index:4;
-	cursor:crosshair;
-	background-color:  #bbe5eb!important; 
-}	
-
-#new_duration span {
-	font-size:12px;
-	left:1px;
-	position:relative;
-	top:9px;
+	top:28px;
+	left:270px;
+	font-size:14px;
+	width:550px;
+	border:1px solid black;
+	background-color:white;
+	height:500px;	
+	padding:12px ;
 }
 
 
+#static_container p { 
+	margin-bottom:1em;
+}
+
+#static_container h1{
+	margin-bottom:1em;
+	margin-top:1em;
+}
 
 
+#static_container ul{
+	list-style-type: disc;
+	list-style-position:outside;
+	margin-left:13px;
+}
 
+#static_container li{
+	margin-bottom:1em;
+}	
 
-
-
- 

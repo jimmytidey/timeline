@@ -1,14 +1,7 @@
 <h1 class='chart_title'><%= @timeline_chart.title %></h1>
-
-
-
-<div class='timeline_context' > 
-
- 
-   
   
 
-  <div class="timeline" id="timeline_<%= @timeline_chart.id %>" style="height: 150px;"></div>
+  <div class="timeline" id="timeline_<%= @timeline_chart.id %>" data-id='<%= @timeline_chart.id %>' style="height: 150px;"></div>
   
   <div class="inline_script">
     <script type="text/javascript">
@@ -42,5 +35,4 @@
 
       Timeliner.create(<%= edit_mode %>, <%=@timeline_chart.interval_pixels.to_s %>, <%= @timeline_chart.zoom %>, <%= start_year_mod %>,<%= @timeline_chart.end_year %>,<%= @timeline_chart.center_year %>, 'timeline_<%= @timeline_chart.id %>', events );
     </script>
-  </div> 
 </div>

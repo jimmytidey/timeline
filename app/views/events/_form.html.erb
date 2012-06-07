@@ -1,62 +1,12 @@
-<div id="<%= type %>_event_form">
-<%= simple_form_for @event, :remote => true do |f| %>
-  <%= f.error_messages %>
+<div id="new_event_form">
+  <label for='new_event_title'>Event name</label>
+  <input name="new_event_title" id='new_event_title' size="50" type="text" value="" />
   
-  <div class="input string required event_title" >
-    <label class="string required">
-      Event name
-    </label>
-    <input class="string required"
-    name="event[title]" size="50" type="text"
-    value="<%= @event.title %>" />
-  </div>
+  <label for='new_event_start_year' >Start Year</label>
+  <input name="new_event_start_year" id='new_event_start_year' size="50" type="text" value="" />
+
+  <label for='new_event_end_year'>End Year</label>
+  <input name="end_year" id='new_event_end_year' size="50" type="text" value="" />
   
-  <div class="input string required" >
-    <label class="string required">
-      Start Year
-    </label>
-    <input class="string required event_start_date auto_remove"
-    name="event[start_year]" size="50" type="text"    
-    
-    <% 	if (@event.start_date) 
-    		start_date = @event.start_date.year 
-    	end
-    %>
-    
-    value="<%= start_date %>" />
-  </div>
-
-  <div class="input string required auto_remove">
-    <label class="string required">
-      End Year
-    </label>
-    <input class="string required event_end_date"
-    name="event[end_year]" size="50" type="text"
-    
-    <% 	if (@event.end_date) 
-    		end_date = @event.end_date	.year 
-    	end
-    %>
-    
-    value="<%= end_date %>" />
-  </div>
-	
-	<div id='color_selector'>
- 	 <%=  f.input :color, :collection => %w{cream yellow blue magenta}, :prompt => "Colour", :label => "Colour" %>
-	  <%= f.hidden_field :timeline_chart_id, :value => @timeline_chart.id %>
-	</div>
-	
-
-	
-
-  <% if type == 'new' %>
-  <input type='hidden' name='event[description]' id='event_description' /> 
-    <%= f.submit :value => '' %>
-  <% else %>
-  	<textarea name='event[description]' id='event_description_text' ><%= @event.description %></textarea>  
-    <%= f.submit :value => 'Save »' %>
-  <% end %>
-
-<% end %>
-
+  <input id="new_event_submit" name="commit" type="button" value="" />
 </div>

@@ -96,96 +96,20 @@ function getMoreData(data) {
  	});
 }
 
+//BIND CLICK STUFF
 $(document).ready(function() {
-
     $('#new_event_form .event_title input').suggest({
 	 "type": ["/people/person", "/time/event"],
  	 "type_strict": "any"
 	}).bind("fb-select", function(e, data) {
         getMoreData(data);
     });
+
+    $('#new_event_submit').click(function() { 
+		addDuration(); 
+	});	
+
 });
-
-
-/*********** AJAX functions ***
- *
- * These functions deal with http 
- * submissions to the rails app.
- *
- **********************************/
-
-function saveCenterDate() {
-  savedPosition = Timeliner.timeline().getBand(0).getCenterVisibleDate();
-}
-
-function restoreCenterDate(date) {
-  Timeliner.timeline().getBand(0).setCenterVisibleDate(date);
-}
-
-/* Extend jQuery with functions for PUT and DELETE requests. */
-function jq_ajax_request(url, data, callback, type, method) {
-  if (jQuery.isFunction(data)) {
-      callback = data;
-      data = {};
-  }
-  return jQuery.ajax({
-    type: method,
-    url: url,
-    data: data,
-    success: callback,
-    dataType: type
-    });
-}
-
-jQuery.extend({
-  put: function(url, data, callback, type) {
-    return jq_ajax_request(url, data, callback, type, 'PUT');
-  },
-  delete_it: function(url, data, callback, type) {
-    return jq_ajax_request(url, data, callback, type, 'DELETE');
-  }
-});
-
-function request_form_to_edit_event_from_server(theEvent) {
-  saveCenterDate();
-  $.get("/events/" + theEvent + "/edit");
-}
-
-function submit_event_to_server(begin, end, band, chart) {
-  saveCenterDate();
-  $.post("/events", { 'event':
-    {
-      'title' : 'click to rename',
-      'start_date': begin.toString(),
-      'end_date': end.toString(),
-      'band': band.toString(),
-      'timeline_chart_id' : chart}
-    });
-}
-
-function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title) {
-  saveCenterDate();
-  
-	$.put("/events/" + theEvent,
-    { 'event':
-      {
-        'start_date':startDate.toString(),
-        'end_date': endDate.toString(),
-		'band': band.toString(),
-		'title': title.toString()
-      }
-    }
-  );
-}
-
-function send_delete_request_to_server(theEvent) {
-  saveCenterDate();
-  $.delete_it("/events/" + theEvent);
-}
-
-function deleteTimeline(id) {
-  $.delete_it("/timeline_charts/" + id);
-}
 
 /*********** SIMILE functions ***
  *
@@ -292,7 +216,7 @@ function initialiseEditFunctions() {
 
 
 //Make the durations draggable
-function initialiseDragAndDrop() {	
+function initialiseDragAndDrop() {
   var band_s = '';
 
    // band_s = 'band_1 band_2 band_3 band_4 ...'
@@ -301,26 +225,26 @@ function initialiseDragAndDrop() {
   }
 
   $('#new_duration').draggable(
-  {	
-    stop: function(event, ui) 
+  {
+    stop: function(event, ui)
     {
       addDuration('new_duration', 'click to give me a name','');
     },
-    grid: [1, 5]		
+    grid: [1, 5]
   });
   
   $('.timeline-event-tape').draggable(
-  {	
-   	start: function(event, ui) {
+  {
+    start: function(event, ui) {
       $(this).removeClass(band_s);
       $('.timeline-event-tape').removeClass(band_s);
-    }, 
+    },
     stop: function(event, ui) {eventSave($(this));},
     drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
     containment: 'parent',
-	  grid: [1, 30]
+	grid: [1, 30]
   });
-}
+};
 
 function initialiseLables() 
 {
@@ -353,6 +277,7 @@ function initialiseViewLables()
 }
 
 function initialiseResize() {
+	/*
 	$(".timeline-event-tape").resizable(
 		{		
 	  	handles: 'e',
@@ -361,6 +286,7 @@ function initialiseResize() {
 		  maxHeight:(20),
 		  minHeight:(20)
 		});
+	*/	
 }	
 
 function initialiseEdit() { 
@@ -434,6 +360,7 @@ function showDescription(tl) {
 }
 
 function initialiseEventMarkers() {
+
   $('.timeline-event-tape').each( function() {
     if (parseInt($(this).css('width'))<10)
       {
@@ -466,7 +393,7 @@ function moveLabel(id) {
 // Pass this function the a tape or label and it will return the
 // id of the event in the database
 function getDataBaseId(child) {
- 	return  $(child).attr('class').match(/\d+/);
+ 	return $(child).attr('class').match(/\d+/);
 }
 
 
@@ -530,38 +457,19 @@ function recalculateEventDate(id)
 	}
 }
 
-function eventSave(id) {
-  var ttop, dbId;
-	dbId = getDataBaseId(id);
- 
-	 // get the band
-	ttop  = parseInt($(id).css('top')); 
-	ttop  = Math.round((ttop)/30)+1; 
-	if (ttop == 0) {ttop=1;}
 
-	title = $(id).next('.timeline-event-label').children('p').html();
-	info = id.next().children('.info');
 
-	start = info.children('.begin_date').attr('data-epoch')
-	end = info.children('.end_date').attr('data-epoch')
-	
-	update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
-};
-
-function addDuration(element_id, title, content, chart) 
+function addDroppableDuration(element_id, title, content, chart) 
 {	
 	//get where the duration has been dropped in pixels 
-	left 	= $("#"+element_id).css('left');
-	width 	= $("#"+element_id).css('width');
-	band	= $("#"+element_id).css('top');
+	var left 	= $("#"+element_id).css('left');
+	var width 	= $("#"+element_id).css('width');
+	var band	= $("#"+element_id).css('top');
 	
 	
 	//convert to a date (css ofsets in the location of the original duration affect this) 
-	
 	band 	= parseInt((parseInt(band)-136)/30);
-	
 	begin 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-40);
-	 	
 	end 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
 	
 	//get timelinechart number
@@ -571,11 +479,80 @@ function addDuration(element_id, title, content, chart)
 	$("#new_duration").css('top', '136px')	
 };
 
+function addDuration() { 
+
+	// validate 
+	 
+	var begin = $("#new_event_start_year").val() +"-01-03 04:10:53.000000";
+	var end = $("#new_event_end_year").val() +"-01-03 04:10:53.000000";
+	var name = $("#new_event_title").val();
+	var chart = $('.timeline').attr('data-id');
+	if (!(/\S/.test(name))) { // no title has been given
+	    name='click to give me a name';
+	}
+	if (end < begin) { 
+		end = begin; 
+	} 
+
+
+	//this to prevent overlapping events happening
+	var search_events = events['events']; 
+	search_events.sort(function(a, b){
+		var first = a.classname.split("_");
+		var second = b.classname.split("_");
+ 		return first[1]-second[1]; 
+	});
+
+	Timeliner.band_store = 1; 
+
+	$.each(events['events'], function(index, value) { // calculate which bad is free
+		//search for dates that start in the same period as ours
+		var test_start_year = parseInt(value.start.getFullYear());
+		console.log("test_start_year "+test_start_year);
+		var test_end_year = parseInt(value.end.getFullYear());
+		console.log("test_end_year "+test_end_year);
+		var start_year = parseInt($("#new_event_start_year").val());
+		console.log("start_year "+start_year); 
+		var end_year = parseInt($("#new_event_end_year").val()); 
+		console.log("end_year "+end_year); 
+		if (test_start_year >= start_year && test_start_year <= end_year) { 
+			Timeliner.band_store = index+2;
+			console.log(index);
+			return true; 
+			console.log('start infringement found');
+		}
+
+		//is there a date that ends in the same period as ours? 
+
+		else if (test_end_year >= start_year && test_end_year <= end_year) { 
+			Timeliner.band_store = index+2;
+			console.log(index);
+			return true; 
+			console.log('end infringement found');
+		}
+
+		else { 
+			console.log('clear band');
+			console.log(index);
+			Timeliner.band_store = index; 
+			return false;
+		}
+	});
+
+
+
+
+
+	submit_event_to_server(name, begin, end, Timeliner.band_store, chart);
+
+}
+
 function autoAdd() {
 	var text = $('#auto_add_text').val(); 
-  text = escape(text); 
+  	text = escape(text); 
 	var json_url = 'http://jimmytidey.co.uk/timeline/open_calais/index.php?query_text='+text+'&callback=?';
 	
+
 	$.ajax({
 	  type: "GET",
 	  url: json_url,

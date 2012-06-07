@@ -14,6 +14,7 @@
     <% else %>
       <%= javascript_include_tag 'jquery/jquery' %>
       <%= javascript_include_tag 'jquery/jquery-ui' %>
+      <%= javascript_include_tag 'ajax' %>
       <script src="/javascripts/timeline/src/ajax/api/simile-ajax-api.js?bundle=false" type="text/javascript"></script>
       <script src="/javascripts/timeline/src/webapp/api/timeline-api.js?bundle=false" type="text/javascript"></script>
     <% end %>
@@ -41,7 +42,7 @@
    
       <div id='login_state'>
 
-        <p id='about' >About</p>
+        <a href='/about' id='about' >About</a>
 
         <% if current_user %>
           <%= link_to 'Log out', current_user, :method=>:delete, :id=>:logout %>
@@ -70,7 +71,7 @@
 	 
     <div id='footer'>
       <div id='footer_contents' > 
-        <a href='mailto:hi@jimmytidey.co.uk' class='footer_element' >Contact</a> 
+        <a href='/about' class='footer_element' >About</a> 
         <a href='/' class='footer_element'>Home</a>
         <span class='footer_element'>Made by Andrew Nagi &amp; Jimmy Tidey </span>
       </div>

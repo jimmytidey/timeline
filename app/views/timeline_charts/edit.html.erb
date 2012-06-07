@@ -4,12 +4,9 @@
   <div id="edit_timeline_chart"> <%= render 'form' %> </div>
 
   <%= render :partial => 'events/form', :locals => { :type => 'new'} %>
+ 
 
-  <!-- More trouble than it's worth? JT
-  <div id='new_duration' data-id='<%= @timeline_chart.id %>'><span>Drag onto the timeline to add</span></div> 
-  -->  
-
-  <div class='timeline_container'> 
+  <div class='timeline_context'> 
     <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
   </div>    
 
