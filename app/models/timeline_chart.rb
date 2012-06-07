@@ -24,13 +24,15 @@ class TimelineChart < ActiveRecord::Base
 
   def update_attributes(attributes)
     yr = attributes.delete('center_year')
-    if yr == "" 
-      self.center_date = nil
-    elsif (not yr.match /\d+\ *?(bc|b\.c\.)?/i)
-      errors.add(:base, "Not a valid year to center the timeline on")
-      return false
-    else
-      self.center_date = Date.parse('1/1/' + yr)
+    if yr
+      if yr == "" 
+        self.center_date = nil
+      elsif (not yr.match /\d+\ *?(bc|b\.c\.)?/i)
+        errors.add(:base, "Not a valid year to center the timeline on")
+        return false
+      else
+        self.center_date = Date.parse('1/1/' + yr)
+      end
     end
     return super(attributes)
   end
@@ -91,6 +93,5 @@ class TimelineChart < ActiveRecord::Base
   def num_events
     self.events.length
   end
-
 end
 

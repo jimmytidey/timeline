@@ -5,8 +5,13 @@
     <%= User.find(@timeline_chart.user_id) %>
   </h1>  
 
+  <div id='tape_description'> 
+    <img id='close_tape_description' src='/images/cross.png' /> 
+    <div></div>
+  </div>
+
+
   <div class="timeline" id="timeline_<%= @timeline_chart.id %>" style="height: 150px;"></div>
-  
   <div class="inline_script">
     <script type="text/javascript">
       /*********** simile timeline functions **/

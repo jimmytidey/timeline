@@ -48,8 +48,6 @@ function getMoreData(data) {
 		dataType: 'json',
   		data: data, 
 		success: function(result) {
-			console.log(result);  
-
 			//this for dates separated by a "-"" 
 			start_array = result.start.split("-");
 			end_array = result.end.split("-");
@@ -172,14 +170,11 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
     if (savedPosition) {
       restoreCenterDate();
     }
-  }	
-
-  //what to do in show mode
-  if (!editMode) {
+  }	else {
     initEmbedCode();
     showDescription(this);
 
-    $(document).ready(function() {initialiseViewLables();}); 
+    $(document).ready(function() {initialiseViewLables(container);}); 
 
     timeline.getBand(0).addOnScrollListener(function(band){ 
       initialiseEventMarkers();
@@ -246,25 +241,22 @@ function initialiseDragAndDrop() {
   });
 };
 
-function initialiseLables() 
-{
-	$('.timeline-event-label').each(function() 	{
-	
-	// this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
-   	wrong_width = parseInt($(this).css('width'));
-   	rigth_width = wrong_width +100; 
-   	$(this).css('width', rigth_width+'px')
-	
-	$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
+function initialiseLables() {
+  $('.timeline-event-label').each(function() 	{
+    // this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
+    wrong_width = parseInt($(this).css('width'));
+    rigth_width = wrong_width +100; 
+    $(this).css('width', rigth_width+'px')
+
+    $(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
     $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 
     recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
-	});	
+  });	
 }
 
-function initialiseViewLables()
-{
-	$('.timeline-event-label').each(function() 	{
+function initialiseViewLables(container) {
+  $('#' + container + ' .timeline-event-label').each(function() 	{
 	
 	//have to make space for the lables 
 	wrong_width = parseInt($(this).css('width'));
@@ -327,35 +319,36 @@ function findEventWithId(events, event_id) {
   return result[0];
 }
 
+
+$(document).ready(function() {
+  $('#close_tape_description').click( function() {
+    $('#tape_description').css({
+      'display': 'none'
+    });	
+  });
+});
+
 function showDescription(tl) {
-  $("#" + tl.container + "div.timeline-event-label").each(function() {
-    var tape_description; 
+  $("#" + tl.container + " div.timeline-event-label").each(function() {
+    var description; 
 
     tape_class_list = $(this).attr('class');
     tape_class = tape_class_list.split(' ');
     event_id = tape_class[0].split('-')[1]; 
     event = findEventWithId(tl.events, event_id);
-    tape_description = event.description;
+    description = event.description;
 
-
-    if (tape_description.length > 1) {
+    if (description.length > 1) {
       $(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ');
-
       $(this).click(function() {
-        tape_description = (tape_description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
-        $('#tape_description div').html(tape_description);
+        description = (description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
+        $('#tape_description div').html(description);
 
         $('#tape_description').css({
           'display': 'block'
         });
       });
     }
-  });
-
-  $('#close_tape_description').click( function() {
-    $('#tape_description').css({
-      'display': 'none'
-    });	
   });
 }
 
