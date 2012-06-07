@@ -22,29 +22,25 @@ class TimelineChart < ActiveRecord::Base
   validates_presence_of :zoom
   validates_numericality_of :user_id
 
-  def update_attributes(attributes)
-    yr = attributes.delete('center_year')
-    if yr
-      if yr == "" 
-        self.center_date = nil
-      elsif (not yr.match /\d+\ *?(bc|b\.c\.)?/i)
-        errors.add(:base, "Not a valid year to center the timeline on")
-        return false
-      else
-        self.center_date = Date.parse('1/1/' + yr)
-      end
-    end
-    return super(attributes)
-  end
-    
   def center_year
     if self.events.length < 1
-      return Time.now.year
+      Time.now.year
     elsif center_date.nil?
       dif = end_date - start_date
-      return (start_date + (dif / 2)).year
+      (start_date + (dif / 2)).year
     else
-      return center_date.year
+      center_date.year
+    end
+  end
+
+  def center_year=(year)
+    if year == "" 
+      self.center_date = nil
+    elsif (not year.match /\d+\ *?(bc|b\.c\.)?/i)
+      errors.add(:base, "Not a valid year to center the timeline on")
+      return false
+    else
+      self.center_date = Date.parse('1/1/' + year)
     end
   end
 

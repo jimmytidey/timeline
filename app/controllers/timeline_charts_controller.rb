@@ -27,6 +27,7 @@ class TimelineChartsController < ApplicationController
   
   def update
     @timeline_chart = TimelineChart.find(params[:id])
+    ap params
     if @timeline_chart.update_attributes(params[:timeline_chart])
       render 'edit_succeeded'
     else
