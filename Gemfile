@@ -28,6 +28,9 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'rspec-rails', '>=2.0.1'
+  gem 'pry'
+  gem 'taps'
+  # Testing tools
   gem 'cucumber'
   gem 'cucumber-rails'
   gem 'ZenTest'
