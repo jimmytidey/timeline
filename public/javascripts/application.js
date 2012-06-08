@@ -205,7 +205,7 @@ function initialiseEditFunctions() {
 	initialiseDestroy();
 	preventBubblePopper();
  	initialiseEditTitle();
- 	initLeaveTest();
+ 	//initLeaveTest();
 }
 
 
@@ -237,7 +237,8 @@ function initialiseDragAndDrop() {
     stop: function(event, ui) {eventSave($(this));},
     drag: function(event, ui) {recalculateEventDate($(this).attr('id')); moveLabel($(this).attr('id')); },
     containment: 'parent',
-	grid: [1, 30]
+	grid: [1, 30],
+	axis: 'y'
   });
 };
 
@@ -269,7 +270,7 @@ function initialiseViewLables(container) {
 }
 
 function initialiseResize() {
-	/*
+	
 	$(".timeline-event-tape").resizable(
 		{		
 	  	handles: 'e',
@@ -278,7 +279,6 @@ function initialiseResize() {
 		  maxHeight:(20),
 		  minHeight:(20)
 		});
-	*/	
 }	
 
 function initialiseEdit() { 
@@ -474,70 +474,113 @@ function addDroppableDuration(element_id, title, content, chart)
 
 function addDuration() { 
 
-	// validate 
-	 
-	var begin = $("#new_event_start_year").val() +"-01-03 04:10:53.000000";
-	var end = $("#new_event_end_year").val() +"-01-03 04:10:53.000000";
-	var name = $("#new_event_title").val();
-	var chart = $('.timeline').attr('data-id');
+	// validate  
+	bandCalculator ={};
+	bandCalculator.begin = $("#new_event_start_year").val() +"-01-03 04:10:53.000000";
+	bandCalculator.end = $("#new_event_end_year").val() +"-01-03 04:10:53.000000";
+	bandCalculator.name = $("#new_event_title").val();
+	bandCalculator.chart = $('.timeline').attr('data-id');
+	
+
 	if (!(/\S/.test(name))) { // no title has been given
-	    name='click to give me a name';
+	    bandCalculator.name='click to give me a name';
 	}
-	if (end < begin) { 
-		end = begin; 
+	if (bandCalculator.end < bandCalculator.begin) { 
+		bandCalculator.end = bandCalculator.begin; 
 	} 
 
 
-	//this to prevent overlapping events happening
-	var search_events = events['events']; 
-	search_events.sort(function(a, b){
+	//Put the exitsing events into an ordered array
+	bandCalculator.search_events = events['events']; 
+	bandCalculator.search_events.sort(function(a, b){
 		var first = a.classname.split("_");
 		var second = b.classname.split("_");
  		return first[1]-second[1]; 
 	});
 
-	Timeliner.band_store = 1; 
-
-	$.each(events['events'], function(index, value) { // calculate which bad is free
-		//search for dates that start in the same period as ours
-		var test_start_year = parseInt(value.start.getFullYear());
-		console.log("test_start_year "+test_start_year);
-		var test_end_year = parseInt(value.end.getFullYear());
-		console.log("test_end_year "+test_end_year);
-		var start_year = parseInt($("#new_event_start_year").val());
-		console.log("start_year "+start_year); 
-		var end_year = parseInt($("#new_event_end_year").val()); 
-		console.log("end_year "+end_year); 
-		if (test_start_year >= start_year && test_start_year <= end_year) { 
-			Timeliner.band_store = index+2;
-			console.log(index);
-			return true; 
-			console.log('start infringement found');
-		}
-
-		//is there a date that ends in the same period as ours? 
-
-		else if (test_end_year >= start_year && test_end_year <= end_year) { 
-			Timeliner.band_store = index+2;
-			console.log(index);
-			return true; 
-			console.log('end infringement found');
-		}
-
-		else { 
-			console.log('clear band');
-			console.log(index);
-			Timeliner.band_store = index; 
-			return false;
-		}
+	//demonstrate that the search has worked 
+	$.each(bandCalculator.search_events, function(index, value) {
+		console.log(value.classname); 
 	});
 
+	bandCalculator.saveBand = function(answer_array) { 
+		var saved = false; 
+		$.each(answer_array, function(index, value) {
+			last_index = answer_array.length - 1; 
+			if (value == 'sucess') {  
+				console.log('adding to sucessful band'); 
+				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index, bandCalculator.chart);
+				saved = true;
+				return false; 
+			} 
+			if (!saved && index == last_index) { 
+				console.log('making a new band'); 
+				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
+				saved = true;
+			}	 
+		});
+	}
 
+	//this is the first event
+	if (bandCalculator.search_events.length == 0) { 
+		band_answer= 1; 
+		submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, band_answer, bandCalculator.chart);
+	}
 
+	else  {
+		answer_array = [];
 
+		$.each(bandCalculator.search_events, function(index, value) { // calculate which bad is free
+			//search for dates that start in the same period as ours
 
-	submit_event_to_server(name, begin, end, Timeliner.band_store, chart);
+			console.log("-------");
+			var test_start_year = parseInt(value.start.getFullYear());
+			console.log("test_start_year "+test_start_year);
+			var test_end_year = parseInt(value.end.getFullYear());
+			console.log("test_end_year "+test_end_year);
+			var start_year = parseInt($("#new_event_start_year").val());
+			console.log("start_year "+start_year); 
+			var end_year = parseInt($("#new_event_end_year").val()); 
+			console.log("end_year "+end_year); 
+		
 
+			var band_test = value.classname.split("_");
+			band_test = parseInt(band_test[1]);
+
+			last_index = bandCalculator.search_events.length - 1; 
+			
+			console.log("band_val" + band_test);
+			
+			if (test_start_year >= start_year && test_start_year <= end_year) { 	
+				console.log('start infringement found');
+				answer_array[band_test] = "fail"; 
+			}
+
+			//is there a date that ends in the same period as ours? 
+			else if (test_end_year >= start_year && test_end_year <= end_year) { 
+				console.log('end infringement found');
+				answer_array[band_test] = "fail"
+			}
+
+			//is there a date that ends in the same period as ours? 
+			else if (test_start_year <= start_year && test_end_year >= end_year) { 
+				console.log('total infringement found');
+				answer_array[band_test] = "fail"
+			}			
+
+			else {
+				console.log('no infringement found '); 
+				if(answer_array[band_test] != 'fail' ) { 
+					answer_array[band_test] = "sucess";
+				} 
+			}
+
+			//trigger band saving once we've looped through everything 
+			if (index == last_index) {
+				bandCalculator.saveBand(answer_array); 
+			}							
+		});
+	}	
 }
 
 function autoAdd() {
@@ -593,6 +636,7 @@ function initLeaveTest() {
 		}			
 	}
 }	
+
 
 // Bringing up a modal 
 var modalWindow = {
