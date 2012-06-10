@@ -116,10 +116,6 @@ $(document).ready(function() {
  *
  **********************************/
 
-if(savedPosition === undefined){
-  var savedPosition;
-}
-
 var Timeliner = {};
 Timeliner.timelines = [];
 Timeliner.timeline = function(){
@@ -156,21 +152,13 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
 
   // what to do speifically for edit mode
   if (editMode) { 
-
-    initialiseEditFunctions();
-
-    timeline.getBand(0).addOnScrollListener(function(band){ 
-      //this readds all the javascript when the timeline repaints everything 
-      if ($(".pencil").length === 0) {
-        initialiseEditFunctions();
-      }
-    });
-
-
-    if (savedPosition) {
-      restoreCenterDate();
-    }
-  }	else {
+	    initialiseEditFunctions();
+		
+		//when the timeline is repainted, redraw all the edit functions 
+	    timeline.getBand(0).addOnScrollListener(function(band){ 
+	      if ($(".pencil").length === 0) {initialiseEditFunctions();}
+	    });
+	}	else {
     initEmbedCode();
     showDescription(this);
 
@@ -511,12 +499,18 @@ function addDuration() {
 				console.log('adding to sucessful band'); 
 				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index, bandCalculator.chart);
 				saved = true;
+				centerYear =  parseInt($("#new_event_start_year").val()) +  parseInt($("#new_event_end_year").val()); 
+				centerYear = centerYear / 2; 
+				timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 				return false; 
 			} 
 			if (!saved && index == last_index) { 
 				console.log('making a new band'); 
 				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
 				saved = true;
+				centerYear =  parseInt($("#new_event_start_year").val()) +  parseInt($("#new_event_end_year").val()); 
+				centerYear = centerYear / 2; 
+				timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));				
 			}	 
 		});
 	}
