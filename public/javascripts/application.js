@@ -7,6 +7,8 @@
  *
  **********************************/
 
+bandCalculator ={};
+
 /* Neater prototypal inheritance http://javascript.crockford.com/prototypal.html */
 function object(o) {
   function F() {}
@@ -123,29 +125,36 @@ Timeliner.timeline = function(){
 };
 
 Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events_array) {
-  var stTheme = Timeline.ClassicTheme.create();
-  this.container = container;
-  this.events = events_array;
-  this.eventSource = new Timeline.DefaultEventSource(0);
-  bandInfos = [
-    Timeline.createBandInfo({
-    width: "100%",
-    intervalUnit: zoom, 
-    intervalPixels: intervalPixels,
-    eventSource: this.eventSource,
-    theme: stTheme
-  })];
+	var stTheme = Timeline.ClassicTheme.create();
+	this.container = container;
+	this.events = events_array;
+	this.eventSource = new Timeline.DefaultEventSource(0);
+	bandInfos = [
+	Timeline.createBandInfo({
+	width: "100%",
+	intervalUnit: zoom, 
+	intervalPixels: intervalPixels,
+	eventSource: this.eventSource,
+	theme: stTheme
+	})];
 
-  events = events_array;
-  initialiseTheme(stTheme);
+	events = events_array;
+	initialiseTheme(stTheme);
 
-  //make the timeline
-  timeline = Timeline.create(document.getElementById(container), bandInfos);
-  this.timelines.push(timeline);
-  this.eventSource.loadJSON(events_array, '');
+	//make the timeline
+	timeline = Timeline.create(document.getElementById(container), bandInfos);
+	this.timelines.push(timeline);
+	this.eventSource.loadJSON(events_array, '');
 
-  //Center Timeline
-  timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
+	//Center Timeline, either to the center year or to the center date or to the last saved event 
+	if(bandCalculator.saved) { 
+		var last_elem = events['events'].length - 1; 
+		last_event = events['events'][last_elem];
+		console.log(last_event); 
+	}
+  	else { 
+ 		timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
+	}
 
   //stop the thing it pops up when you roll over somethign 
   preventBubblePopper();	
@@ -158,29 +167,27 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
 	    timeline.getBand(0).addOnScrollListener(function(band){ 
 	      if ($(".pencil").length === 0) {initialiseEditFunctions();}
 	    });
-	}	else {
-    initEmbedCode();
-    showDescription(this);
+	} 
+	else {
+    	initEmbedCode();
+    	showDescription(this);
+    	$(document).ready(function() {initialiseViewLables(container);}); 
+	    timeline.getBand(0).addOnScrollListener(function(band){ 
+	      initialiseEventMarkers();
 
-    $(document).ready(function() {initialiseViewLables(container);}); 
-
-    timeline.getBand(0).addOnScrollListener(function(band){ 
-      initialiseEventMarkers();
-
-    });
-  }
-  initialiseEventMarkers();
+	    });
+  	}
+  	initialiseEventMarkers();
 };
 
 function initialiseTheme(stTheme) {
-  stTheme.event.tape.height = 20;
+	stTheme.event.tape.height = 20;
 }
 
 //Stop timeline scrolling for ever in View mode
 function limitScollingOfTimeline(stTheme, startYear, endYear) {
   stTheme.timeline_start = new Date(startYear,1,1);
-  stTheme.timeline_stop  = new Date(endYear,1,1);
-  
+  stTheme.timeline_stop  = new Date(endYear,1,1);  
 }
 
 // If this function is called, then the timeline is drawn in "edit" mode. If not
@@ -200,9 +207,9 @@ function initialiseEditFunctions() {
 
 //Make the durations draggable
 function initialiseDragAndDrop() {
-  var band_s = '';
 
-   // band_s = 'band_1 band_2 band_3 band_4 ...'
+  // band_s = 'band_1 band_2 band_3 band_4 ...'
+  var band_s = '';
   for(var i=1;i<=12;i++) {
     band_s += 'band_' + i + ' '
   }
@@ -231,34 +238,32 @@ function initialiseDragAndDrop() {
 };
 
 function initialiseLables() {
-  $('.timeline-event-label').each(function() 	{
-    // this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
-    wrong_width = parseInt($(this).css('width'));
-    rigth_width = wrong_width +100; 
-    $(this).css('width', rigth_width+'px')
+	$('.timeline-event-label').each(function() {
+		// this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
+		wrong_width = parseInt($(this).css('width'));
+		rigth_width = wrong_width +100; 
+		$(this).css('width', rigth_width+'px')
 
-    $(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
-    $(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
+		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
+		$(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
 
-    recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
-  });	
+		recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
+	});	
 }
 
 function initialiseViewLables(container) {
-  $('#' + container + ' .timeline-event-label').each(function() 	{
-	
-	//have to make space for the lables 
-	wrong_width = parseInt($(this).css('width'));
-   	rigth_width = wrong_width +100;
-   	$(this).css('width', rigth_width+'px')
-   	
-	$(this).append('<span class="info"></span>');
-    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
+  $('#' + container + ' .timeline-event-label').each(function() {
+		//have to make space for the lables 
+		wrong_width = parseInt($(this).css('width'));
+	   	rigth_width = wrong_width +100;
+	   	$(this).css('width', rigth_width+'px')
+	   	
+		$(this).append('<span class="info"></span>');
+	    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
 	});
 }
 
 function initialiseResize() {
-	
 	$(".timeline-event-tape").resizable(
 		{		
 	  	handles: 'e',
@@ -285,8 +290,8 @@ function initialiseEditTitle() {
 	);
 }
 
-function initialiseDestroy() { 
-  // making the bin trash the event 
+// making the bin trash the event 
+function initialiseDestroy() {   
   $('.bin').click(function() {
       if (confirm("Do you really want to delete this event?")){
         send_delete_request_to_server(getDataBaseId($(this).parent()));
@@ -341,7 +346,6 @@ function showDescription(tl) {
 }
 
 function initialiseEventMarkers() {
-
   $('.timeline-event-tape').each( function() {
     if (parseInt($(this).css('width'))<10)
       {
@@ -350,7 +354,8 @@ function initialiseEventMarkers() {
           "border":"none",
           "overflow": "visible", 
           "z-index" : "1000",
-          "border":"1px solid black"
+          "border":"none"
+          
         }); 
         $(this).html("<img src='/images/event_marker.png' class='event_marker' />"); 
       }
@@ -463,7 +468,6 @@ function addDroppableDuration(element_id, title, content, chart)
 function addDuration() { 
 
 	// validate  
-	bandCalculator ={};
 	bandCalculator.begin = $("#new_event_start_year").val() +"-01-03 04:10:53.000000";
 	bandCalculator.end = $("#new_event_end_year").val() +"-01-03 04:10:53.000000";
 	bandCalculator.name = $("#new_event_title").val();
@@ -492,22 +496,22 @@ function addDuration() {
 	});
 
 	bandCalculator.saveBand = function(answer_array) { 
-		var saved = false; 
+		bandCalculator.saved = false; 
 		$.each(answer_array, function(index, value) {
 			last_index = answer_array.length - 1; 
 			if (value == 'sucess') {  
 				console.log('adding to sucessful band'); 
 				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index, bandCalculator.chart);
-				saved = true;
+				bandCalculator.saved = true;
 				centerYear =  parseInt($("#new_event_start_year").val()) +  parseInt($("#new_event_end_year").val()); 
 				centerYear = centerYear / 2; 
 				timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 				return false; 
 			} 
-			if (!saved && index == last_index) { 
+			if (!bandCalculator.saved && index == last_index) { 
 				console.log('making a new band'); 
 				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
-				saved = true;
+				bandCalculator.saved = true;
 				centerYear =  parseInt($("#new_event_start_year").val()) +  parseInt($("#new_event_end_year").val()); 
 				centerYear = centerYear / 2; 
 				timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));				
