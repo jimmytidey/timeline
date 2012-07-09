@@ -1,3 +1,18 @@
-<% form = render :partial => 'form', :locals => { :type => 'edit'} %>
-modalWindow.content = '<%= escape_javascript form %>';
-modalWindow.open();
+
+<% form = render :partial => 'modal_form', :locals => { :type => 'edit'} %>
+$('body').append('<div id="edit_modal"><%= escape_javascript form %></div>');
+$('#edit_modal').dialog({
+	width: 400, 
+	height: 400, 
+	resizable: false, 
+	close: function() {
+		$('#edit_modal').remove();
+	}
+	
+	
+});
+
+$('#event_submit').click(function() {
+	update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title) 
+	$('#edit_modal').dialog('close');
+});

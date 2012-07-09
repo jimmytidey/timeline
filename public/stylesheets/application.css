@@ -124,6 +124,10 @@
 	margin-bottom:6px;
 }
 
+.chart_title a {
+	text-decoration:none;
+} 	
+
 .chart_author {
 	width:200px;
 	float:right;
@@ -453,4 +457,38 @@ background-image:url(/images/btn_save_down.png);
 #static_container li{
 	margin-bottom:1em;
 }	
+
+
+/* modal edit window */ 
+#edit_modal  {
+	padding:10px;
+}
+
+#edit_modal label { 
+	width:100px;
+	float:left;
+	margin-bottom:4px;
+}
+
+#edit_modal input { 
+	margin-bottom:4px;
+}
+
+#edit_description { 
+	width:350px;
+	height:120px;
+}
+
+#event_edit_submit { 
+	margin-top:10px;
+}
+
+.ui-icon-closethick { 
+	float:right;
+}
+
+.ui-dialog {
+	position:absolute;
+} 
+
 

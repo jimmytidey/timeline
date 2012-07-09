@@ -1,0 +1,2 @@
+<% @timeline_chart = top_chart  %>
+<%= render :partial => 'timeline_charts/chart_multiple', :locals => {:all_events => top_chart.events.all, :edit_mode => 'false' } %>

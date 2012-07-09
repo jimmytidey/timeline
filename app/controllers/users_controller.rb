@@ -1,17 +1,9 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
-  before_filter :verify_authenticated_as_admin, :only => [:index, :show, :update]
+  before_filter :verify_authenticated_as_admin, :only => [:show, :update]
 
   def index
-    #User is authenticacted, but protect against SQL injection just incase
-    sort_field = case params[:sort_by]
-      #when "id" then "id"
-      when "name" then "name ASC"
-      when "email" then "email ASC"
-      when "created" then "created_at DESC"
-      else "id ASC"
-    end
-    @users = User.paginate :page => params[:page], :order => "#{sort_field}"
+    @user_charts  = current_user.timeline_charts
   end
 
   def create
