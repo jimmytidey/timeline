@@ -12,7 +12,6 @@ function eventSave(id) {
   var ttop, dbId;
   dbId = getDataBaseId(id);
   
-
   // get the band
   ttop  = parseInt($(id).css('top')); 
   ttop  = Math.round((ttop)/30)+1; 
@@ -23,7 +22,7 @@ function eventSave(id) {
 
   start = info.children('.begin_date').attr('data-epoch')
   end = info.children('.end_date').attr('data-epoch')
-  
+
   update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
 };
 
@@ -67,6 +66,7 @@ function request_form_to_edit_event_from_server(theEvent) {
 
 function submit_event_to_server(name, begin, end, band, chart) {
   saveCenterDate();
+	console.log("startdate" + begin); 
   $.post("/events", { 'event':
     {
       'title' : name,
@@ -77,19 +77,31 @@ function submit_event_to_server(name, begin, end, band, chart) {
     });
 }
 
-function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title) {
+function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description) {
   saveCenterDate();
-  
-	$.put("/events/" + theEvent,
-    { 'event':
-      {
-        'start_date':startDate.toString(),
-        'end_date': endDate.toString(),
-		'band': band.toString(),
-		'title': title.toString()
-      }
-    }
-  );
+	if (!typeof description === "undefined") { 
+		$.put("/events/" + theEvent,
+	    { 'event':
+	      {
+	        'start_date': startDate.toString(),
+	        'end_date': endDate.toString(),
+			'band': band.toString(),
+			'title': title.toString(),
+			'description': description.toString()
+	      }
+	    });
+	}
+	else { 
+		$.put("/events/" + theEvent,
+	    { 'event':
+	      {
+	        'start_date': startDate.toString(),
+	        'end_date': endDate.toString(),
+			'band': band.toString(),
+			'title': title.toString()
+	      }
+	    });	
+	}
 }
 
 function send_delete_request_to_server(theEvent) {

@@ -12,7 +12,14 @@ $('#edit_modal').dialog({
 	
 });
 
-$('#event_submit').click(function() {
-	update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title) 
+$('#event_edit_submit').click(function() {
+	var theEvent 	= $('#event_edit_id').val(); 
+	var startDate 	= $('#event_edit_start').val() +"-01-03 04:10:53.000000";
+	var endDate	 	= $('#event_edit_end').val() +"-01-03 04:10:53.000000";
+	var band		= $('#event_edit_band').val();
+	var title 		= $('#event_edit_title').val(); 
+	var description = $('#event_edit_description').val(); 
+	alert(description);
+	update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description);
 	$('#edit_modal').dialog('close');
 });

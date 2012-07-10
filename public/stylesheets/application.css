@@ -18,7 +18,7 @@
 #about { 
  	font-size: 16px;
     left: 50%;
-    margin-left: -856px;
+    margin-left: -892px;
     position: absolute;
     text-align: right;
     background-color:#64283c;
@@ -47,8 +47,7 @@
 
 #logo { 
 	position:absolute;
-	top:30px;
-	left:36px;
+	top:10px;
 }
 
 /* HOME PAGE */
@@ -59,15 +58,16 @@
 
 }
 
-#sign_in input, #add_timeline {
+#sign_in input, #add_timeline, #user_page_button {
 	width:200px;
 	height:50px;
 	background-image:url(/images/btn_start_building_up.png);
 	border:none;
 	cursor:pointer;
+	display:block;
 }
 
-#sign_in input:hover, #add_timeline:hover {
+#sign_in input:hover, #add_timeline:hover,  #user_page_button:hover {
 	background-image:url(/images/btn_start_building_down.png);
 }	
 
@@ -100,7 +100,7 @@
 	margin-left:264px;
 }
 	
-.home .timeline_context { 
+.home .timeline_context, .users .timeline_context { 
 	height:280px;
 	width:764px;
     background-image:url(/images/timeline_background_narrow.png);
@@ -183,6 +183,36 @@
 	width:100px;
 }
 
+/* USER PAGE */ 
+#btn_new_timeline {
+	width:199px;
+	height:50px;
+	background-image:url(/images/btn_new_timeline_up.png);
+	border:none;
+	cursor:pointer;
+	display:block;
+	float:right;
+	margin-top:20px;
+	margin-right:-2px;
+}
+
+#user_name { 
+	margin-left:4px;
+	margin-bottom:40px;
+	width:300px;
+	margin-top:20px;
+	float:left;
+}
+
+.users .timeline_context{ 
+	clear:both;
+}
+
+#btn_new_timeline:hover {
+	background-image:url(/images/btn_new_timeline_down.png);
+}
+
+
 /* VIEW PAGE */ 
 #view_info {
 	position:absolute;
@@ -193,7 +223,7 @@
 .view_page .timeline_context { 
 	position:absolute;
 	width:1024px;
-	top:260px;
+	top:220px;
 	background-image:url(/images/timeline_background_wide.png);
 	height:379px;
 	padding: 12px;
@@ -213,7 +243,7 @@
 #chart_description {
 	position:absolute;
 	width:480px;
-	top:70px;
+	top:32px;
 	left: 290px;
 }
 
@@ -224,20 +254,10 @@
 }
 
 
-#timeline_title  {
-	display: none;
-    font-size: 24px;
-    left: 283px;
-    position: absolute;
-    top: 51px;
-    z-index: 1000;
-}
-
 
 
 .view_page .timeline-event-tape {
 	cursor: auto!important;
-
 }
 
 /*  EDIT PAGE */ 
@@ -270,9 +290,9 @@
 }
 
 .edit .loading_gif  {
-    left: -390px;
+    left: -410px;
     position: relative;
-    top: 8px;
+    top: 2px;
 }
 
 /* Set up the timeline */
@@ -464,23 +484,9 @@ background-image:url(/images/btn_save_down.png);
 	padding:10px;
 }
 
-#edit_modal label { 
-	width:100px;
-	float:left;
-	margin-bottom:4px;
-}
-
-#edit_modal input { 
-	margin-bottom:4px;
-}
-
-#edit_description { 
+.edit_event textarea { 
 	width:350px;
 	height:120px;
-}
-
-#event_edit_submit { 
-	margin-top:10px;
 }
 
 .ui-icon-closethick { 

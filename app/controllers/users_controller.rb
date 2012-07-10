@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
-  before_filter :verify_authenticated_as_admin, :only => [:show, :update]
+  before_filter :verify_authenticated_as_admin, :only => [:update]
 
   def index
     @user_charts  = current_user.timeline_charts
@@ -36,5 +36,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @user_charts  = current_user.timeline_charts
   end
 end
