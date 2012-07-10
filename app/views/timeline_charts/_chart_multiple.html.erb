@@ -1,15 +1,12 @@
 <div class='timeline_context' > 
 
-  <h1 class='chart_title'><a href='timeline_charts/<%= @timeline_chart.id %>' ><%= @timeline_chart.title %></a></h1>
+  <h1 class='chart_title'><a href='/timeline_charts/<%= @timeline_chart.id %>' ><%= @timeline_chart.title %></a></h1>
   <h1 class='chart_author'>
     <%= User.find(@timeline_chart.user_id) %>
+    <% if defined?(@user) && @timeline_chart.user_id == @user.id %>
+        <a href='/timeline_charts/<%= @timeline_chart.id %>/edit    '>Edit</a>
+    <% end %>
   </h1>  
-
-  <div id='tape_description'> 
-    <img id='close_tape_description' src='/images/cross.png' /> 
-    <div></div>
-  </div>
-
 
   <div class="timeline" id="timeline_<%= @timeline_chart.id %>" style="height: 150px;"></div>
   <div class="inline_script">

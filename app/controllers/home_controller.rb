@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     
     if current_user
       @user_charts  = current_user.timeline_charts
+      @user = User.find(current_user)
     end
   end
 

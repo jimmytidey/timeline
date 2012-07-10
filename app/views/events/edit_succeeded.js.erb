@@ -1,5 +1,8 @@
-modalWindow.close();
+
 <%= render :file => 'global/hide_flash_and_errors' %>
+
+$('#edit_modal').remove();
+
 
 <% flash_message = "Successfully edited the event." %>
 $("#ajax_flash_notice").html("<%= escape_javascript(flash_message)%>");

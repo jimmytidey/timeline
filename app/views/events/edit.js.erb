@@ -1,3 +1,36 @@
-<% form = render :partial => 'form', :locals => { :type => 'edit'} %>
-modalWindow.content = '<%= escape_javascript form %>';
-modalWindow.open();
+
+<% form = render :partial => 'modal_form', :locals => { :type => 'edit'} %>
+$('body').append('<div id="edit_modal"><%= escape_javascript form %></div>');
+$('#edit_modal').dialog({
+	width: 400, 
+	height: 400, 
+	resizable: false, 
+	close: function() {
+		$('#edit_modal').remove();
+	}
+	
+	
+});
+
+$('.bin').click(function() {
+    if(confirm("Do you really want to delete this event?")){
+		destory_id = $(this).attr('data-id');
+      send_delete_request_to_server(destory_id);
+		$('.tape-'+destory_id).remove();
+		$('.label-'+destory_id).remove();
+		$('#edit_modal').dialog('close');		
+		$('#edit_modal').remove();
+    }
+});
+
+$('#event_edit_submit').click(function() {
+	var theEvent 	= $('#event_edit_id').val(); 
+	var startDate 	= $('#event_edit_start').val() +"-01-03 04:10:53.000000";
+	var endDate	 	= $('#event_edit_end').val() +"-01-03 04:10:53.000000";
+	var band		= $('#event_edit_band').val();
+	var title 		= $('#event_edit_title').val(); 
+	var description = $('#event_edit_description').val(); 
+	alert(description);
+	update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description);
+	$('#edit_modal').dialog('close');
+});

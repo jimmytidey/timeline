@@ -1,43 +1,11 @@
 <%= stylesheet 'admin'  %>
 <%= stylesheet 'users'  %>
 
-<h1> User List </h1>
-<div id="content_container">
-
-  <table class="tc-table">
-    <tr>
-      <td class="link">
-        <%= link_to "Administer Charts", admin_url %>
-      </td>
-      <td class="link">
-        <%= link_to "Sort by name", users_url(:sort_by => 'name') %>
-      </td>
-      <td class="link">
-        <%= link_to "Sort by email", users_url(:sort_by => 'email') %>
-      </td>
-      <td class="link">
-        <%= link_to "Sort by date created", users_url(:sort_by => 'created') %>
-      </td>
-      <td>
-        <%= will_paginate @charts %>
-      </td>
-    </tr>
-  </table>
-
-  <table class="tc-table">
-    <tr>
-      <th>id</th>
-      <th>Name</th>
-      <th>email</th>
-      <th>Date Created</th>
-    </tr>
-    <% for user in @users -%>
-      <tr>
-        <td> <%= link_to user.id, user_url(user.id) %> </td>
-        <td> <%= user.name %> </td>
-        <td> <%= user.email %> </td>
-        <td> <%= user.created_at.strftime("%d %b %y | %H:%M") %> </td>
-      </tr>
-    <% end -%>
-  </table>
+<div id='gallery'>
+	<%= render :partial => "top_chart", :collection => @top_charts %>
 </div>
+
+
+	<p id='sign_in'> <%= button_to '', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> </p>
+
+

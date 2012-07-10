@@ -1,17 +1,19 @@
 <div id='intro'> 
+
 	<h1>Make timelines for free</h1>
 	<h1>Automatically import dates <br/> from Wikipedia</h1>
 	<h1>Share your timelines</h1>
+	
+    <% if current_user %>
+    	<a id='user_page_button' href='/users/<%= User.find(session[:user_id]).id %>'>&nbsp;</a>
+    <% else %>
+    	<p id='sign_in'><%= (RPXNow.popup_code("#{submit_tag ''}",RPX_APP_NAME, users_url)).html_safe %></p> 	
+    <% end %>	
 </div>
 
 <div id='gallery'>
 	<%= render :partial => "top_chart", :collection => @top_charts %>
 </div>
 
-<% if current_user %>
-	<p id='sign_in'> <%= button_to '', 'home/new', :remote => true, :method => :get, :id => :add_timeline %> 
-</p>
-<% else %>
-	<p id='sign_in'><%= (RPXNow.popup_code("#{submit_tag ''}",RPX_APP_NAME, users_url)).html_safe %></p> 	
-<% end %>
+
 <br class='clearfix' />	

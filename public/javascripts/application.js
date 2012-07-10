@@ -50,22 +50,30 @@ function getMoreData(data) {
 		dataType: 'json',
   		data: data, 
 		success: function(result) {
+			
+			start_array = [];
+			end_array = [];
+			
 			//this for dates separated by a "-"" 
-			start_array = result.start.split("-");
-			end_array = result.end.split("-");
-			
-			end = end_array[0];
-			start = start_array[0];
-
-			//this for dates separated by a ", "
-			if (start_array.length < 2) { 
-				start_array = result.start.split(", ");
-				start = start_array[1];
+			if (result.start != null ) { 
+				start_array = result.start.split("-");
+				start = start_array[0];
+				
+				//this for dates separated by a ", "
+				if (start_array.length < 2) { 
+					start_array = result.start.split(", ");
+					start = start_array[1];
+				}				
+				
 			}
-			
-			if (end_array.length < 2) { 
-				end_array = result.end.split(", ");
-				end = end_array[1];
+			if (result.end != null) { 	
+				end_array = result.end.split("-");
+				end = end_array[0];
+
+				if (end_array.length < 2) { 
+					end_array = result.end.split(", ");
+					end = end_array[1];
+				}				
 			}
 
 			//if we only got one date, just assume it lasts a single year
@@ -77,9 +85,10 @@ function getMoreData(data) {
 			if (isNumber(start) && isNumber(end)) { 
 				description= unescape(result.description); 
 				
-				$('.event_start_date').val(start);
-				$('.event_end_date').val(end);
+				$('#new_event_start_year').val(start);
+				$('#new_event_end_year').val(end);
 				$('#event_description').val(description);
+				console.log($('#event_description').val());
 				$('.loading_gif').remove();
 			}
 			else { 
@@ -98,7 +107,7 @@ function getMoreData(data) {
 
 //BIND CLICK STUFF
 $(document).ready(function() {
-    $('#new_event_form .event_title input').suggest({
+    $('#new_event_form #new_event_title').suggest({
 	 "type": ["/people/person", "/time/event"],
  	 "type_strict": "any"
 	}).bind("fb-select", function(e, data) {
@@ -124,6 +133,7 @@ Timeliner.timeline = function(){
   return this.timelines[0];
 };
 
+//simile code for writing a new timeline
 Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events_array) {
 	var stTheme = Timeline.ClassicTheme.create();
 	this.container = container;
@@ -180,6 +190,7 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
   	initialiseEventMarkers();
 };
 
+//changes the height of each band
 function initialiseTheme(stTheme) {
 	stTheme.event.tape.height = 20;
 }
@@ -197,15 +208,13 @@ function initialiseEditFunctions() {
 	initialiseResize();
 	initialiseLables();
 	initialiseEdit();
-	initialiseDestroy();
-	preventBubblePopper();
  	initialiseEditTitle();
- 	//initLeaveTest();
+	preventBubblePopper();
 }
 
 
 
-//Make the durations draggable
+//Make the durations draggable (only up and down )
 function initialiseDragAndDrop() {
 
   // band_s = 'band_1 band_2 band_3 band_4 ...'
@@ -213,15 +222,6 @@ function initialiseDragAndDrop() {
   for(var i=1;i<=12;i++) {
     band_s += 'band_' + i + ' '
   }
-
-  $('#new_duration').draggable(
-  {
-    stop: function(event, ui)
-    {
-      addDuration('new_duration', 'click to give me a name','');
-    },
-    grid: [1, 5]
-  });
   
   $('.timeline-event-tape').draggable(
   {
@@ -237,51 +237,49 @@ function initialiseDragAndDrop() {
   });
 };
 
+//add information beyond the event name to each event 
 function initialiseLables() {
 	$('.timeline-event-label').each(function() {
 		// this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
 		wrong_width = parseInt($(this).css('width'));
 		rigth_width = wrong_width +100; 
 		$(this).css('width', rigth_width+'px')
-
-		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="close" class="pencil" />');
-		$(this).append('<img src="/images/bin.png" alt="close" class="bin" />');
-
+		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="pencil" class="pencil" />');
 		recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
 	});	
 }
 
+//placing the dates after each of the event titles
 function initialiseViewLables(container) {
   $('#' + container + ' .timeline-event-label').each(function() {
-		//have to make space for the lables 
 		wrong_width = parseInt($(this).css('width'));
 	   	rigth_width = wrong_width +100;
-	   	$(this).css('width', rigth_width+'px')
-	   	
+	   	$(this).css('width', rigth_width+'px');
 		$(this).append('<span class="info"></span>');
-	    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id') );
+	    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id'));
 	});
 }
 
+//change the duration of an event 
 function initialiseResize() {
 	$(".timeline-event-tape").resizable(
-		{		
-	  	handles: 'e',
-		  stop: function(event, ui) { eventSave($(this)) },
-		  resize: function(event, ui) {recalculateEventDate($(this).attr('id')) },
-		  maxHeight:(20),
-		  minHeight:(20)
-		});
+	{		
+  	  handles: 'e',
+	  stop: function(event, ui) { eventSave($(this)) },
+	  resize: function(event, ui) {recalculateEventDate($(this).attr('id')) },
+	  maxHeight:(20),
+	  minHeight:(20)
+	});
 }	
 
+// making the pencil open a modal to edit the event
 function initialiseEdit() { 
-  // making the pencil open a modal 
   $('.pencil').click(function() {
       request_form_to_edit_event_from_server(getDataBaseId($(this).parent()));
-      initialiseDestroy();
   });
 }
 
+//just click on the text of the title to edit it 
 function initialiseEditTitle() { 
 	$('.timeline-event-label p').click(
 		function(event, ui) {	
@@ -290,29 +288,17 @@ function initialiseEditTitle() {
 	);
 }
 
-// making the bin trash the event 
-function initialiseDestroy() {   
-  $('.bin').click(function() {
-      if (confirm("Do you really want to delete this event?")){
-        send_delete_request_to_server(getDataBaseId($(this).parent()));
-      }
-  });
-}
 
+//Simile has an annoying pop up bubble that I want to disable
 function preventBubblePopper() {
   Timeline.OriginalEventPainter.prototype._showBubble = function(x, y, evt) {
     //stop the bubble from appearing!
   };
 }
 
-function findEventWithId(events, event_id) {
-  result = jQuery.grep(events.events, function(event, i){
-    return (event.eventID == event_id);
-  });
-  return result[0];
-}
 
 
+//hides all the extended descriptions on init 
 $(document).ready(function() {
   $('#close_tape_description').click( function() {
     $('#tape_description').css({
@@ -321,6 +307,7 @@ $(document).ready(function() {
   });
 });
 
+//displays extended descriptions 
 function showDescription(tl) {
   $("#" + tl.container + " div.timeline-event-label").each(function() {
     var description; 
@@ -335,16 +322,20 @@ function showDescription(tl) {
       $(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ');
       $(this).click(function() {
         description = (description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
-        $('#tape_description div').html(description);
-
-        $('#tape_description').css({
-          'display': 'block'
-        });
+		$('body').append("<p id='modal_description'>"+description+"</p>"); 
+		$('#modal_description').dialog({
+			width:500,
+			height:600, 
+			close: function(){ 
+				$('#modal_description').remove();
+			}
+		});
       });
     }
   });
 }
 
+//for events of low width a tape doesn't look right - we need a market instead 
 function initialiseEventMarkers() {
   $('.timeline-event-tape').each( function() {
     if (parseInt($(this).css('width'))<10)
@@ -355,7 +346,6 @@ function initialiseEventMarkers() {
           "overflow": "visible", 
           "z-index" : "1000",
           "border":"none"
-          
         }); 
         $(this).html("<img src='/images/event_marker.png' class='event_marker' />"); 
       }
@@ -365,22 +355,13 @@ function initialiseEventMarkers() {
 
 // when user drags the tape it needs to make the lable move with it 
 function moveLabel(id) {
-
 	var top;  
-	
 	top = $('#'+id).css("top");	
-	
     $('#'+id).next('.timeline-event-label').css('cssText', "top:"+top+" !important");
-
 	left = $('#'+id).css("left");	
 	$('#'+id).next('.timeline-event-label').css('left', left);
 }
 
-// Pass this function the a tape or label and it will return the
-// id of the event in the database
-function getDataBaseId(child) {
- 	return $(child).attr('class').match(/\d+/);
-}
 
 
 function editTitle(edit_id)
@@ -393,7 +374,7 @@ function editTitle(edit_id)
 	{
 		replacement_text = $('.active_text').val();
 		$('.active_text').replaceWith("<p>"+replacement_text+'</p>'); 	
-		eventSave($('#'+edit_id).prev()); 
+		eventSave($('#'+edit_id).prev());
 	});
 }
 
@@ -443,44 +424,22 @@ function recalculateEventDate(id)
 	}
 }
 
-
-
-function addDroppableDuration(element_id, title, content, chart) 
-{	
-	//get where the duration has been dropped in pixels 
-	var left 	= $("#"+element_id).css('left');
-	var width 	= $("#"+element_id).css('width');
-	var band	= $("#"+element_id).css('top');
-	
-	
-	//convert to a date (css ofsets in the location of the original duration affect this) 
-	band 	= parseInt((parseInt(band)-136)/30);
-	begin 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)-40);
-	end 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(parseInt(left)+parseInt(width));
-	
-	//get timelinechart number
-	chart 	= $("#"+element_id).attr('data-id');
-  	submit_event_to_server(begin, end, band, chart);
-	$("#new_duration").css('left', '40px')
-	$("#new_duration").css('top', '136px')	
-};
-
+//when the form adds a new duration to the timeline, including intelligently assigning a band
 function addDuration() { 
-
 	// validate  
 	bandCalculator.begin = $("#new_event_start_year").val() +"-01-03 04:10:53.000000";
 	bandCalculator.end = $("#new_event_end_year").val() +"-01-03 04:10:53.000000";
 	bandCalculator.name = $("#new_event_title").val();
 	bandCalculator.chart = $('.timeline').attr('data-id');
-	
+	bandCalculator.description = $('#event_description').val();
 
-	if (!(/\S/.test(name))) { // no title has been given
+	if (!(/\S/.test(bandCalculator.name))) { // no title has been given
 	    bandCalculator.name='click to give me a name';
 	}
+	
 	if (bandCalculator.end < bandCalculator.begin) { 
 		bandCalculator.end = bandCalculator.begin; 
 	} 
-
 
 	//Put the exitsing events into an ordered array
 	bandCalculator.search_events = events['events']; 
@@ -490,31 +449,21 @@ function addDuration() {
  		return first[1]-second[1]; 
 	});
 
-	//demonstrate that the search has worked 
-	$.each(bandCalculator.search_events, function(index, value) {
-		console.log(value.classname); 
-	});
-
 	bandCalculator.saveBand = function(answer_array) { 
 		bandCalculator.saved = false; 
 		$.each(answer_array, function(index, value) {
+			console.log("name:" + bandCalculator.name);
 			last_index = answer_array.length - 1; 
 			if (value == 'sucess') {  
 				console.log('adding to sucessful band'); 
-				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index, bandCalculator.chart);
+				submit_event_to_server(bandCalculator.name, bandCalculator.description, bandCalculator.begin, bandCalculator.end, index, bandCalculator.chart);
 				bandCalculator.saved = true;
-				centerYear =  parseInt($("#new_event_start_year").val()) +  parseInt($("#new_event_end_year").val()); 
-				centerYear = centerYear / 2; 
-				timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
 				return false; 
 			} 
 			if (!bandCalculator.saved && index == last_index) { 
 				console.log('making a new band'); 
-				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
-				bandCalculator.saved = true;
-				centerYear =  parseInt($("#new_event_start_year").val()) +  parseInt($("#new_event_end_year").val()); 
-				centerYear = centerYear / 2; 
-				timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));				
+				submit_event_to_server(bandCalculator.name, bandCalculator.description, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
+				bandCalculator.saved = true;				
 			}	 
 		});
 	}
@@ -522,13 +471,13 @@ function addDuration() {
 	//this is the first event
 	if (bandCalculator.search_events.length == 0) { 
 		band_answer= 1; 
-		submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, band_answer, bandCalculator.chart);
+		submit_event_to_server(bandCalculator.name, bandCalculator.description, bandCalculator.begin, bandCalculator.end, band_answer, bandCalculator.chart);
 	}
 
 	else  {
 		answer_array = [];
 
-		$.each(bandCalculator.search_events, function(index, value) { // calculate which bad is free
+		$.each(bandCalculator.search_events, function(index, value) { // calculate which band is free
 			//search for dates that start in the same period as ours
 
 			console.log("-------");
@@ -581,12 +530,13 @@ function addDuration() {
 	}	
 }
 
+ 
+
 function autoAdd() {
 	var text = $('#auto_add_text').val(); 
   	text = escape(text); 
 	var json_url = 'http://jimmytidey.co.uk/timeline/open_calais/index.php?query_text='+text+'&callback=?';
 	
-
 	$.ajax({
 	  type: "GET",
 	  url: json_url,
@@ -615,66 +565,21 @@ function initEmbedCode() {
 	});
 }
 
-function initLeaveTest() {
-	
-	window.onbeforeunload = bunload;
-	
-	function bunload(){
-		var title = $('#timeline_chart_title').val(); 
-		var description = $('#timeline_chart_description').val();
-		
-		if (title == 'Untitled') {
-			dontleave="Why not give your timeline a proper title before you leave? Press cancel to stay on this page";
-			return dontleave;
-		}	
-		
-		if (description == '') {
-			dontleave="Giving your timeline a description will help other users find it. Press cancel to stay on this page";
-			return dontleave;
-		}			
-	}
-}	
+//grep for an event with a particular ID 
+function findEventWithId(events, event_id) {
+  result = jQuery.grep(events.events, function(event, i){
+    return (event.eventID == event_id);
+  });
+  return result[0];
+}
+
+// Pass this function the a tape or label and it will return the
+// id of the event in the database
+function getDataBaseId(child) {
+ 	return $(child).attr('class').match(/\d+/);
+}
 
 
-// Bringing up a modal 
-var modalWindow = {
-	parent:"body",
-	windowId:null,
-	content:null,
-	width:null,
-	height:null,
-	close:function()
-	{
-		$(".modal-window").remove();
-		$(".modal-overlay").remove();
-	},
-	open:function()
-	{
-		var modal = "";
-		modal += "<div class=\"modal-overlay\"></div>";
-		modal += "<div id=\"" + this.windowId + "\" class=\"modal-window\" style=\"width:"
-      + this.width + "px; height:"
-      + this.height + "px; margin-top:-"
-      + (this.height / 2) + "px; margin-left:-"
-      + (this.width / 2) + "px;\">";
-		modal += this.content;
-		modal += "</div>";
-
-		$(this.parent).append(modal);
-
-		$(".modal-window").append("<a class=\"close-window\"></a>");
-		$(".close-window").click(function(){modalWindow.close();});
-	}
-};
-
-function openMyModal(id)
-{
-	modalWindow.windowId = "myModal";
-	modalWindow.width = 480;
-	modalWindow.height = 405;
-	modalWindow.content = "<p>Edit " + id + " here</p>";
-	modalWindow.open();
-}; 
 
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);

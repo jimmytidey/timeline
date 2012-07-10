@@ -1,53 +1,23 @@
-<div id="new_event_form">
-  <form id="new_event" method="post"><div style="margin:0;padding:0;display:inline">
-    <input name="utf8" type="hidden" value="&#x2713;" />
-
-</div>
-
-
-  <div class="input string required event_title" >
-    <label class="string required">
-      Event name
-    </label>
-    <input class="string required"
-    name="event[title]" size="50" type="text"
-    value="" />
-  </div>
+<%= form_for @event, :remote=>true do |f| %>
+  <%= f.label :title, "Title" %><br />
+  <%= f.text_field :title %><br />
   
-  <div class="input string required" >
-    <label class="string required">
-      Start Year
-    </label>
-    <input class="string required event_start_date auto_remove"
-    name="event[start_year]" size="50" type="text"    
-    
-    
-    value="" />
-  </div>
-
-  <div class="input string required auto_remove">
-    <label class="string required">
-      End Year
-    </label>
-    <input class="string required event_end_date"
-    name="event[end_year]" size="50" type="text"
-    
-    
-    value="" />
-  </div>
+  <%= f.label :start_date, "Start Date" %><br />
+  <%= f.text_field :start_date %><br />
   
-  <div id='color_selector'>
-   <div class="input select optional"><label class="select optional" for="event_color"> Colour</label><select class="select optional" id="event_color" name="event[color]"><option value="">Colour</option>
-<option value="cream">cream</option>
-<option value="yellow">yellow</option>
-<option value="blue">blue</option>
-<option value="magenta">magenta</option></select></div>
-    <input id="event_timeline_chart_id" name="event[timeline_chart_id]" type="hidden" value="1" />
-  </div>
+  <%= f.label :end_date, "End Date" %><br />
+  <%= f.text_field :end_date %><br />  
   
-
-  <input type='hidden' name='event[description]' id='event_description' /> 
-    <input id="event_submit" name="commit" type="button" value="" />
-
-</form>
-</div>
+  <% myArray = ['blue', 'yellow', 'cream', 'magenta'] %>
+  
+  <%= f.label :color, "Colour" %><br />
+  <%= f.select(:color, myArray)  %><br /> 
+  
+  <%= f.label :description, "Description" %><br />
+  <%= f.text_area :description %><br /> 
+  
+  <%= f.submit %>
+  
+  <input class='bin' type='button' data-id='<%=@event.id %>' value='Delete' />
+  
+<% end %>
