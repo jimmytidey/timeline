@@ -4,7 +4,7 @@
   <h1 class='chart_author'>
     <%= User.find(@timeline_chart.user_id) %>
     <% if defined?(@user) && @timeline_chart.user_id == @user.id %>
-        <a href='/timeline_charts/<%= @timeline_chart.id %>'>Edit</a>
+        <a href='/timeline_charts/<%= @timeline_chart.id %>/edit    '>Edit</a>
     <% end %>
   </h1>  
 

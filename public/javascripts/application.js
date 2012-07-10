@@ -50,22 +50,30 @@ function getMoreData(data) {
 		dataType: 'json',
   		data: data, 
 		success: function(result) {
+			
+			start_array = [];
+			end_array = [];
+			
 			//this for dates separated by a "-"" 
-			start_array = result.start.split("-");
-			end_array = result.end.split("-");
-			
-			end = end_array[0];
-			start = start_array[0];
-
-			//this for dates separated by a ", "
-			if (start_array.length < 2) { 
-				start_array = result.start.split(", ");
-				start = start_array[1];
+			if (result.start != null ) { 
+				start_array = result.start.split("-");
+				start = start_array[0];
+				
+				//this for dates separated by a ", "
+				if (start_array.length < 2) { 
+					start_array = result.start.split(", ");
+					start = start_array[1];
+				}				
+				
 			}
-			
-			if (end_array.length < 2) { 
-				end_array = result.end.split(", ");
-				end = end_array[1];
+			if (result.end != null) { 	
+				end_array = result.end.split("-");
+				end = end_array[0];
+
+				if (end_array.length < 2) { 
+					end_array = result.end.split(", ");
+					end = end_array[1];
+				}				
 			}
 
 			//if we only got one date, just assume it lasts a single year
@@ -200,7 +208,6 @@ function initialiseEditFunctions() {
 	initialiseResize();
 	initialiseLables();
 	initialiseEdit();
-	initialiseDestroy();
  	initialiseEditTitle();
 	preventBubblePopper();
 }
@@ -238,7 +245,6 @@ function initialiseLables() {
 		rigth_width = wrong_width +100; 
 		$(this).css('width', rigth_width+'px')
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="pencil" class="pencil" />');
-		$(this).append('<img src="/images/bin.png" alt="bin" class="bin" />');
 		recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
 	});	
 }
@@ -282,17 +288,6 @@ function initialiseEditTitle() {
 	);
 }
 
-// making the bin trash the event 
-function initialiseDestroy() {   
-  $('.bin').click(function() {
-      if(confirm("Do you really want to delete this event?")){
-		destory_id = getDataBaseId($(this).parent()); 
-        send_delete_request_to_server(destory_id);
-		$('.tape-'+destory_id).remove();
-		$('.label-'+destory_id).remove();
-      }
-  });
-}
 
 //Simile has an annoying pop up bubble that I want to disable
 function preventBubblePopper() {
@@ -327,11 +322,14 @@ function showDescription(tl) {
       $(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ');
       $(this).click(function() {
         description = (description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
-        $('#tape_description div').html(description);
-
-        $('#tape_description').css({
-          'display': 'block'
-        });
+		$('body').append("<p id='modal_description'>"+description+"</p>"); 
+		$('#modal_description').dialog({
+			width:500,
+			height:600, 
+			close: function(){ 
+				$('#modal_description').remove();
+			}
+		});
       });
     }
   });
@@ -433,7 +431,7 @@ function addDuration() {
 	bandCalculator.end = $("#new_event_end_year").val() +"-01-03 04:10:53.000000";
 	bandCalculator.name = $("#new_event_title").val();
 	bandCalculator.chart = $('.timeline').attr('data-id');
-	
+	bandCalculator.description = $('#event_description').val();
 
 	if (!(/\S/.test(bandCalculator.name))) { // no title has been given
 	    bandCalculator.name='click to give me a name';
@@ -442,7 +440,6 @@ function addDuration() {
 	if (bandCalculator.end < bandCalculator.begin) { 
 		bandCalculator.end = bandCalculator.begin; 
 	} 
-
 
 	//Put the exitsing events into an ordered array
 	bandCalculator.search_events = events['events']; 
@@ -459,13 +456,13 @@ function addDuration() {
 			last_index = answer_array.length - 1; 
 			if (value == 'sucess') {  
 				console.log('adding to sucessful band'); 
-				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index, bandCalculator.chart);
+				submit_event_to_server(bandCalculator.name, bandCalculator.description, bandCalculator.begin, bandCalculator.end, index, bandCalculator.chart);
 				bandCalculator.saved = true;
 				return false; 
 			} 
 			if (!bandCalculator.saved && index == last_index) { 
 				console.log('making a new band'); 
-				submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
+				submit_event_to_server(bandCalculator.name, bandCalculator.description, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
 				bandCalculator.saved = true;				
 			}	 
 		});
@@ -474,7 +471,7 @@ function addDuration() {
 	//this is the first event
 	if (bandCalculator.search_events.length == 0) { 
 		band_answer= 1; 
-		submit_event_to_server(bandCalculator.name, bandCalculator.begin, bandCalculator.end, band_answer, bandCalculator.chart);
+		submit_event_to_server(bandCalculator.name, bandCalculator.description, bandCalculator.begin, bandCalculator.end, band_answer, bandCalculator.chart);
 	}
 
 	else  {

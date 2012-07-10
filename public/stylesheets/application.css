@@ -88,7 +88,7 @@
 
 #intro {
 	position:absolute;
-	left:36px;
+	left:0px;
 	top:275px;
 	color:#64283c;
 	text-align:center;
@@ -248,12 +248,12 @@
 }
 
 #embed_code {
-    top: 200px;
-    left: 290px;
-    position: absolute;
+    margin-top:30px;
 }
 
-
+#modal_description { 
+	padding:5px;
+}
 
 
 .view_page .timeline-event-tape {
@@ -273,7 +273,7 @@
 	background-image:url(/images/timeline_background_wide.png);
 	height:379px;
 	padding: 12px;
-	top:300px;
+	top:236px;
 }
 
 .edit .timeline {
@@ -290,7 +290,7 @@
 }
 
 .edit .loading_gif  {
-    left: -410px;
+    left: -510px;
     position: relative;
     top: 2px;
 }
@@ -302,7 +302,7 @@
 #edit_timeline_chart {
    position:absolute;
    left:384px;
-   top:36px;
+   top:12px;
    width:700px;
 }
 
@@ -402,7 +402,7 @@ background-image:url(/images/btn_save_down.png);
     display: inline;
     position: absolute;
     right: -7px;
-    top: 272px;
+    top: 215px;
     width: 580px;
 }
 
@@ -487,6 +487,7 @@ background-image:url(/images/btn_save_down.png);
 .edit_event textarea { 
 	width:350px;
 	height:120px;
+	margin-bottom:10px;
 }
 
 .ui-icon-closethick { 

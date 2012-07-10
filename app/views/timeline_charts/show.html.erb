@@ -1,33 +1,25 @@
 <% title @timeline_chart.title, false %>
 
 <div id='content_container' class='view_page'>
-	
-	
-	
 	<div class='timeline_context'> 
 		  <%= render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'false' } %>
 	</div>
 	
 	<div id='chart_description'> 
-	    <h1 id='timeline_title'><%= @timeline_chart.title %></h1>
-		<%= @timeline_chart.description %>
-	
-	  <br/>
-	  <strong>Created by:</strong> <%= @timeline_chart.user %>
-  	  <% if current_user && current_user.id == @timeline_chart.user.id then %>
-  	  <%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %>
-  	  <% end %>
-	</div>
-	
-	
-	<div id='embed_code'>
-		<p><input type='button' value='Generate Embed Code' id='embed_code_generate' />
-		&nbsp; &nbsp;Pixel width: <input type='text' value='500' id='embed_code_width' name='' /></p>
-		<div id='embed_code_output'></div> 
-	</div>
-	
+        <h1 id='timeline_title'><%= @timeline_chart.title %></h1>
+        <%= @timeline_chart.description %>
 
-	
-	
-	
+        <br/>
+        <strong>Created by:</strong> <%= @timeline_chart.user %>
+        <% if current_user && current_user.id == @timeline_chart.user.id then %>
+        <%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %>
+        <% end %>
+        
+        <div id='embed_code'>
+    		<p><input type='button' value='Generate Embed Code' id='embed_code_generate' />
+    		&nbsp; &nbsp;Pixel width: <input type='text' value='500' id='embed_code_width' name='' /></p>
+    		<div id='embed_code_output'></div> 
+    	</div>
+        
+	</div>
 </div>	

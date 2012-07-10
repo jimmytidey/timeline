@@ -26,7 +26,6 @@ class EventsController < ApplicationController
     @timeline_chart = @event.timeline_chart
 
     # convert_epochs_to_dates
-
     if @event.update_attributes(params[:event])
       render 'edit_succeeded'
     else

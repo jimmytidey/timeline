@@ -12,6 +12,17 @@ $('#edit_modal').dialog({
 	
 });
 
+$('.bin').click(function() {
+    if(confirm("Do you really want to delete this event?")){
+		destory_id = $(this).attr('data-id');
+      send_delete_request_to_server(destory_id);
+		$('.tape-'+destory_id).remove();
+		$('.label-'+destory_id).remove();
+		$('#edit_modal').dialog('close');		
+		$('#edit_modal').remove();
+    }
+});
+
 $('#event_edit_submit').click(function() {
 	var theEvent 	= $('#event_edit_id').val(); 
 	var startDate 	= $('#event_edit_start').val() +"-01-03 04:10:53.000000";
