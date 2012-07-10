@@ -89,5 +89,9 @@ class TimelineChart < ActiveRecord::Base
   def num_events
     self.events.length
   end
+
+  def to_param
+    "#{id} #{title}".parameterize
+  end
 end
 

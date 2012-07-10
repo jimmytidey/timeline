@@ -1,10 +1,10 @@
 <div class='timeline_context' > 
 
-  <h1 class='chart_title'><a href='/timeline_charts/<%= @timeline_chart.id %>' ><%= @timeline_chart.title %></a></h1>
+  <h1 class='chart_title'><%= link_to @timeline_chart.title,  @timeline_chart %></h1>
   <h1 class='chart_author'>
     <%= User.find(@timeline_chart.user_id) %>
     <% if defined?(@user) && @timeline_chart.user_id == @user.id %>
-        <a href='/timeline_charts/<%= @timeline_chart.id %>/edit    '>Edit</a>
+      <%= link_to "Edit", edit_timeline_chart_path(@timeline_chart) %>
     <% end %>
   </h1>  
 
