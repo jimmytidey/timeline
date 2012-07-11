@@ -1,22 +1,25 @@
+<% require 'date' %>
+
 <%= form_for @event, :remote=>true do |f| %>
   <%= f.label :title, "Title" %><br />
   <%= f.text_field :title %><br />
   
-  <%= f.label :start_date, "Start Date" %><br />
-  <%= f.text_field :start_date %><br />
-  
-  <%= f.label :end_date, "End Date" %><br />
-  <%= f.text_field :end_date %><br />  
+ 
+  <%= f.hidden_field :id, :id =>'edit_event_id' %>
+  <%= f.hidden_field :start_date, :id =>'edit_start_date' %>
+  <%= f.hidden_field :band, :id =>'edit_band' %>
+ 
+  <%= f.hidden_field :end_date, :id =>'edit_end_date' %>
   
   <% myArray = ['blue', 'yellow', 'cream', 'magenta'] %>
   
   <%= f.label :color, "Colour" %><br />
   <%= f.select(:color, myArray)  %><br /> 
   
-  <%= f.label :description, "Description" %><br />
+  <%= f.label :description, "Description", :id =>'edit_description' %><br />
   <%= f.text_area :description %><br /> 
   
-  <%= f.submit %>
+  <input id='event_edit_submit' type='button' value='Save' />
   
   <input class='bin' type='button' data-id='<%=@event.id %>' value='Delete' />
   

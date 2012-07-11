@@ -1,118 +1,9 @@
-/*globals $ Timeline jQuery document*/
 
-/*********** Doug Crockford's functions ***
- *
- * These functions add syntactic sugar that 
- * should probably be in the language anyway.
- *
- **********************************/
 
 bandCalculator ={};
 
-/* Neater prototypal inheritance http://javascript.crockford.com/prototypal.html */
-function object(o) {
-  function F() {}
-  F.prototype = o;
-  return new F();
-}
-
-if (typeof Object.beget !== 'function') {
-  Object.beget = function (o) {
-    var F = function () {};
-    F.prototype = o;
-    return new F();
-  };
-}
-
-/* Augment a basic type */
-Function.prototype.method = function (name, func) {
-    this.prototype[name] = func;
-    return this;
-};
-
-/*********** freebase functions ***
- *
- * The next three functions tie 
- * freebase suggest to the "Title" box,
- * and later, run an MQL query to grab 
- * a couple of dates.
- *
- **********************************/
-// Called by the function below
-function getMoreData(data) {
-	
-  query = data.id;
-
-	$('#new_event_form').append("<img src='/images/loading.gif' class='loading_gif' />"); 	
-
-	$.ajax({
-		url: 'http://jimmytidey.co.uk/timeline/autocomplete/get_dates.php?id='+query+'&callback=?',
-		dataType: 'json',
-  		data: data, 
-		success: function(result) {
-			
-			start_array = [];
-			end_array = [];
-			
-			//this for dates separated by a "-"" 
-			if (result.start != null ) { 
-				start_array = result.start.split("-");
-				start = start_array[0];
-				
-				//this for dates separated by a ", "
-				if (start_array.length < 2) { 
-					start_array = result.start.split(", ");
-					start = start_array[1];
-				}				
-				
-			}
-			if (result.end != null) { 	
-				end_array = result.end.split("-");
-				end = end_array[0];
-
-				if (end_array.length < 2) { 
-					end_array = result.end.split(", ");
-					end = end_array[1];
-				}				
-			}
-
-			//if we only got one date, just assume it lasts a single year
-			if (!isNumber(end)) { 
-				end = start;
-			}
-			
-
-			if (isNumber(start) && isNumber(end)) { 
-				description= unescape(result.description); 
-				
-				$('#new_event_start_year').val(start);
-				$('#new_event_end_year').val(end);
-				$('#event_description').val(description);
-				console.log($('#event_description').val());
-				$('.loading_gif').remove();
-			}
-			else { 
-  				$('#new_event_form .loading_gif').remove();
-  				alert("couldn't find dates");
-			}
-			
- 
-		},
-		
-		error: function(result) {
-
-  		}
- 	});
-}
-
 //BIND CLICK STUFF
 $(document).ready(function() {
-    $('#new_event_form #new_event_title').suggest({
-	 "type": ["/people/person", "/time/event"],
- 	 "type_strict": "any"
-	}).bind("fb-select", function(e, data) {
-        getMoreData(data);
-    });
 
     $('#new_event_submit').click(function() { 
 		addDuration(); 
@@ -120,86 +11,6 @@ $(document).ready(function() {
 
 });
 
-/*********** SIMILE functions ***
- *
- * These functions deal with the 
- * timeline.
- *
- **********************************/
-
-var Timeliner = {};
-Timeliner.timelines = [];
-Timeliner.timeline = function(){
-  return this.timelines[0];
-};
-
-//simile code for writing a new timeline
-Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events_array) {
-	var stTheme = Timeline.ClassicTheme.create();
-	this.container = container;
-	this.events = events_array;
-	this.eventSource = new Timeline.DefaultEventSource(0);
-	bandInfos = [
-	Timeline.createBandInfo({
-	width: "100%",
-	intervalUnit: zoom, 
-	intervalPixels: intervalPixels,
-	eventSource: this.eventSource,
-	theme: stTheme
-	})];
-
-	events = events_array;
-	initialiseTheme(stTheme);
-
-	//make the timeline
-	timeline = Timeline.create(document.getElementById(container), bandInfos);
-	this.timelines.push(timeline);
-	this.eventSource.loadJSON(events_array, '');
-
-	//Center Timeline, either to the center year or to the center date or to the last saved event 
-	if(bandCalculator.saved) { 
-		var last_elem = events['events'].length - 1; 
-		last_event = events['events'][last_elem];
-		console.log(last_event); 
-	}
-  	else { 
- 		timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
-	}
-
-  //stop the thing it pops up when you roll over somethign 
-  preventBubblePopper();	
-
-  // what to do speifically for edit mode
-  if (editMode) { 
-	    initialiseEditFunctions();
-		
-		//when the timeline is repainted, redraw all the edit functions 
-	    timeline.getBand(0).addOnScrollListener(function(band){ 
-	      if ($(".pencil").length === 0) {initialiseEditFunctions();}
-	    });
-	} 
-	else {
-    	initEmbedCode();
-    	showDescription(this);
-    	$(document).ready(function() {initialiseViewLables(container);}); 
-	    timeline.getBand(0).addOnScrollListener(function(band){ 
-	      initialiseEventMarkers();
-
-	    });
-  	}
-  	initialiseEventMarkers();
-};
-
-//changes the height of each band
-function initialiseTheme(stTheme) {
-	stTheme.event.tape.height = 20;
-}
-
-//Stop timeline scrolling for ever in View mode
-function limitScollingOfTimeline(stTheme, startYear, endYear) {
-  stTheme.timeline_start = new Date(startYear,1,1);
-  stTheme.timeline_stop  = new Date(endYear,1,1);  
-}
 
 // If this function is called, then the timeline is drawn in "edit" mode. If not
 // then it is drawn in view mode.
@@ -295,8 +106,6 @@ function preventBubblePopper() {
     //stop the bubble from appearing!
   };
 }
-
-
 
 //hides all the extended descriptions on init 
 $(document).ready(function() {
@@ -427,11 +236,13 @@ function recalculateEventDate(id)
 //when the form adds a new duration to the timeline, including intelligently assigning a band
 function addDuration() { 
 	// validate  
-	bandCalculator.begin = $("#new_event_start_year").val() +"-01-03 04:10:53.000000";
-	bandCalculator.end = $("#new_event_end_year").val() +"-01-03 04:10:53.000000";
-	bandCalculator.name = $("#new_event_title").val();
-	bandCalculator.chart = $('.timeline').attr('data-id');
-	bandCalculator.description = $('#event_description').val();
+	var begindate = new Date($("#new_event_start_year").val()); 
+	var enddate = new Date($("#new_event_end_year").val()); 
+	bandCalculator.begin 		=  begindate.getTime();
+	bandCalculator.end 			=  enddate.getTime();
+	bandCalculator.name 		= $("#new_event_title").val();
+	bandCalculator.chart 		= $('.timeline').attr('data-id');
+	bandCalculator.description 	= $('#event_description').val();
 
 	if (!(/\S/.test(bandCalculator.name))) { // no title has been given
 	    bandCalculator.name='click to give me a name';
@@ -578,8 +389,6 @@ function findEventWithId(events, event_id) {
 function getDataBaseId(child) {
  	return $(child).attr('class').match(/\d+/);
 }
-
-
 
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);

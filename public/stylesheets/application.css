@@ -499,3 +499,20 @@ background-image:url(/images/btn_save_down.png);
 } 
 
 
+#edit_event_start_year, #edit_event_start_month, #edit_event_start_day {
+	width:30px;
+}
+
+#edit_start_label { 
+	margin-top:10px;
+}
+
+#edit_event_end_year, #edit_event_end_month, #edit_event_end_day {
+	width:30px;
+}
+
+#edit_end_label { 
+	margin-top:10px;
+}
+
+
