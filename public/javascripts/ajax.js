@@ -9,31 +9,46 @@
 
 
 function eventSave(id) {
-  var ttop, dbId;
+  var ttop, dbId,color;
   dbId = getDataBaseId(id);
   
   // get the band
   ttop  = parseInt($(id).css('top')); 
   ttop  = Math.round((ttop)/30)+1; 
   if (ttop == 0) {ttop=1;}
-  console.log(ttop);
-  title = $(id).next('.timeline-event-label').children('p').html();
-  info = id.next().children('.info');
+  var title = $(id).next('.timeline-event-label').children('p').html();
+  var info = id.next().children('.info');
+  	
+	if ($(id).hasClass('magenta')) { 
+		color = 'magenta';
+	}
+	else if  ($(id).hasClass('cream')) { 
+		color = 'cream';
+	}
+	else if  ($(id).hasClass('yellow')) { 
+		color="yellow"; 
+	}	
+	else { 
+		color = 'blue';
+	}
+	
+	var start = info.children('.begin_date').attr('data-epoch');
+	var end = info.children('.end_date').attr('data-epoch');
+  	if (end == undefined) { 
+		end = start; 
+	}
 
-  start = info.children('.begin_date').attr('data-epoch')
-  end = info.children('.end_date').attr('data-epoch')
-
-  update_dates_for_event_on_the_server(dbId, start, end, ttop, title); 
+  update_dates_for_event_on_the_server(dbId, start, end, ttop, title, color); 
 };
 
 
 function saveCenterDate() {
-  savedPosition = Timeliner.timeline().getBand(0).getCenterVisibleDate();
+	// everytime an event is edited a new timeline is created. this is very wasteful of memeory and should probably be addressed.
+	var current_timeline_index = Timeliner.timelines.length - 1;
+	window.savedPosition = Timeliner.timelines[current_timeline_index].getBand(0).getCenterVisibleDate();
 }
 
-function restoreCenterDate(date) {
-  Timeliner.timeline().getBand(0).setCenterVisibleDate(date);
-}
+
 
 /* Extend jQuery with functions for PUT and DELETE requests. */
 function jq_ajax_request(url, data, callback, type, method) {
@@ -78,7 +93,7 @@ function submit_event_to_server(name, description, begin, end, band, chart) {
     });
 }
 
-function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description) {
+function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description, color) {
   saveCenterDate();
 	if (!typeof description === "undefined") { 
 		$.put("/events/" + theEvent,
@@ -88,6 +103,7 @@ function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band
 	        'end_date': endDate.toString(),
 			'band': band.toString(),
 			'title': title.toString(),
+			'color': color,
 			'description': description.toString()
 	      }
 	    });
@@ -99,6 +115,7 @@ function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band
 	        'start_date': startDate.toString(),
 	        'end_date': endDate.toString(),
 			'band': band.toString(),
+			'color': color,
 			'title': title.toString()
 	      }
 	    });	

@@ -4,11 +4,9 @@ bandCalculator ={};
 
 //BIND CLICK STUFF
 $(document).ready(function() {
-
     $('#new_event_submit').click(function() { 
 		addDuration(); 
 	});	
-
 });
 
 
@@ -98,7 +96,6 @@ function initialiseEditTitle() {
 		} 							 
 	);
 }
-
 
 //Simile has an annoying pop up bubble that I want to disable
 function preventBubblePopper() {
@@ -190,23 +187,23 @@ function editTitle(edit_id)
 function recalculateEventDate(id) 
 {
 	// covert tape element ID to ID for the relevant lable  
-	left 	= $("#"+id).css('left');
-	width 	= $("#"+id).css('width');
+	var left 	= $("#"+id).css('left');
+	var width 	= $("#"+id).css('width');
 	
-	left = parseInt(left);
-	width = parseInt(width);
+	var left = parseInt(left);
+	var width = parseInt(width);
 	
 	//caluclate and remove offset from begining of timeline
-	offset = parseInt(Timeliner.timeline().getBand(0)._bandInfo.ether._band._viewOffset);	
-	begin 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
-	end 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
+	var offset = parseInt(Timeliner.timeline().getBand(0)._bandInfo.ether._band._viewOffset);	
+	var begin 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
+	var end 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
 
 	if (id != null) {var id = "label"+ id.substr(5);}
 	
 	//this to prevent a problem with rounding that dates to be 1px out sometimes
 	if (parseInt(begin.getMonth()) > 5)
 	{
-		rounded_begin = parseInt(begin.getFullYear());
+		var rounded_begin = parseInt(begin.getFullYear());
 		rounded_begin ++; 
 	}
 	else 
@@ -216,7 +213,7 @@ function recalculateEventDate(id)
 	
 	if (parseInt(end.getMonth()) > 5)
 	{
-		rounded_end = parseInt(end.getFullYear());
+		var rounded_end = parseInt(end.getFullYear());
 		rounded_end++; 
 	}
 	else 
@@ -225,21 +222,21 @@ function recalculateEventDate(id)
 	}	
 	
 	if (rounded_begin != rounded_end) {
-		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date" data-epoch="' + begin.getTime() + '">' + rounded_begin + '</span> <span class="end_date" data-epoch="' + end.getTime() + '">'+ rounded_end+'</span>)</span>');	
+		$('#'+id+" .info").replaceWith('<span class="info" >(<span class="begin_date" data-epoch="' + begin.getTime() + '">' + rounded_begin + '</span> - <span class="end_date" data-epoch="' + end.getTime() + '">'+ rounded_end+'</span>)</span>');	
 	} 
 	
 	else {
-		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date">'+rounded_begin+'</span>)</span>');	
+		$('#'+id+" .info").replaceWith(' <span class="info">(<span class="begin_date" data-epoch="' + begin.getTime() + '" >'+rounded_begin+'</span>)</span>');	
 	}
 }
 
 //when the form adds a new duration to the timeline, including intelligently assigning a band
 function addDuration() { 
 	// validate  
-	var begindate = new Date($("#new_event_start_year").val()); 
-	var enddate = new Date($("#new_event_end_year").val()); 
-	bandCalculator.begin 		=  begindate.getTime();
-	bandCalculator.end 			=  enddate.getTime();
+	bandCalculator.begindate 	= new Date($("#new_event_start_year").val()); 
+	bandCalculator.enddate 		= new Date($("#new_event_end_year").val()); 
+	bandCalculator.begin 		=  bandCalculator.begindate.getTime();
+	bandCalculator.end 			=  bandCalculator.enddate.getTime();
 	bandCalculator.name 		= $("#new_event_title").val();
 	bandCalculator.chart 		= $('.timeline').attr('data-id');
 	bandCalculator.description 	= $('#event_description').val();

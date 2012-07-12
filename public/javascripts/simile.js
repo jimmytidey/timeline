@@ -5,11 +5,19 @@
  *
  **********************************/
 
+
 var Timeliner = {};
 Timeliner.timelines = [];
+
+
+/*
+This code is suspected of doing something other than intended 
+*/
+
 Timeliner.timeline = function(){
-  return this.timelines[0];
+	return this.timelines[0];
 };
+
 
 //simile code for writing a new timeline
 Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, centerYear, container, events_array) {
@@ -35,13 +43,17 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
 	this.eventSource.loadJSON(events_array, '');
 
 	//Center Timeline, either to the center year or to the center date or to the last saved event 
-	if(bandCalculator.saved) { 
+	if(bandCalculator.saved != undefined) { 
 		var last_elem = events['events'].length - 1; 
 		last_event = events['events'][last_elem];
-		console.log(last_event); 
+		timeline.getBand(0).setCenterVisibleDate(bandCalculator.begindate);
 	}
-  	else { 
- 		timeline.getBand(0).setCenterVisibleDate(new Date(centerYear,1,1));
+  	if (window.savedPosition != undefined) {
+ 		timeline.getBand(0).setCenterVisibleDate(window.savedPosition);
+	}
+	else {
+		var center_date_object = new Date(centerYear + ", 1, 1");
+		timeline.getBand(0).setCenterVisibleDate(center_date_object);
 	}
 
   //stop the thing it pops up when you roll over somethign 
@@ -71,10 +83,4 @@ Timeliner.create = function(editMode, intervalPixels, zoom, startYear, endYear, 
 //changes the height of each band
 function initialiseTheme(stTheme) {
 	stTheme.event.tape.height = 20;
-}
-
-//Stop timeline scrolling for ever in View mode
-function limitScollingOfTimeline(stTheme, startYear, endYear) {
-  stTheme.timeline_start = new Date(startYear,1,1);
-  stTheme.timeline_stop  = new Date(endYear,1,1);  
 }

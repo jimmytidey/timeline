@@ -65,7 +65,7 @@
 	height:10px!important;
 	border: 1px solid black;
 	overflow: visible!important;
-	cursor: crosshair!important; 
+	cursor: row-resize!important; 
 }
 
 .event_marker {

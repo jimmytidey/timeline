@@ -1,4 +1,5 @@
 <%# clear events from memory %>
 Timeliner.timeline()._bandInfos[0].eventSource.clear();
+//Timeliner.timelines[0] = null;
 <% events = render :partial => 'timeline_charts/chart', :locals => {:all_events => @timeline_chart.events.all, :edit_mode => 'true' } %>
 $(".inline_script").html("<%= escape_javascript events %>");
