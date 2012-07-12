@@ -52,14 +52,11 @@
 
 /* HOME PAGE */
 #sign_in, #add_timeline { 
-	position:absolute;
-	left:36px;
-	top:430px;
 
 }
 
 #sign_in input, #add_timeline, #user_page_button {
-	width:200px;
+	width:199px;
 	height:50px;
 	background-image:url(/images/btn_start_building_up.png);
 	border:none;
@@ -119,7 +116,7 @@
 
 
 .chart_title { 
-	width:400px;
+	width:555px;
 	float:left;
 	margin-bottom:6px;
 }
