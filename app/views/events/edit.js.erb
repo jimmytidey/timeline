@@ -45,7 +45,8 @@ $('#edit_modal').dialog({
 			var color		= $('#event_color').val();
 			var band		= $('#edit_band').val();
 			var title 		= $('#event_title').val(); 
-			var description = $('#edit_description').val();
+			var description = $('#edit_event_description').val();
+			console.log('description detected' + description);
 			update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description, color);
 			$('#edit_modal').dialog('close');
 		

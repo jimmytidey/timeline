@@ -95,7 +95,9 @@ function submit_event_to_server(name, description, begin, end, band, chart) {
 
 function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description, color) {
   saveCenterDate();
-	if (!typeof description === "undefined") { 
+
+	if (description.length > 0) { 
+		
 		$.put("/events/" + theEvent,
 	    { 'event':
 	      {
@@ -104,7 +106,7 @@ function update_dates_for_event_on_the_server(theEvent, startDate, endDate, band
 			'band': band.toString(),
 			'title': title.toString(),
 			'color': color,
-			'description': description.toString()
+			'description': description
 	      }
 	    });
 	}

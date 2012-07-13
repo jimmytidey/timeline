@@ -16,8 +16,8 @@
   <%= f.label :color, "Colour" %><br />
   <%= f.select(:color, myArray)  %><br /> 
   
-  <%= f.label :description, "Description", :id =>'edit_description' %><br />
-  <%= f.text_area :description %><br /> 
+  <%= f.label :description, "Description"  %><br />
+  <%= f.text_area :description, :id =>'edit_event_description' %><br /> 
   
   <input id='event_edit_submit' type='button' value='Save' />
   
