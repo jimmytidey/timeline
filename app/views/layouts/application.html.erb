@@ -2,38 +2,40 @@
 <html>
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Timeline" %></title>
-    <meta name="google-site-verification" content="p_Ul0IlSvQ2-eWxxU-kORj1VD4fEgkh2-xiXehRL_Fg" />
-     <meta name="description" content="Make and share timelines. Automatically add Wikipedia dates, drag and drop events... super simple timelines." />
-    <%= stylesheet_link_tag "application" %>
+        <meta name="google-site-verification" content="p_Ul0IlSvQ2-eWxxU-kORj1VD4fEgkh2-xiXehRL_Fg" />
+        <meta name="description" content="Make and share timelines. Automatically add Wikipedia dates, drag and drop events... super simple timelines." />
+    
     <% if Rails.env.production? then %>
-      <%= javascript_include_tag 'jquery/jquery.min' %>
-      <%= javascript_include_tag 'jquery/jquery-ui.min' %>
-      <%# simile timeline from MIT servers: <script src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js" type="text/javascript"></script> %>
-      <script src="/javascripts/timeline/timeline_ajax/simile-ajax-api.js?bundle=true" type="text/javascript"></script>
-      <script src="/javascripts/timeline/timeline_js/timeline-api.js?bundle=true" type="text/javascript"></script>
-    <% else %>
-      <%= javascript_include_tag 'jquery/jquery' %>
-      <%= javascript_include_tag 'jquery/jquery-ui' %>
-      <%= javascript_include_tag 'ajax' %>
-      <script src="/javascripts/timeline/src/ajax/api/simile-ajax-api.js?bundle=false" type="text/javascript"></script>
-      <script src="/javascripts/timeline/src/webapp/api/timeline-api.js?bundle=false" type="text/javascript"></script>
-    <% end %>
-    <%# Freebase suggest %> 
-    <link type="text/css" rel="stylesheet" href="http://freebaselibs.com/static/suggest/1.2.1/suggest.min.css" />
-    <link type="text/css" rel="stylesheet" href="/javascripts/jquery.css" />
-    <link type="text/css" rel="stylesheet" href="/stylesheets/timeline.css" />
-    <link type="text/css" rel="stylesheet" href="/stylesheets/modal.css" />
-    <link type="text/css" rel="stylesheet" href="/stylesheets/global.css" />
-    <link type="text/css" rel="stylesheet" href="/stylesheets/rails.css" />
 
-    <script type="text/javascript" src="http://freebaselibs.com/static/suggest/1.2.1/suggest.min.js"></script>
-    <%= javascript_include_tag 'rails' %>
+    <% else %>
+     
+
+    <% end %>
+    
+    
+    <%= stylesheet_link_tag "http://freebaselibs.com/static/suggest/1.2.1/suggest.min.css" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "/javascripts/jquery" %>
+    <%= stylesheet_link_tag "timeline" %>
+    <%= stylesheet_link_tag "modal" %>
+    <%= stylesheet_link_tag "global" %>
+    <%= stylesheet_link_tag "rails" %>
+        
     <%= javascript_include_tag 'crockford' %>
+    <%= javascript_include_tag "/javascripts/timeline/timeline_ajax/simile-ajax-api.js?bundle=true" %>
+    <%= javascript_include_tag "/javascripts/timeline/timeline_js/timeline-api.js?bundle=true" %>
+    <%= javascript_include_tag "http://freebaselibs.com/static/suggest/1.2.1/suggest.min.js" %>
+    <%= javascript_include_tag 'jquery/jquery.min' %>
+    <%= javascript_include_tag 'jquery/jquery-ui.min' %>    
+    <%= javascript_include_tag 'ajax' %>
+    <%= javascript_include_tag 'rails' %>
+    
     <%= javascript_include_tag 'freebase' %>
     <%= javascript_include_tag 'simile' %>    
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
+    
   </head>
   <body >
  	<%	 
