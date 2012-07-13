@@ -18,7 +18,7 @@
 #about { 
  	font-size: 16px;
     left: 50%;
-    margin-left: -892px;
+    margin-left: -827px;
     position: absolute;
     text-align: right;
     background-color:#64283c;
@@ -256,6 +256,7 @@
 .view_page .timeline-event-tape {
 	cursor: auto!important;
 }
+
 
 /*  EDIT PAGE */ 
 .timeline {

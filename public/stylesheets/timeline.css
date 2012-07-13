@@ -38,7 +38,10 @@
 
 .timeline-band-0 .timeline-ether-bg{background-color:#F4F3EE!important;}
 
-.info {font-size:9px;}
+.info {
+	font-size:9px;
+	margin-left:3px;
+}
 
 .timeline-event-label {
     font-size: 12px;
@@ -83,6 +86,11 @@
 
 .magenta.timeline-event-tape {
 	background-color:#d9b0c5!important;
+}
+
+
+.blue.timeline-event-tape {
+	background-color:#58A0DC!important;
 }
 
 

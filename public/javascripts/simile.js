@@ -15,7 +15,8 @@ This code is suspected of doing something other than intended
 */
 
 Timeliner.timeline = function(){
-	return this.timelines[0];
+	var current_timeline_index = Timeliner.timelines.length - 1;
+	return this.timelines[current_timeline_index];
 };
 
 

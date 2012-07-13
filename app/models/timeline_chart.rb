@@ -1,7 +1,7 @@
 class TimelineChart < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 14
-  NUM_TOP_CHARTS = 3
+  NUM_TOP_CHARTS = 4
   PERIOD = [[:Month, 6], [:Year, 7], [:Decade, 8], [:Century, 9]]
   INTERVAL = [[:One, 60], [:Two, 90], [:Three, 120], [:Four, 170], [:Five, 220]]
   TEMPLATE = { :title => 'Untitled',

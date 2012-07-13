@@ -5,7 +5,9 @@ bandCalculator ={};
 //BIND CLICK STUFF
 $(document).ready(function() {
     $('#new_event_submit').click(function() { 
+		console.log('adding new duration');
 		addDuration(); 
+		$('#new_event_form #new_event_title').suggest('close')
 	});	
 });
 
@@ -125,7 +127,7 @@ function showDescription(tl) {
     description = event.description;
 
     if (description.length > 1) {
-      $(this).append('<img src="/images/arrow.gif" class="show_me_more" /> ');
+      $("p", this).append('<img src="/images/arrow.gif" class="show_me_more" /> ');
       $(this).click(function() {
         description = (description + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ "<br />" +'$2');
 		$('body').append("<p id='modal_description'>"+description+"</p>"); 
@@ -194,6 +196,7 @@ function recalculateEventDate(id)
 	var width = parseInt(width);
 	
 	//caluclate and remove offset from begining of timeline
+	
 	var offset = parseInt(Timeliner.timeline().getBand(0)._bandInfo.ether._band._viewOffset);	
 	var begin 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(left+offset);
 	var end 	= Timeliner.timeline().getBand(0)._bandInfo.ether.pixelOffsetToDate(width+offset+left);
@@ -233,8 +236,14 @@ function recalculateEventDate(id)
 //when the form adds a new duration to the timeline, including intelligently assigning a band
 function addDuration() { 
 	// validate  
-	bandCalculator.begindate 	= new Date($("#new_event_start_year").val()); 
-	bandCalculator.enddate 		= new Date($("#new_event_end_year").val()); 
+	// add zeron padding to make dates before 1000 ad work 
+	var begin_dirty = $("#new_event_start_year").val();
+	var end_dirty 	= $("#new_event_end_year").val(); 
+	var begin_clean = zeroPad(begin_dirty,4);
+	var end_clean = zeroPad(end_dirty,4);
+	
+	bandCalculator.begindate 	= new Date(begin_clean); 
+	bandCalculator.enddate 		= new Date(end_clean); 
 	bandCalculator.begin 		=  bandCalculator.begindate.getTime();
 	bandCalculator.end 			=  bandCalculator.enddate.getTime();
 	bandCalculator.name 		= $("#new_event_title").val();
@@ -390,4 +399,14 @@ function getDataBaseId(child) {
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+function zeroPad(num,count)
+{
+var numZeropad = num + '';
+while(numZeropad.length < count) {
+numZeropad = "0" + numZeropad;
+}
+return numZeropad;
+}
+
 
