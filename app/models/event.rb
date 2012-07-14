@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
       if record.end_date < record.start_date
         record.errors[:end_date] << 'is before the start date'
       end
+      record.errors.add(:start_date, "can't be zero. See http://en.wikipedia.org/wiki/0_(year)") if record.start_date.year == 0
+      record.errors.add(:end_date, "can't be zero. See http://en.wikipedia.org/wiki/0_(year)") if record.end_date.year == 0
     end
   end
 
@@ -17,19 +19,9 @@ class Event < ActiveRecord::Base
   validates_presence_of :start_date
   validates_presence_of :end_date
   validates_presence_of :timeline_chart_id
-  validates_numericality_of :start_year
-  validates_numericality_of :end_year
 
   include ActiveModel::Validations
   validates_with EventDateValidator
-
-  def start_year=(year)
-    self.start_date = Date.parse('1/1/' + year)
-  end
-
-  def end_year=(year)
-    self.end_date = Date.parse('1/1/' + year)
-  end
 
   def start_year
     start_date.year
@@ -39,9 +31,12 @@ class Event < ActiveRecord::Base
     end_date.year
   end
 
+  private
+
   def mark_timeline_as_updated
     tc = self.timeline_chart
     tc.updated_at = Time.now
     tc.save
   end
 end
+

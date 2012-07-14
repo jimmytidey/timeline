@@ -40,6 +40,8 @@ $('#edit_modal').dialog({
 			var enddate 	= new Date(end_string);
 			console.log(begindate);
 			var theEvent 	= $('#edit_event_id').val(); 
+      begindate.setFullYear($("#edit_event_start_year").val());
+      enddate.setFullYear($("#edit_event_end_year").val());
 			var startDate 	= begindate.getTime();
 			var endDate	 	= enddate.getTime();
 			var color		= $('#event_color').val();
@@ -49,8 +51,6 @@ $('#edit_modal').dialog({
 			console.log('description detected' + description);
 			update_dates_for_event_on_the_server(theEvent, startDate, endDate, band, title, description, color);
 			$('#edit_modal').dialog('close');
-		
-
 		});		
 	}, 
 	close: function() {

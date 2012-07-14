@@ -19,7 +19,7 @@ function initialiseEditFunctions() {
 	initialiseResize();
 	initialiseLables();
 	initialiseEdit();
- 	initialiseEditTitle();
+  initialiseEditTitle();
 	preventBubblePopper();
 }
 
@@ -31,7 +31,7 @@ function initialiseDragAndDrop() {
   // band_s = 'band_1 band_2 band_3 band_4 ...'
   var band_s = '';
   for(var i=1;i<=12;i++) {
-    band_s += 'band_' + i + ' '
+    band_s += 'band_' + i + ' ';
   }
   
   $('.timeline-event-tape').draggable(
@@ -52,9 +52,9 @@ function initialiseDragAndDrop() {
 function initialiseLables() {
 	$('.timeline-event-label').each(function() {
 		// this because there is no space for the pencil in the and the delete icon because the labels all have widths assigned 
-		wrong_width = parseInt($(this).css('width'));
-		rigth_width = wrong_width +100; 
-		$(this).css('width', rigth_width+'px')
+		wrong_width = parseInt($(this).css('width'), 10);
+		right_width = wrong_width +100; 
+		$(this).css('width', right_width+'px');
 		$(this).append('<span class="info"></span><img src="/images/pencil.png" alt="pencil" class="pencil" />');
 		recalculateEventDate($(this).prev('.timeline-event-tape').attr('id') );
 	});	
@@ -63,9 +63,9 @@ function initialiseLables() {
 //placing the dates after each of the event titles
 function initialiseViewLables(container) {
   $('#' + container + ' .timeline-event-label').each(function() {
-		wrong_width = parseInt($(this).css('width'));
-	   	rigth_width = wrong_width +100;
-	   	$(this).css('width', rigth_width+'px');
+		wrong_width = parseInt($(this).css('width'), 10);
+      right_width = wrong_width +100;
+      $(this).css('width', right_width+'px');
 		$(this).append('<span class="info"></span>');
 	    recalculateEventDate( $(this).prev('.timeline-event-tape').attr('id'));
 	});

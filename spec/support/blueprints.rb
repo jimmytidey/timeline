@@ -14,7 +14,7 @@ TimelineChart.blueprint do
   user_id { 1 }
   title { Faker::Lorem.sentence(1) }
   center_date { Date.civil(1100) }
-  zoom { TimelineChart::PERIOD[:Decade] }
+  zoom { 3 }
   private { false }
   hits { rand 100 }
 end
@@ -25,7 +25,7 @@ TimelineChart.blueprint(:hidden) do
   user_id { 1 }
   title { "The Hidden Temple of Doom" }
   center_date { Date.civil(1100) }
-  zoom { TimelineChart::PERIOD[:Decade] }
+  zoom { 3 }
   private { true }
   hits { 0 }
 end
@@ -36,7 +36,7 @@ TimelineChart.blueprint(:empty) do
   user_id { 99 }
   title { Faker::Lorem.sentence(1) }
   center_date { nil }
-  zoom { TimelineChart::PERIOD[:Decade] }
+  zoom { 3 }
   private { false }
   hits { rand 0 }
 end

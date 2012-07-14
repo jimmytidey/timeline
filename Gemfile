@@ -48,6 +48,6 @@ group :development, :test do
   # Debugging tools
   gem 'ruby-debug'
   gem 'awesome_print'
-  gem 'pry'
+  gem 'pry-rails'
   gem 'pry-doc'
 end

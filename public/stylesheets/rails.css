@@ -19,13 +19,13 @@
     color: red;
     font-size: 16px;
     font-weight: bold;
-    margin-right: -150px;
+    margin-right: -300px;
     position: absolute;
     right: 50%;
     text-align: center;
     text-transform: uppercase;
     top: -28px;
-    width: 300px;
+    width: 600px;
 }
 
 .fieldWithErrors {
@@ -34,29 +34,20 @@
 }
 
 .error_messages {
-    position: absolute;
-    right: 14px;
-    text-align: right;
-    top: 7px;
     visibility: hidden;
-    width: 505px;
+    height: 0px;
 }
 
-.error_messages h2 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 10px;
-  font-size: 12px;
-  margin: 0;
-  background-color: #c00;
-  color: #fff;
+.error_messages h2, p {
+  display: none;
 }
 
 .error_messages ul {
-	left:321px;
+	left:451px;
 	position:absolute;
-	top:60px;
 	visibility:visible;
+  color: red;
+  font-size:1.2em;
 }
 
 .error_messages p {
