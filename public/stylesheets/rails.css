@@ -38,7 +38,7 @@
     height: 0px;
 }
 
-.error_messages h2, p {
+.error_messages h2{
   display: none;
 }
 

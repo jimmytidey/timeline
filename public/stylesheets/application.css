@@ -51,9 +51,6 @@
 }
 
 /* HOME PAGE */
-#sign_in, #add_timeline { 
-
-}
 
 #sign_in input, #add_timeline, #user_page_button {
 	width:199px;
