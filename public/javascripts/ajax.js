@@ -81,7 +81,7 @@ function request_form_to_edit_event_from_server(theEvent) {
 
 function submit_event_to_server(name, description, begin, end, band, chart) {
   saveCenterDate();
-	console.log("startdate" + begin); 
+	console.log("startdate" + begin);
   $.post("/events", { 'event':
     {
       'title' : name,

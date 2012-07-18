@@ -59,6 +59,7 @@
 	border:none;
 	cursor:pointer;
 	display:block;
+	background-color:transparent;
 }
 
 #sign_in input:hover, #add_timeline:hover,  #user_page_button:hover {

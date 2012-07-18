@@ -242,8 +242,10 @@ function addDuration() {
 	var begin_clean = zeroPad(begin_dirty,4);
 	var end_clean = zeroPad(end_dirty,4);
 	
-	bandCalculator.begindate 	= new Date(begin_clean); 
-	bandCalculator.enddate 		= new Date(end_clean); 
+	console.log(">>>>>begin_clean" + begin_clean);
+	bandCalculator.begindate 	= new Date("01/01/"+begin_clean); 
+	bandCalculator.enddate 		= new Date("01/01/"+end_clean);
+	
 	bandCalculator.begin 		=  bandCalculator.begindate.getTime();
 	bandCalculator.end 			=  bandCalculator.enddate.getTime();
 	bandCalculator.name 		= $("#new_event_title").val();
@@ -278,7 +280,7 @@ function addDuration() {
 				return false; 
 			} 
 			if (!bandCalculator.saved && index == last_index) { 
-				console.log('making a new band'); 
+				console.log('making a new band' + bandCalculator.begin + " -  " + bandCalculator.end); 
 				submit_event_to_server(bandCalculator.name, bandCalculator.description, bandCalculator.begin, bandCalculator.end, index+1, bandCalculator.chart);
 				bandCalculator.saved = true;				
 			}	 
