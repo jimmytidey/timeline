@@ -7,5 +7,14 @@
     
     <a href='/timeline_charts/new' id='btn_new_timeline'>&nbsp;</a>
     
+    <% if @user.timeline_charts.length == 0 %>
+    
+    <h1 id='no_timelines_message' >You don't have any timelines yet. Use the "New Timeline" button to get started.</h1>
+    
+    <% else %>
+     
     <%= render :partial => "top_chart", :collection => @user.timeline_charts %>
+
+    <% end %>
+
 </div>

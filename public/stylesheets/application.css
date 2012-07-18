@@ -207,6 +207,15 @@
 	background-image:url(/images/btn_new_timeline_down.png);
 }
 
+#no_timelines_message {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px 10px 10px 10px;
+    clear: both;
+    padding: 20px;
+    width: 513px;
+}
+
 
 /* VIEW PAGE */ 
 #view_info {
