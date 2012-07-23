@@ -12,11 +12,7 @@ class UsersController < ApplicationController
       data = {:name => data[:username], :email => data[:email], :identifier => data[:identifier]}
       self.current_user = User.find_by_identifier(data[:identifier]) || User.create!(data)
       flash[:notice] = 'Signed in successfully'
-      if params[:forward] == 'new_timeline' #if user logged in after clicking 'Add a timeline' on the home page as opposed to clicking 'Sign In' ...
-        redirect_to url_for :controller => 'timeline_charts', :action => 'new'
-      else
-        redirect_to '/'
-      end
+      redirect_to user_path(current_user)
     else
       redirect_to '/'
     end
