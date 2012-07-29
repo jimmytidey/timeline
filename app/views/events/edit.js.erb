@@ -11,22 +11,21 @@ $('#edit_modal').dialog({
 		/*this to process dates into a human readable format   */
 		
 		//start
-		var edit_start_date_array = $('#edit_start_date').val().split('T');
-		edit_start_date_array = edit_start_date_array[0].split('-');
-		var start_year 	=  edit_start_date_array[0];
-		var start_month =  edit_start_date_array[1];
-		var start_day   =   edit_start_date_array[2].split(' ')[0];
+    var start_date = new Date($('#edit_start_date').data("date_as_int"));
+		var start_year 	= start_date.getFullYear();
+		var start_month = start_date.getMonth() + 1;
+		var start_day   = start_date.getDate();
+
 		$('#event_title').after('<p id="edit_start_label">Start Date (Y/M/D)');
 		$('#edit_start_label').after('<input type="text" value='+start_year+' id="edit_event_start_year" />');
 		$('#edit_event_start_year').after('<input type="text" value='+start_month+' id="edit_event_start_month" />');
 		$('#edit_event_start_month').after('<input type="text" value='+start_day+' id="edit_event_start_day" /></p>');	
 		
-		//
-		var edit_end_date_array = $('#edit_end_date').val().split('T');
-		edit_end_date_array = edit_end_date_array[0].split('-');
-		var end_year 	=  edit_end_date_array[0];
-		var end_month =  edit_end_date_array[1];
-		var end_day   =   edit_end_date_array[2].split(' ')[0];
+    //end
+    var end_date = new Date($('#edit_end_date').data("date_as_int"));
+    var end_year 	= end_date.getFullYear();
+		var end_month = end_date.getMonth() + 1;
+		var end_day   = end_date.getDate();
 		$('#edit_event_start_day').after('<p id="edit_end_label">End Date (Y/M/D)');
 		$('#edit_end_label').after('<input type="text" value='+end_year+' id="edit_event_end_year" />');
 		$('#edit_event_end_year').after('<input type="text" value='+end_month+' id="edit_event_end_month" />');
