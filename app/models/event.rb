@@ -31,6 +31,14 @@ class Event < ActiveRecord::Base
     end_date.year
   end
 
+  def start_date_as_int
+    start_date.to_i * 1000
+  end
+
+  def end_date_as_int
+    end_date.to_i * 1000
+  end
+
   private
 
   def mark_timeline_as_updated

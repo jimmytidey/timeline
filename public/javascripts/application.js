@@ -4,11 +4,11 @@ bandCalculator ={};
 
 //BIND CLICK STUFF
 $(document).ready(function() {
-    $('#new_event_submit').click(function() { 
-		console.log('adding new duration');
-		addDuration(); 
-		$('#new_event_form #new_event_title').suggest('close')
-	});	
+  $('#new_event_submit').click(function() { 
+    console.log('adding new duration');
+    addDuration(); 
+    $('#new_event_form #new_event_title').suggest('close');
+  });	
 });
 
 
@@ -236,36 +236,30 @@ function recalculateEventDate(id)
 
 //when the form adds a new duration to the timeline, including intelligently assigning a band
 function addDuration() { 
-	// validate  
-	// add zeron padding to make dates before 1000 ad work 
-	var begin_dirty = $("#new_event_start_year").val();
-	var end_dirty 	= $("#new_event_end_year").val(); 
-	var begin_clean = zeroPad(begin_dirty,4);
-	var end_clean = zeroPad(end_dirty,4);
-	bandCalculator.name 		= $("#new_event_title").val();
-	bandCalculator.chart 		= $('.timeline').attr('data-id');
-	bandCalculator.description 	= $('#event_description').val();	
-	
-	//if the event is very short, we need to use the length of the label, not the timespan
-	if ((end_clean - begin_clean) < 5) { 
-		end_clean = parseInt(begin_clean) + 20 + bandCalculator.name.length;
-	}
-	
-	
-	bandCalculator.begindate 	= new Date("01/01/"+begin_clean); 
-	bandCalculator.enddate 		= new Date("01/01/"+end_clean);
-	
-	bandCalculator.begin 		=  bandCalculator.begindate.getTime();
-	bandCalculator.end 			=  bandCalculator.enddate.getTime();
-	
 
+	var beginYears = $("#new_event_start_year").val();
+	var endYears 	= $("#new_event_end_year").val(); 
+
+	 // Get time expressed as integer
+	var begin_time_as_int = getMillisecondsSince1970(beginYears);
+	var end_time_as_int = getMillisecondsSince1970(endYears);
+
+	// Construct date with integer so as to ensure dates before 100AD are handled
+	bandCalculator.begindate = new Date(begin_time_as_int);
+	bandCalculator.enddate = new Date(end_time_as_int);
+
+	bandCalculator.begin =  bandCalculator.begindate.getTime();
+	bandCalculator.end =  bandCalculator.enddate.getTime();
+	bandCalculator.name = $("#new_event_title").val();
+	bandCalculator.chart = $('.timeline').attr('data-id');
+	bandCalculator.description = $('#event_description').val();
 
 	if (!(/\S/.test(bandCalculator.name))) { // no title has been given
-	    bandCalculator.name='click to give me a name';
+	  bandCalculator.name='click to give me a name';
 	}
-	
+
 	if (bandCalculator.end < bandCalculator.begin) { 
-		bandCalculator.end = bandCalculator.begin; 
+	bandCalculator.end = bandCalculator.begin; 
 	} 
 
 	//Put the exitsing events into an ordered array
@@ -414,41 +408,13 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function zeroPad(num,count)
-{
-var numZeropad = num + '';
-while(numZeropad.length < count) {
-numZeropad = "0" + numZeropad;
+function getMillisecondsSince1970(yearStr) {
+  year = parseInt(yearStr, 10);
+  milliSecondsInAYear = 31560000000;
+  unixEpochPlusSixMonths = new Date("1970", "6", "1").getTime();
+  unixYear = 1970
+  return ((year - unixYear) * milliSecondsInAYear) + unixEpochPlusSixMonths
 }
-return numZeropad;
-}
-
 
 //bring up a alert if the user hasn't give a title 
-
-function initLeaveTest() {
-
-	window.onbeforeunload = bunload;
-
-	function bunload(){
-		var title = $('#timeline_chart_title').val(); 
-		var description = $('#timeline_chart_description').val();
-
-		if(events.events.length <3) { 
-			dontleave="I see you haven't got very far. I'd love to hear if there is a problem... jimmytidey@gmail.com";
-			return dontleave;			
-		}
-
-		if (title == 'Untitled') {
-			dontleave="Why not give your timeline a title?";
-			return dontleave;
-		}	
-
-		if (description == '') {
-			dontleave="Giving your timeline a description will help other users find it. Press cancel to stay on this page";
-			return dontleave;
-		}			
-	}
-}	
-
 

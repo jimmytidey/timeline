@@ -6,10 +6,9 @@
   
  
   <%= f.hidden_field :id, :id =>'edit_event_id' %>
-  <%= f.hidden_field :start_date, :id =>'edit_start_date' %>
+  <%= f.hidden_field :start_date, :id =>'edit_start_date', :"data-date_as_int" => @event.start_date_as_int %>
+  <%= f.hidden_field :end_date, :id =>'edit_end_date', :"data-date_as_int" => @event.end_date_as_int %>
   <%= f.hidden_field :band, :id =>'edit_band' %>
- 
-  <%= f.hidden_field :end_date, :id =>'edit_end_date' %>
   
   <% myArray = ['blue', 'yellow', 'cream', 'magenta'] %>
   
