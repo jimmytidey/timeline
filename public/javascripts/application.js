@@ -418,3 +418,29 @@ function getMillisecondsSince1970(yearStr) {
 
 //bring up a alert if the user hasn't give a title 
 
+function initLeaveTest() {
+
+	window.onbeforeunload = bunload;
+
+	function bunload(){
+		var title = $('#timeline_chart_title').val(); 
+		var description = $('#timeline_chart_description').val();
+
+		if(events.events.length <3) { 
+			dontleave="I see you haven't got very far. I'd love to hear if there is a problem... jimmytidey@gmail.com";
+			return dontleave;			
+		}
+
+		if (title == 'Untitled') {
+			dontleave="Why not give your timeline a title?";
+			return dontleave;
+		}	
+
+		if (description == '') {
+			dontleave="Giving your timeline a description will help other users find it. Press cancel to stay on this page";
+			return dontleave;
+		}			
+	}
+}	
+
+
